@@ -97,10 +97,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(AssociationProfile::class);
     }
 
-    // --- Helper method to get all profiles combined ---
     public function allProfiles()
     {
-        // Eager load all profile types to avoid N+1 issues
         $this->loadMissing(['enterpriseProfiles', 'clusterProfiles', 'societyProfiles', 'associationProfiles']);
 
         $enterpriseProfiles = $this->enterpriseProfiles->each(function ($profile) {

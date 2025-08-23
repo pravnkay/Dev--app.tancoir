@@ -12,10 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('acl_users', function (Blueprint $table) {
-
     		$table->string('active_profile_type')->after('password')->nullable();
 			$table->unsignedBigInteger('active_profile_id')->after('active_profile_type')->nullable();
-
         });
     }
 
