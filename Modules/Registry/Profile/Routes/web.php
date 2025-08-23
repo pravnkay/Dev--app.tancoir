@@ -10,11 +10,6 @@ use Modules\Registry\Profile\Actions\Profiles\Edit;
 use Modules\Registry\Profile\Actions\Profiles\Show;
 use Modules\Registry\Profile\Actions\Profiles\Update;
 
-use Modules\Registry\Profile\Actions\Profiles\Update\Enterprise;
-use Modules\Registry\Profile\Actions\Profiles\Update\Cluster;
-use Modules\Registry\Profile\Actions\Profiles\Update\Society;
-use Modules\Registry\Profile\Actions\Profiles\Update\Association;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes

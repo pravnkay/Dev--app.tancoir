@@ -19,7 +19,15 @@ class EnterpriseProfileObserver
      */
     public function updated(EnterpriseProfile $profile): void
     {
-        // ...
+		$user = $profile->user;
+
+        if ($user->active_profile_id == $profile->id && $user->active_profile_type == $profile->getMorphClass()) {
+			$user->update([
+				'active_profile_id' => null,
+				'active_profile_type' => null
+			]);
+		}
+
     }
  
     /**
@@ -30,9 +38,7 @@ class EnterpriseProfileObserver
         $user = $profile->user;
             
 		// If this profile was the active one, clear the active profile
-		if ($user->active_profile_id == $profile->id && 
-			$user->active_profile_type == $profile->getMorphClass()) {
-			
+		if ($user->active_profile_id == $profile->id && $user->active_profile_type == $profile->getMorphClass()) {			
 			$user->update([
 				'active_profile_id' => null,
 				'active_profile_type' => null

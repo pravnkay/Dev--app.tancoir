@@ -26,13 +26,7 @@ class Store
         $profile = $modelClass::create([
 			'user_id' 	=> $user['id'],
 			'name' 		=> $validated['profile_name']
-		]);
-
-		if (is_null($user->active_profile_id)) {
-			$user->active_profile_id = $profile->id;
-			$user->active_profile_type = $profile->getMorphClass();
-			$user->save();
-		}
+		]);		
 
 		notify('Profile created successfully!', ['icon' => 'circle-check-big']);
 		

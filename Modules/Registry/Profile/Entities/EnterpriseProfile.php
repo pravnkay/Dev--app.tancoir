@@ -11,6 +11,8 @@ use Modules\Core\Core\Enums\DistrictEnum;
 use Modules\Core\Core\Traits\Userstamps;
 use Modules\Registry\Profile\Observers\EnterpriseProfileObserver;
 
+use Modules\Core\Core\Enums\ProfileStatusEnum;
+
 #[ObservedBy([EnterpriseProfileObserver::class])]
 class EnterpriseProfile extends Model
 {
@@ -21,7 +23,8 @@ class EnterpriseProfile extends Model
     protected $guarded = [];
 
 	protected $casts = [
-		'district' => DistrictEnum::class
+		'district' 	=> DistrictEnum::class,
+		'status'	=> ProfileStatusEnum::class
     ];
 
 	public function user(): BelongsTo

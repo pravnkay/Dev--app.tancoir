@@ -4,6 +4,7 @@ namespace Modules\Registry\Profile\Actions\Profiles;
 
 use Illuminate\Support\Facades\Auth;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Modules\Core\Core\Enums\ProfileStatusEnum;
 use Modules\Core\Core\Enums\ProfileTypeEnum;
 
 class Activate
@@ -30,6 +31,11 @@ class Activate
 
 		if (!$profile) {
 			notify('Profile not found!', ['status'=> 'destructive', 'icon' => 'ban']);
+			return redirect()->back();
+		}
+
+		if ($profile->status !== ProfileStatusEnum::APPROVED) {
+			notify('Profile not approved! Submit for approval.', ['status'=> 'destructive', 'icon' => 'ban']);
 			return redirect()->back();
 		}
 

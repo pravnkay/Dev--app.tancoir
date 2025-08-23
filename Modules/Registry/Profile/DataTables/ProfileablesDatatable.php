@@ -17,6 +17,10 @@ class ProfileablesDatatable extends DataTable
 				return $profile->profile_type_enum->label();
 			})		
 
+			->addColumn('status', function($profile) {
+				return "<span class='uk-badge uk-badge-secondary'>{$profile->status->label()}</span>";
+			})
+
 			->addColumn('is_active', function ($profile) {				
 				$user = Auth::user();
 				
@@ -49,7 +53,7 @@ class ProfileablesDatatable extends DataTable
 				])->render();	
 			})
 			
-			->rawColumns(['is_active','action']);
+			->rawColumns(['is_active', 'status', 'action']);
     }
 
     public function query()
@@ -208,7 +212,14 @@ class ProfileablesDatatable extends DataTable
 				"searchable"			=> true,
 			],
 			[
-				"title"					=> __('Active'),
+				"title"					=> __('Status'),
+				"data"					=> "status",
+				"responsivePriority"	=> "1",
+				"orderable"				=> true,
+				"searchable"			=> true,
+			],
+			[
+				"title"					=> __('Active (Click to change)'),
 				"data"					=> "is_active",
 				"responsivePriority"	=> "1",
 				"orderable"				=> true,
