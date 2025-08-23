@@ -131,39 +131,4 @@ class User extends Authenticatable implements MustVerifyEmail
 		return $this->active_profile_id == $profile->id && 
 			$this->active_profile_type == $profile->getMorphClass();
 	}
-
-	public function profilesForAdmin()
-	{
-		return $this->allProfiles()->filter(function ($profile) {
-			return $profile->checkStatus('admin_visible');
-		});
-	}
-
-	public function submittedProfiles()
-	{
-		return $this->allProfiles()->filter(function ($profile) {
-			return $profile->checkStatus('submitted');
-		});
-	}
-
-	public function approvedProfiles()
-	{
-		return $this->allProfiles()->filter(function ($profile) {
-			return $profile->checkStatus('approved');
-		});
-	}
-
-	public function draftProfiles()
-	{
-		return $this->allProfiles()->filter(function ($profile) {
-			return $profile->checkStatus('draft');
-		});
-	}
-
-	public function returnedProfiles()
-	{
-		return $this->allProfiles()->filter(function ($profile) {
-			return $profile->checkStatus('returned');
-		});
-	}
 }

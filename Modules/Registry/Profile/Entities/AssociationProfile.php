@@ -10,31 +10,14 @@ use Modules\Core\Auth\Entities\User;
 use Modules\Core\Core\Traits\Userstamps;
 use Modules\Registry\Profile\Observers\AssociationProfileObserver;
 
-use Makeable\QueryKit\QueryKit;
-use Modules\Registry\Profile\Entities\Traits\HasProfileStatus;
-use Makeable\EloquentStatus\HasStatus;
-
 #[ObservedBy([AssociationProfileObserver::class])]
 class AssociationProfile extends Model
 {
 	use Userstamps;
-	use HasProfileStatus, QueryKit, HasStatus;
 	
 	protected $table = "profile_association_profiles";
 
     protected $guarded =[];
-
-	protected $requiredForSubmission = [
-        'name',
-        'udyam',
-        'enterprise_name',
-        'enterprise_place',
-        'enterprise_district',
-        'contact_person_name',
-        'contact_email',
-        'contact_phone',
-		'contact_whatsapp',
-    ];
 
 	protected $casts = [
 		//
@@ -43,11 +26,6 @@ class AssociationProfile extends Model
 	public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-	public function getRequiredForSubmission(): array
-    {
-        return $this->requiredForSubmission;
     }
 
 }

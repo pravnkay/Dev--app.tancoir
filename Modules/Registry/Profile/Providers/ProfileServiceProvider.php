@@ -4,16 +4,7 @@ namespace Modules\Registry\Profile\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-
 use Nwidart\Modules\Traits\PathNamespace;
-use Makeable\EloquentStatus\StatusManager;
-
-use Modules\Registry\Profile\Entities\AssociationProfile;
-use Modules\Registry\Profile\Entities\ClusterProfile;
-use Modules\Registry\Profile\Entities\EnterpriseProfile;
-use Modules\Registry\Profile\Entities\SocietyProfile;
-use Modules\Registry\Profile\Entities\Status\ProfileStatus;
-
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -36,11 +27,6 @@ class ProfileServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'Database/Migrations'));
-
-		StatusManager::bind(EnterpriseProfile::class, ProfileStatus::class);
-        StatusManager::bind(ClusterProfile::class, ProfileStatus::class);
-        StatusManager::bind(SocietyProfile::class, ProfileStatus::class);
-        StatusManager::bind(AssociationProfile::class, ProfileStatus::class);
     }
 
     /**
