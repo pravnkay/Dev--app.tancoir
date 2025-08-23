@@ -8,6 +8,7 @@ use Modules\Registry\Profile\Actions\Profiles\Store;
 use Modules\Registry\Profile\Actions\Profiles\Activate;
 use Modules\Registry\Profile\Actions\Profiles\Edit;
 use Modules\Registry\Profile\Actions\Profiles\Show;
+use Modules\Registry\Profile\Actions\Profiles\Update;
 
 use Modules\Registry\Profile\Actions\Profiles\Update\Enterprise;
 use Modules\Registry\Profile\Actions\Profiles\Update\Cluster;
@@ -41,20 +42,10 @@ Route::middleware(['auth', 'verified', 'role:user'])
 		Route::post('/',												Store::class)			->name('store');
 		Route::get('/{profile_type}/{profile_id}/',						Show::class)			->name('show');
 		Route::get('/{profile_type}/{profile_id}/edit',					Edit::class)			->name('edit');
+		Route::put('/{profile_type}/{profile_id}/edit',					Update::class)			->name('update');
 		Route::put('activate/{profile_type}/{profile_id}',				Activate::class)		->name('activate');
 		Route::delete('/{profile_type}/{profile_id}',					Destroy::class)			->name('destroy');
-
-		Route::middleware(['auth', 'verified', 'role:user'])
-		->prefix('update')
-		->name('update.')
-		->group(function () {
 		
-			Route::put('update/enterprise/{profile_type}/{profile_id}',		Enterprise::class)		->name('enterprise');
-			Route::put('update/cluster/{profile_type}/{profile_id}',		Cluster::class)			->name('cluster');
-			Route::put('update/society/{profile_type}/{profile_id}',		Society::class)			->name('society');
-			Route::put('update/association/{profile_type}/{profile_id}',	Association::class)		->name('association');
-
-		});
 	});
 
 });
