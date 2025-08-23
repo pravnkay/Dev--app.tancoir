@@ -1,0 +1,7 @@
+{
+    "Core": true,
+    "Auth": true,
+    "Dashboard": true,
+    "Registry": true,
+    "Profile": true
+}

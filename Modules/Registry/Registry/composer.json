@@ -1,0 +1,30 @@
+{
+    "name": "praveen/registry",
+    "description": "",
+    "authors": [
+        {
+            "name": "Praveen Kalaiarasu",
+            "email": "praveen.kalaiarasu@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Registry\\Registry\\": "/",
+            "Modules\\Registry\\Registry\\Database\\Factories\\": "Database/Factories/",
+            "Modules\\Registry\\Registry\\Database\\Seeders\\": "Database/Seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Registry\\Registry\\Tests\\": "Tests/"
+        }
+    }
+}

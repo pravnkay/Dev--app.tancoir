@@ -1,0 +1,11 @@
+{
+    "name": "Registry",
+    "alias": "registry",
+    "description": "",
+    "keywords": [],
+    "priority": 4,
+    "providers": [
+        "Modules\\Registry\\Registry\\Providers\\RegistryServiceProvider"
+    ],
+    "files": []
+}
