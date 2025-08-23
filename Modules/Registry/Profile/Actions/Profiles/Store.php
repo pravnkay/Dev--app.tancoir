@@ -23,11 +23,14 @@ class Store
 		$profileEnum = ProfileTypeEnum::from($validated['profile_type']);
         $modelClass = $profileEnum->classDefinition();
 
+		clock($request);
+		clock($user['id']);
+
         $profile = $modelClass::create([
 			'user_id' 	=> $user['id'],
 			'name' 		=> $validated['profile_name']
 		]);
-
+		
 		if (is_null($user->active_profile_id)) {
 			$user->active_profile_id = $profile->id;
 			$user->active_profile_type = $profile->getMorphClass();

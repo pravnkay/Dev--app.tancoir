@@ -10,9 +10,17 @@
 		<div class="flex justify-between items-center">
 			{{ Breadcrumbs::render('profile.show', $profile_type, $profile->id)}}
 			<div> 
-				<x-core::back />
+				<x-core::anchor back />
 				<x-core::anchor primary href="{{route('app.profile.edit', ['profile_id' => $profile['id'], 'profile_type' => $profile_type])}}" icon="pen"> Edit Profile </x-core::anchor>
 			</div>
+		</div>
+		<div class="border-border border-t"></div>
+	</div>
+
+	<div class="space-y-4 mb-4">
+		<div class="flex justify-between items-center">
+			<p class="uk-paragraph">Profile Status:<code class="uk-codespan">{{$profile->status->label()}}</code></p>
+			
 		</div>
 		<div class="border-border border-t"></div>
 	</div>
