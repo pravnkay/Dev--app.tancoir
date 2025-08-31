@@ -42,10 +42,6 @@ class ProfileablesDatatable extends DataTable
 						'profile_type'	=> $profile->profile_type_enum, 
 						'profile_id' 	=> $profile->id
 					]),
-					'edit'=> route('app.profile.edit', [
-						'profile_type'	=> $profile->profile_type_enum, 
-						'profile_id' 	=> $profile->id
-					]),
 					'delete' => route('app.profile.destroy', [
 						'profile_type'	=> $profile->profile_type_enum, 
 						'profile_id' 	=> $profile->id

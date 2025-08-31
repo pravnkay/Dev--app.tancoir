@@ -2,6 +2,7 @@
  
 namespace Modules\Registry\Profile\Observers;
 
+use Modules\Core\Core\Enums\ProfileStatusEnum;
 use Modules\Registry\Profile\Entities\EnterpriseProfile;
 
 class EnterpriseProfileObserver
@@ -28,6 +29,12 @@ class EnterpriseProfileObserver
 			]);
 		}
 
+		if($profile->isComplete()) {
+			$profile->updateQuietly([
+				'status' => ProfileStatusEnum::SUBMITTED->value,
+				'submitted_at' => now(),
+			]);
+		}
     }
  
     /**

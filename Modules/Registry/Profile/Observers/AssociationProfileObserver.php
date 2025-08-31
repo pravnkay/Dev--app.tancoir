@@ -2,6 +2,7 @@
  
 namespace Modules\Registry\Profile\Observers;
 
+use Modules\Core\Core\Enums\ProfileStatusEnum;
 use Modules\Registry\Profile\Entities\AssociationProfile;
 
 class AssociationProfileObserver
@@ -19,7 +20,21 @@ class AssociationProfileObserver
      */
     public function updated(AssociationProfile $profile): void
     {
-        // ...
+        $user = $profile->user;
+
+        if ($user->active_profile_id == $profile->id && $user->active_profile_type == $profile->getMorphClass()) {
+			$user->update([
+				'active_profile_id' => null,
+				'active_profile_type' => null
+			]);
+		}
+
+		if($profile->isComplete()) {
+			$profile->updateQuietly([
+				'status' => ProfileStatusEnum::SUBMITTED->value,
+				'submitted_at' => now(),
+			]);
+		}
     }
  
     /**

@@ -10,11 +10,29 @@
 
 <div class="fr-widget border-border bg-background text-foreground md:border md:p-10">
 
-	<div class="flex flex-col space-y-1.5">
+	<div class="flex flex-col space-y-1.5 mb-4">
 		<h1 class="uk-h4">Sign in to your account</h1>
 		<p class="text-muted-foreground">
 			Enter your credentials below to login to your account.
 		</p>
+	</div>
+
+	<div class="flex space-x-2">
+
+	<form action="{{route('login')}}" method="post">
+		@csrf
+		<input name="email" value="admin@email.com" hidden>
+		<input name="password" value="Open8d@16" hidden>
+		<button class="uk-btn uk-btn-default" submit>Login as Admin</button>
+	</form>
+
+	<form action="{{route('login')}}" method="post">
+		@csrf
+		<input name="email" value="userone@email.com" hidden>
+		<input name="password" value="Open8d@16" hidden>
+		<button class="uk-btn uk-btn-default" submit>Login as User</button>
+	</form>
+
 	</div>
 
 	<x-core::form post action="{{route('login')}}" class="mt-6 space-y-6">

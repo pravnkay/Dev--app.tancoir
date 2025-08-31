@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Modules\Core\Auth\Entities\User;
 use Modules\Core\Core\Enums\ProfileStatusEnum;
 use Modules\Core\Core\Helpers\ProfileHelper;
 
@@ -17,14 +17,10 @@ return new class extends Migration
         foreach ($tables as $table) {
             Schema::table($table, function (Blueprint $table) {
                 $table->string('status')->default(ProfileStatusEnum::DRAFT->value)->after('contact_whatsapp');
-                $table->text('review_remarks')->nullable()->after('status');
-                $table->timestamp('submitted_at')->nullable()->after('review_remarks');
-                $table->timestamp('reviewed_at')->nullable()->after('submitted_at');
-                $table->unsignedBigInteger('reviewed_by')->nullable()->after('reviewed_at');
-                
-                $table->foreign('reviewed_by')->references('id')->on('acl_users')->onDelete('set null');
-                $table->index(['status']);
-                $table->index(['submitted_at']);
+                $table->dateTime('submitted_at')->nullable()->after('status');
+                $table->text('review_remarks')->nullable()->after('submitted_at');
+                $table->dateTime('reviewed_at')->nullable()->after('review_remarks');
+				$table->foreignIdFor(User::class, 'reviewed_by')->nullable()->after('reviewed_at')->nullOnCascade();
             });
         }
     }
@@ -41,8 +37,6 @@ return new class extends Migration
         foreach ($tables as $table) {
             Schema::table($table, function (Blueprint $table) {
                 $table->dropForeign(['reviewed_by']);
-                $table->dropIndex(['status']);
-                $table->dropIndex(['submitted_at']);
                 $table->dropColumn([
                     'status', 
                     'review_remarks', 
