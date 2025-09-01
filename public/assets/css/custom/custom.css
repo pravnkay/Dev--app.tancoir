@@ -123,4 +123,9 @@
 		background-color: var(--uk-form-input-bg, transparent);
 		color: var(--uk-form-input-color, hsl(var(--foreground)));
 	}
+
+	.uk-badge-success {
+		--uk-badge-border: 1px solid hsl(125deg 85% 85%);
+		--uk-badge-bg: hsl(125deg 85% 85%);
+	}
 }

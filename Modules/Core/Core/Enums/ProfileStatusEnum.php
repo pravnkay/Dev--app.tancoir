@@ -22,10 +22,10 @@ enum ProfileStatusEnum: string
     public function color(): string
     {
         return match ($this) {
-            self::DRAFT 	=> 'gray',
-            self::SUBMITTED => 'blue',
-            self::APPROVED 	=> 'green',
-            self::RETURNED 	=> 'red',
+            self::DRAFT 	=> 'secondary',
+            self::SUBMITTED => 'secondary',
+            self::APPROVED 	=> 'success',
+            self::RETURNED 	=> 'destructive',
         };
     }
 

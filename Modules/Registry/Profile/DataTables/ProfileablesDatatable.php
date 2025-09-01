@@ -18,7 +18,7 @@ class ProfileablesDatatable extends DataTable
 			})		
 
 			->addColumn('status', function($profile) {
-				return "<span class='uk-badge uk-badge-secondary'>{$profile->status->label()}</span>";
+				return "<span class='uk-badge uk-badge-{$profile->status->color()}'>{$profile->status->label()}</span>";
 			})
 
 			->addColumn('is_active', function ($profile) {				
