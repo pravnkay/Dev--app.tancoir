@@ -56,6 +56,19 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 
 		});
 
+		Route::prefix('events')
+		->name('events.')
+		->group(function () {
+
+			Route::get('/', 					\Modules\Backend\RAMPManagement\Actions\Events\Index::class)			->name('index');
+			Route::get('/create', 				\Modules\Backend\RAMPManagement\Actions\Events\Create::class)			->name('create');
+			Route::post('/', 					\Modules\Backend\RAMPManagement\Actions\Events\Store::class)			->name('store');
+			Route::get('/{event}/edit', 		\Modules\Backend\RAMPManagement\Actions\Events\Edit::class)				->name('edit');
+			Route::put('/{event}', 				\Modules\Backend\RAMPManagement\Actions\Events\Update::class)			->name('update');
+			Route::delete('/{event}', 			\Modules\Backend\RAMPManagement\Actions\Events\Destroy::class)			->name('destroy');
+
+		});
+
 	});
 
 });

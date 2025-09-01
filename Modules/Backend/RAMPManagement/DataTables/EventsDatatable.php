@@ -2,10 +2,10 @@
 
 namespace Modules\Backend\RAMPManagement\DataTables;
 
-use Modules\Backend\RAMPManagement\Entities\Vertical;
+use Modules\Backend\RAMPManagement\Entities\Event;
 use Yajra\DataTables\Services\DataTable;
 
-class VerticalsDatatable extends DataTable
+class EventsDatatable extends DataTable
 {
     public function dataTable($query)
     {
@@ -13,14 +13,14 @@ class VerticalsDatatable extends DataTable
             ->eloquent($query)
             ->addIndexColumn()
 
-			->addColumn('selector', function ($vertical) {
-                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$vertical->id.'">';
+			->addColumn('selector', function ($event) {
+                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$event->id.'">';
             })
 
-			->addColumn('action', function ($vertical) {
+			->addColumn('action', function ($event) {
 				return view('core::components.datatable.action_column')->with([
-					'edit'		=> route('backend.rampmanagement.verticals.edit',		["vertical" => $vertical->id]),
-					'delete'	=> route('backend.rampmanagement.verticals.destroy',	["vertical" => $vertical->id]),
+					'edit' 		=> route('backend.rampmanagement.events.edit', 		["event"	=> $event->id]),
+					'delete' 	=> route('backend.rampmanagement.events.destroy', 	["event" 	=> $event->id]),
 				])->render();
 	
 			})
@@ -30,14 +30,14 @@ class VerticalsDatatable extends DataTable
 
     public function query()
     {
-		$vertical = Vertical::select();
-		return $this->applyScopes($vertical);
+		$event = Event::select();
+		return $this->applyScopes($event);
     }
 
     public function html()
     {
-		$table_id  = 'verticals-table';
-		$importer_route = route('backend.bulk.import.create', ['model' =>'verticals']);
+		$table_id  = 'events-table';
+		$importer_route = route('backend.bulk.import.create', ['model' => 'events']);
 
         return $this->builder()
                     ->columns($this->getColumns())
@@ -47,13 +47,13 @@ class VerticalsDatatable extends DataTable
 					
 					->setTableId($table_id)
 					
-					->orderBy(2, 'asc')
+					->orderBy(3, 'asc')
 					
 					->parameters([          
 						'searchDelay' => 1000,
 						'initComplete' => "						
 						
-						function (enterprise, json) {
+						function (master, json) {
 
 							var tableId  = '#{$table_id}';
 
@@ -63,7 +63,7 @@ class VerticalsDatatable extends DataTable
 								$('thead').append(r);
 
 								var column = this;
-								var colDef = enterprise['aoColumns'][index];
+								var colDef = master['aoColumns'][index];
 
 								var input = document.createElement(\"input\")
 								input.className = 'uk-input uk-form-sm'
@@ -97,7 +97,7 @@ class VerticalsDatatable extends DataTable
 
 						}",
 
-						'drawCallback' => "function (enterprise) {
+						'drawCallback' => "function (master) {
 							
 						}",
 
@@ -144,14 +144,14 @@ class VerticalsDatatable extends DataTable
 					->layout([
 						'topStart' => [
 							'rowClass' => 'grid lg:grid-cols-2 gap-4 mb-8 items-center',
-							'className' => 'mb-4 lg:mb-0 justify-self-start font-light',
+							'className' => 'justify-self-center mb-4 lg:mb-0 lg:justify-self-start font-light',
 							'features' => [
 								'info'
 							]
 						],
 						'topEnd' => [
 							'rowClass' => '',
-							'className' => 'justify-self-end',
+							'className' => 'justify-self-center lg:justify-self-end',
 							'features' => [
 								'buttons'
 							]
@@ -202,23 +202,37 @@ class VerticalsDatatable extends DataTable
 				"searchable"			=> true,
 			],
 			[
-				"title"					=> __('Allocated Funds'),
-				"data"					=> "allocated_funds",
-				"responsivePriority"	=> "1",
+				"title"					=> __('Date'),
+				"data"					=> "date",
+				"responsivePriority"	=> "2",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],
 			[
-				"title"					=> __('Utilised Funds'),
-				"data"					=> "utilised_funds",
-				"responsivePriority"	=> "1",
+				"title"					=> __('Days'),
+				"data"					=> "days",
+				"responsivePriority"	=> "2",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],
 			[
-				"title"					=> __('Remaining Funds'),
-				"data"					=> "remaining_funds",
-				"responsivePriority"	=> "1",
+				"title"					=> __('Cost'),
+				"data"					=> "cost",
+				"responsivePriority"	=> "2",
+				"orderable"				=> false,
+				"searchable"			=> false,
+			],
+			[
+				"title"					=> __('Participant Count'),
+				"data"					=> "participant_count",
+				"responsivePriority"	=> "2",
+				"orderable"				=> false,
+				"searchable"			=> false,
+			],
+			[
+				"title"					=> __('Participant Cost'),
+				"data"					=> "participant_cost",
+				"responsivePriority"	=> "2",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],

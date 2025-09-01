@@ -4,7 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use Modules\Backend\RAMPManagement\Entities\Programme;
 use Modules\Backend\RAMPManagement\Entities\Vertical;
+
 use Modules\Core\Core\Enums\ProgrammeSchemeEnum;
 
 return new class extends Migration
@@ -30,6 +32,20 @@ return new class extends Migration
 			$table->string('scheme')->default(ProgrammeSchemeEnum::NORMAL);
             $table->userTimeStamps();
 		});
+
+		Schema::create('ramp_events', function (Blueprint $table) {
+            $table->increments('id');
+            $table->foreignIdFor(Programme::class)->nullable()->nullOnDelete();
+			$table->string('name')->nullable();
+			$table->string('title')->nullable();
+			$table->integer('iteration')->nullable();
+			$table->date('date')->nullable();
+			$table->integer('days')->nullable()->default(1);
+			$table->decimal('cost', 12, 2)->default(0.00);
+			$table->integer('participant_count')->default(20);
+			$table->decimal('participant_cost', 12, 2)->default(0.00);
+            $table->userTimeStamps();
+        });
     }
 
     /**
@@ -39,5 +55,6 @@ return new class extends Migration
     {
         Schema::drop('ramp_verticals');
         Schema::drop('ramp_programmes');
+        Schema::drop('ramp_events');
     }
 };

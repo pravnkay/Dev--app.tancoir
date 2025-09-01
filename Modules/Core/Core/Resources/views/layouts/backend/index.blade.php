@@ -85,21 +85,28 @@
 				'label'		=> 'RAMP Mgmt.',
 				'active'	=> 'backend.rampmanagement.*',
 				'route'		=> 'backend.rampmanagement.dashboard.index',
-				'icon'		=> 'gauge',
+				'icon'		=> 'command',
 				'links'		=> [
 					[
 						'label'		=> 'Verticals',
 						'active'	=> 'backend.rampmanagement.verticals.*',
 						'route'		=> 'backend.rampmanagement.verticals.index',
-						'icon'		=> 'building-2',
+						'icon'		=> 'kanban',
 					],					
 					[
 						'label'		=> 'Programmes',
 						'active'	=> 'backend.rampmanagement.programmes.*',
 						'route'		=> 'backend.rampmanagement.programmes.index',
-						'icon'		=> 'building-2',
+						'icon'		=> 'scroll-text',
 						'hr'		=> 'true'
-					],					
+					],
+					[
+						'label'		=> 'Events',
+						'active'	=> 'backend.rampmanagement.events.*',
+						'route'		=> 'backend.rampmanagement.events.index',
+						'icon'		=> 'fan',
+						'hr'		=> 'true'
+					],			
 				]
 			],			
 

@@ -14,8 +14,6 @@ class Store
     {
 		$validated = $request->validated();
 
-		clock($validated);
-
 		\DB::beginTransaction();
 
 		try {
@@ -51,6 +49,7 @@ class Store
 
 		} catch (\Throwable $th) {
 
+			clock($th);
 			clock($th->getMessage());
 			notify('DB Error. Contact Admin!', ['status'=> 'destructive', 'icon' => 'ban']);
 			\DB::rollBack();

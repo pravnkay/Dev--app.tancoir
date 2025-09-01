@@ -3,6 +3,7 @@
 namespace Modules\Backend\Dashboard\Actions\Bulk\Importer;
 
 use Lorisleiva\Actions\Concerns\AsAction;
+use Modules\Backend\RAMPManagement\Entities\Event;
 use Modules\Backend\RAMPManagement\Entities\Programme;
 use Modules\Backend\RAMPManagement\Entities\Vertical;
 
@@ -12,9 +13,10 @@ class Create
 
 	public function handle($snake_cased_model)
 	{
-		$model_classes = [
-			'verticals' => Vertical::class,
-			'programmes' => Programme::class
+		$model_classes 		= [
+			'verticals' 	=> Vertical::class,
+			'programmes' 	=> Programme::class,
+			'events' 		=> Event::class,
 		];
 
 		$studly = \Illuminate\Support\Str::studly(\Illuminate\Support\Str::singular($snake_cased_model));

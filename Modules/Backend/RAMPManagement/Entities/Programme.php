@@ -30,8 +30,8 @@ class Programme extends Model
 		return $this->belongsTo(Vertical::class);
 	}
 
-	// public function events()
-	// {
-	// 	return $this->hasMany(Event::class);
-	// }
+	public function events()
+	{
+		return $this->hasMany(Event::class);
+	}
 }
