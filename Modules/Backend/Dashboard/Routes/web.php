@@ -22,4 +22,22 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 		return view('dashboard::dashboard.index');
 	})->name('dashboard');
 
+	Route::prefix('bulk')
+	->name('bulk.')
+	->group(function () {
+
+		Route::prefix('import')
+		->name('import.')
+		->group(function () {
+
+			Route::get('/{model}', 				\Modules\Backend\Dashboard\Actions\Bulk\Importer\Create::class)			->name('create');
+			Route::post('/',		 			\Modules\Backend\Dashboard\Actions\Bulk\Importer\Store::class)			->name('store');
+
+		});
+			
+		Route::delete('/delete', 				\Modules\Backend\Dashboard\Actions\Bulk\Destroyer\Destroy::class)		->name('destroy');
+
+
+	});
+
 });

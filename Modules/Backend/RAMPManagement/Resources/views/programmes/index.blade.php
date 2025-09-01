@@ -9,10 +9,10 @@
 			<div class="row">
 				<div class="col w-6/12">
 					<p class="uk-text-lead mt-2"> {{__('RAMP Management')}} </p>
-					<h3 class="uk-h3"> {{__('Verticals')}} </h3>				
+					<h3 class="uk-h3"> {{__('Programmes')}} </h3>				
 				</div>
 				<div class="col w-6/12 flex items-end justify-end">
-					<a type="button" href="{{route('backend.rampmanagement.verticals.create')}}" class="uk-btn uk-btn-primary self-end">{{__('New Vertical')}}</a>
+					<a type="button" href="{{route('backend.rampmanagement.programmes.create')}}" class="uk-btn uk-btn-primary self-end">{{__('New Programme')}}</a>
 				</div>
 			</div>
 		</div>

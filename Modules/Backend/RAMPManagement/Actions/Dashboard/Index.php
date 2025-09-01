@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Backend\RAMPManegement\Actions\Dashboard;
+namespace Modules\Backend\RAMPManagement\Actions\Dashboard;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 

@@ -1,15 +1,18 @@
 <?php
 
-namespace Modules\Backend\RAMPManegement\Actions\Verticals;
+namespace Modules\Backend\RAMPManagement\Actions\Verticals;
 
 use Lorisleiva\Actions\Concerns\AsAction;
+use Modules\Backend\RAMPManagement\DataTables\VerticalsDatatable;
 
 class Index
 {
 	use AsAction;
 
-	public function handle()
+	public function handle(VerticalsDatatable $datatable)
     {
-		return view('rampmanagement::verticals.index');
+		return $datatable->render('rampmanagement::verticals.index', [
+			'model' => 'Modules\\Backend\\RAMPManagement\\Entities\\Vertical'
+		]);
     }
 }

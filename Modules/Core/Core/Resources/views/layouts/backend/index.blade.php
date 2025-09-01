@@ -83,49 +83,25 @@
 
 			"RAMP Mgmt." => [
 				'label'		=> 'RAMP Mgmt.',
-				'active'	=> 'rampmanagement.*',
-				'route'		=> 'rampmanagement.dashboard.index',
+				'active'	=> 'backend.rampmanagement.*',
+				'route'		=> 'backend.rampmanagement.dashboard.index',
 				'icon'		=> 'gauge',
 				'links'		=> [
 					[
 						'label'		=> 'Verticals',
-						'active'	=> 'rampmanagement.verticals.*',
-						'route'		=> 'rampmanagement.verticals.index',
+						'active'	=> 'backend.rampmanagement.verticals.*',
+						'route'		=> 'backend.rampmanagement.verticals.index',
+						'icon'		=> 'building-2',
+					],					
+					[
+						'label'		=> 'Programmes',
+						'active'	=> 'backend.rampmanagement.programmes.*',
+						'route'		=> 'backend.rampmanagement.programmes.index',
 						'icon'		=> 'building-2',
 						'hr'		=> 'true'
 					],					
 				]
-			],
-
-			// "Settings"	=> [
-			// 	'label'		=> 'Settings',
-			// 	'active'	=> 'settings.*',
-			// 	'route'		=> 'settings.dashboard',
-			// 	'icon'		=> 'bolt',
-			// 	'links'		=> [
-			// 		[
-			// 			'label'		=> 'Users',
-			// 			'active'	=> 'settings.users.*',
-			// 			'route'		=> 'settings.users.index',
-			// 			'icon'		=> 'users',
-			// 		],
-			// 		[
-			// 			'label'		=> 'Roles',
-			// 			'active'	=> 'settings.roles.*',
-			// 			'route'		=> 'settings.roles.index',
-			// 			'icon'		=> 'book-user',
-			// 			'hr'		=> 'true'
-			// 		],
-			// 		[
-			// 			'label'		=> 'Appearance',
-			// 			'active'	=> 'settings.appearance',
-			// 			'route'		=> 'settings.appearance',
-			// 			'icon'		=> 'sun-moon',
-			// 			'hr'		=> 'true'
-			// 		],
-			// 	]
-			// ],
-			
+			],			
 
 		];
 	@endphp
@@ -144,9 +120,7 @@
 		@include('core::layouts.backend.includes.aside')
 			
 			<section class="flex-1 overflow-y-auto p-4">
-				<div class="uk-container uk-container-lg">
-					@yield('main-content')
-				</div>	
+				@yield('main-content')
 			</section>
 
 	</main>
