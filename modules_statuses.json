@@ -4,5 +4,7 @@
     "Dashboard": true,
     "Registry": true,
     "Profile": true,
-    "Moderation": true
+    "Moderation": true,
+    "Ramp": true,
+    "RAMPManagement": true
 }

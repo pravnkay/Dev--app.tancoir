@@ -8,17 +8,17 @@
 
 				<li class="pb-2 uk-parent {{active([$route['active']], 'uk-open', '')}}">
 
-					<a class="pb-3 {{active([$route['active']], 'font-semibold', '')}}" href="#" id="uk-nav-{{$loop->index}}" role="button" aria-controls="uk-nav-{{$loop->iteration}}" aria-expanded="{{active([$route['active']], 'true', 'false')}}" aria-disabled="{{active([$route['active']], 'true', 'false')}}">
+					<a class="mb-1 {{active([$route['active']], 'font-semibold', '')}}" href="#" id="uk-nav-{{$loop->index}}" role="button" aria-controls="uk-nav-{{$loop->iteration}}" aria-expanded="{{active([$route['active']], 'true', 'false')}}" aria-disabled="{{active([$route['active']], 'true', 'false')}}">
 						<uk-icon class="pe-3" icon="{{$route['icon']}}"></uk-icon>
 						{{$route['label']}}
 						<span data-uk-nav-parent-icon></span>
 					</a>
 
-					<ul class="uk-nav-sub ms-4 pb-3" hidden="" id="uk-nav-{{$loop->iteration}}" role="region" aria-labelledby="uk-nav-{{$loop->index}}">
+					<ul class="uk-nav-sub ms-4 mb-3" hidden="" id="uk-nav-{{$loop->iteration}}" role="region" aria-labelledby="uk-nav-{{$loop->index}}">
 
 						@foreach ($route['links'] as $link)
 
-							<li class="{{active([$link['active']], 'uk-active font-semibold', '')}}" role="presentation"> 
+							<li class="mt-0 {{active([$link['active']], 'uk-active font-semibold', '')}}" role="presentation"> 
 								<a href="{{route($link['route'])}}" class="flex items-center justify-between">
 									<span class="ps-3 nav-link-title"> {{$link['label']}} </span>
 								</a>

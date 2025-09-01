@@ -74,21 +74,20 @@
 				]
 			],
 
-			// "Master" => [
-			// 	'label'		=> 'Master',
-			// 	'active'	=> 'master.*',
-			// 	'route'		=> 'master.dashboard',
-			// 	'icon'		=> 'gauge',
-			// 	'links'		=> [
-			// 		[
-			// 			'label'		=> 'Dumps',
-			// 			'active'	=> 'master.enterprise_dumps.*',
-			// 			'route'		=> 'master.enterprise_dumps.index',
-			// 			'icon'		=> 'archive',
-			// 			'hr'		=> 'true'
-			// 		],
-			// 	]
-			// ],
+			"RAMP" => [
+				'label'		=> 'RAMP',
+				'active'	=> 'ramp.*',
+				'route'		=> 'ramp.apply.index',
+				'icon'		=> 'gauge',
+				'links'		=> [
+					[
+						'label'		=> 'Apply',
+						'active'	=> 'ramp.apply.*',
+						'route'		=> 'ramp.apply.index',
+						'icon'		=> 'archive',
+					],
+				]
+			],
 
 			// "Profile" => [
 			// 	'label'		=> 'Profile',

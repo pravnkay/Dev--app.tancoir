@@ -81,21 +81,21 @@
 				]
 			],
 
-			// "Profile" => [
-			// 	'label'		=> 'Profile',
-			// 	'active'	=> 'profile.*',
-			// 	'route'		=> 'profile.dashboard',
-			// 	'icon'		=> 'gauge',
-			// 	'links'		=> [
-			// 		[
-			// 			'label'		=> 'MSMEs',
-			// 			'active'	=> 'profile.msmes.*',
-			// 			'route'		=> 'profile.msmes.index',
-			// 			'icon'		=> 'building-2',
-			// 			'hr'		=> 'true'
-			// 		],					
-			// 	]
-			// ],
+			"RAMP Mgmt." => [
+				'label'		=> 'RAMP Mgmt.',
+				'active'	=> 'rampmanagement.*',
+				'route'		=> 'rampmanagement.dashboard.index',
+				'icon'		=> 'gauge',
+				'links'		=> [
+					[
+						'label'		=> 'Verticals',
+						'active'	=> 'rampmanagement.verticals.*',
+						'route'		=> 'rampmanagement.verticals.index',
+						'icon'		=> 'building-2',
+						'hr'		=> 'true'
+					],					
+				]
+			],
 
 			// "Settings"	=> [
 			// 	'label'		=> 'Settings',
