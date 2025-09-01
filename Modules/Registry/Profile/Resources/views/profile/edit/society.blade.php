@@ -1,4 +1,3 @@
-
 @extends('core::layouts.registry.index')
 
 @section('main-content')

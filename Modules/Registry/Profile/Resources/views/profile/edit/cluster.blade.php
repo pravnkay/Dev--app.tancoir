@@ -2,7 +2,6 @@
 
 @section('main-content')
 
-
 <x-core::form put action="{{route('app.profile.update', ['profile_id' => $profile['id'], 'profile_type' => $profile_type])}}" :model="$profile">
 	
 <div>

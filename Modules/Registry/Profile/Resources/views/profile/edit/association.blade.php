@@ -2,14 +2,15 @@
 
 @section('main-content')
 
-
 <x-core::form put action="{{route('app.profile.update', ['profile_id' => $profile['id'], 'profile_type' => $profile_type])}}" :model="$profile">
 	
 <div>
 
 	<div class="space-y-4 mb-4">
 		<div class="flex justify-between items-center">
-			{{ Breadcrumbs::render('profile.edit', $profile_type, $profile->id)}}
+			<div class="self-center">
+				{{ Breadcrumbs::render('profile.edit', $profile_type, $profile->id)}}
+			</div>
 			<div>
 				<x-core::anchor back /> 
 				<x-core::button primary submit icon="save">Update Association Profile</x-core::button>
