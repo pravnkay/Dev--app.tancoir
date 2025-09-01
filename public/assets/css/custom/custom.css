@@ -125,7 +125,8 @@
 	}
 
 	.uk-badge-success {
-		--uk-badge-border: 1px solid hsl(125deg 85% 85%);
-		--uk-badge-bg: hsl(125deg 85% 85%);
+		--uk-badge-border: 1px solid hsl(93.91deg 69.7% 74.12%);
+		--uk-badge-bg: #f6ffed;
+		--uk-badge-color: hsl(102.21deg 84.8% 33.53%);
 	}
 }
