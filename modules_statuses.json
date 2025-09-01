@@ -3,5 +3,6 @@
     "Auth": true,
     "Dashboard": true,
     "Registry": true,
-    "Profile": true
+    "Profile": true,
+    "Moderation": true
 }

@@ -8,7 +8,7 @@
 		<div class="space-y-1">
 
 			<p class="uk-text-lead mt-2">
-				{{__('Admin Backend')}}
+				{{__('Moderation')}}
 			</p>
 			<h3 class="uk-h3">
 				{{__('Dashboard')}}

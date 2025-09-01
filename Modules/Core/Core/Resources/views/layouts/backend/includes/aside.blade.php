@@ -1,4 +1,4 @@
-<aside class="hidden xl:flex w-52 overflow-y-auto border-r border-border px-0 py-4">
+<aside class="hidden xl:flex flex-col w-52 overflow-y-auto border-r border-border px-0 py-4">
 
 	@foreach ($routes as $route)
 		<div class="grow {{active([$route['active']], 'flex', 'hidden')}}">

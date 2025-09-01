@@ -109,4 +109,18 @@
 		height: 10px;
 	}
 
+	textarea.uk-textarea {
+		vertical-align: var(--uk-form-input-select-vertical-align, middle);
+   		display: var(--uk-form-input-select-display, inline-block);
+		border-radius: var(--uk-form-input-radius);
+		box-shadow: var(--uk-form-input-shadow);
+		padding: var(--uk-form-input-padding);
+		font-size: var(--uk-form-input-font-size);
+		line-height: var(--uk-form-input-leading);
+		border-width: var(--uk-form-input-border-width, 1px);
+		border-style: var(--uk-form-input-border-style, solid);
+		border-color: var(--uk-form-input-border-color, hsl(var(--input) / var(--input-alpha, 1)));
+		background-color: var(--uk-form-input-bg, transparent);
+		color: var(--uk-form-input-color, hsl(var(--foreground)));
+	}
 }

@@ -29,18 +29,12 @@ enum ProfileStatusEnum: string
         };
     }
 
-    public function canTransitionTo(self $status): bool
+	public static function asArray(): array
     {
-        return match ($this) {
-            self::DRAFT 	=> in_array($status, [self::SUBMITTED]),
-            self::SUBMITTED => in_array($status, [self::APPROVED, self::RETURNED]),
-            self::APPROVED 	=> in_array($status, [self::RETURNED]),
-            self::RETURNED 	=> in_array($status, [self::SUBMITTED]),
-        };
-    }
-
-    public static function adminVisibleStatuses(): array
-    {
-        return [self::SUBMITTED, self::APPROVED, self::RETURNED];
+        $array = [];
+        foreach (self::cases() as $case) {
+            $array[$case->value] = $case->label();
+        }
+        return $array;
     }
 }

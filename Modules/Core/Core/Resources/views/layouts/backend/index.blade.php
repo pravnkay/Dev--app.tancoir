@@ -55,31 +55,31 @@
 	@php
 		$routes = [
 
-			// "Dashboard" => [
-			// 	'label'		=> 'Dashboard',
-			// 	'active'	=> 'core.*',
-			// 	'route'		=> 'core.dashboard',
-			// 	'icon'		=> 'gauge',
-			// 	'links'		=> [
+			"Dashboard" => [
+				'label'		=> 'Dashboard',
+				'active'	=> 'backend.dashboard',
+				'route'		=> 'backend.dashboard',
+				'icon'		=> 'gauge',
+				'links'		=> [
 					
-			// 	]
-			// ],
+				]
+			],
 
-			// "Master" => [
-			// 	'label'		=> 'Master',
-			// 	'active'	=> 'master.*',
-			// 	'route'		=> 'master.dashboard',
-			// 	'icon'		=> 'gauge',
-			// 	'links'		=> [
-			// 		[
-			// 			'label'		=> 'Dumps',
-			// 			'active'	=> 'master.enterprise_dumps.*',
-			// 			'route'		=> 'master.enterprise_dumps.index',
-			// 			'icon'		=> 'archive',
-			// 			'hr'		=> 'true'
-			// 		],
-			// 	]
-			// ],
+			"Moderation" => [
+				'label'		=> 'Moderation',
+				'active'	=> 'backend.moderation.*',
+				'route'		=> 'backend.moderation.index',
+				'icon'		=> 'signature',
+				'links'		=> [
+					[
+						'label'		=> 'Profiles',
+						'active'	=> 'backend.moderation.profile.*',
+						'route'		=> 'backend.moderation.profile.index',
+						'icon'		=> 'file-text',
+						'hr'		=> 'true'
+					],
+				]
+			],
 
 			// "Profile" => [
 			// 	'label'		=> 'Profile',
@@ -133,25 +133,25 @@
 	<div class="border-border fixed inset-x-0 top-0 z-10 border-b">
 		<div class="bg-background text-foreground">
 			
-			@include('core::layouts.main.includes.header')
-			@include('core::layouts.main.includes.topbar')
+			@include('core::layouts.backend.includes.header')
+			@include('core::layouts.backend.includes.topbar')
 
 		</div>
 	</div>
 
 	<main class="flex flex-row absolute inset-x-0 top-14 xl:top-28 bottom-0 ">
 
-		@include('core::layouts.main.includes.aside')				
-	
-		<section class="flex-1 overflow-y-auto p-4">
-
-			@yield('main-content')
+		@include('core::layouts.backend.includes.aside')
 			
-		</section>
+			<section class="flex-1 overflow-y-auto p-4">
+				<div class="uk-container uk-container-lg">
+					@yield('main-content')
+				</div>	
+			</section>
 
 	</main>
 
-	@include('core::layouts.main.includes.offcanvas')	
+	@include('core::layouts.backend.includes.offcanvas')	
 
 	<div id="delete-confirm-modal" uk-modal>
 		<div class="uk-modal-dialog uk-modal-body">

@@ -1,44 +1,50 @@
-@extends('core::layouts.registry.index')
+@extends('core::layouts.backend.index')
 
 @section('main-content')
 
-<x-core::form horizontal action="javascript:;" :model="$profile">
-	
 <div>
+	
+	<x-core::form action="{{route('backend.moderation.profile.update', ['profile_type' => $profile_type, 'profile_id' => $profile['id']])}}" :model="$profile">
 
 	<div class="space-y-4 mb-4">
 		<div class="flex justify-between items-center">
 			{{ Breadcrumbs::render('profile.show', $profile_type, $profile->id)}}
 			<div> 
 				<x-core::anchor back />
-				<x-core::anchor primary href="{{route('app.profile.edit', ['profile_id' => $profile['id'], 'profile_type' => $profile_type])}}" icon="pen"> Edit Profile </x-core::anchor>
 			</div>
 		</div>
 		<div class="border-border border-t"></div>
 	</div>
 
-	<div class="space-y-4 mb-4">
+	<div class="row my-6">
+		<div class="col w-full">
 
-		<div class="uk-alert" data-uk-alert>
-			<div class="uk-alert-title">Notice</div>
-			@if ($profile->status->value === 'draft')
-				<p>Your profile will be <strong>auto-submitted for approval</strong> once all required information is updated. <br> Use the <code class="uk-codespan">Edit Profile</code> button above to update the details.</p>
-			@elseif ($profile->status->value === 'submitted')
-				<p>Your profile has been submitted for review. <br> Once approved, you can activate your profile.</p>
-			@elseif ($profile->status->value === 'returned')
-				<p>You profile has been returned with comments. <br> Please, correct them by editing your profile.</p><br><br>
-				<p class="text-destructive">{{$profile->review_remarks}}</p>
-			@else
-				<p>You profile is approved. You can now, activate this profile from main table.</p>
-			@endif
-		</div>
+			<div class="uk-form-element mt-4">
+				<label class="uk-form-label uk-form-label-custom" for="review_remarks">
+					Comment
+				</label>
+				<div class="uk-form-controls">
+					<textarea id="review_remarks" name="review_remarks" class="uk-textarea" rows="5" cols="100"></textarea>
+				</div>
+			</div>
+			
+			<div class="row space-y-4 md:space-0">
+				<div class="col w-full md:w-1/2">
+					<x-core::select name="status" :enum="$statuses" :100> </x-core::select>
+				</div>
+				<div class="col w-full md:w-1/2 content-end">
+					<x-core::button submit primary>Update Profile</x-core::button>
+				</div>
+			</div>
 
-		<div class="flex justify-between items-center">
-			<p class="uk-paragraph">Your profile status: <code class="uk-codespan">{{$profile->status->label()}}</code></p>
 		</div>
-		<div class="border-border border-t"></div>
 	</div>
 
+	<div class="border-border border-t my-4"></div>
+
+	</x-core::form>
+
+	<x-core::form horizontal action="javascript:;" :model="$profile" >
 	<div class="row my-6">
 
 		<div class="col w-full">
@@ -73,11 +79,10 @@
 		</div>	
 		
 	</div>
+	</x-core::form>
+
 
 </div>
-	
-</x-core::form>
-
 
 @endsection
 
