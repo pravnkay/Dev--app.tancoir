@@ -76,14 +76,14 @@
 
 			"RAMP" => [
 				'label'		=> 'RAMP',
-				'active'	=> 'ramp.*',
-				'route'		=> 'ramp.apply.index',
+				'active'	=> 'app.ramp.*',
+				'route'		=> 'app.ramp.apply.index',
 				'icon'		=> 'gauge',
 				'links'		=> [
 					[
 						'label'		=> 'Apply',
-						'active'	=> 'ramp.apply.*',
-						'route'		=> 'ramp.apply.index',
+						'active'	=> 'app.ramp.apply.*',
+						'route'		=> 'app.ramp.apply.index',
 						'icon'		=> 'archive',
 					],
 				]

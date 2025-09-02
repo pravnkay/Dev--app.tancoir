@@ -5,6 +5,6 @@
     "Registry": true,
     "Profile": true,
     "Moderation": true,
-    "Ramp": true,
-    "RAMPManagement": true
+    "RAMPManagement": true,
+    "RAMP": true
 }

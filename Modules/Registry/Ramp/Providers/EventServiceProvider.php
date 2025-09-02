@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Registry\Ramp\Providers;
+namespace Modules\Registry\RAMP\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 

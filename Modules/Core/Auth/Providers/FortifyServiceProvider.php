@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use Modules\Core\Auth\Entities\User;
 use Modules\Core\Auth\Responses\LoginResponse;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -31,13 +32,23 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+		if (app()->environment('local')) {
+			Fortify::authenticateUsing(function (Request $request) {
+				$user = User::where('email', $request->email)->first();
+				return  $user ? $user : null;				
+			});
+		}
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
 
 		Fortify::loginView(function () {
-			return view('auth::fortify.login');
+			$users = User::all();
+			return view('auth::fortify.login')->with([
+				'users' => $users
+			]);
 		});
 
 		Fortify::registerView(function () {

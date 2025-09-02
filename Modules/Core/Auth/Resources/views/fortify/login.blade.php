@@ -17,22 +17,28 @@
 		</p>
 	</div>
 
-	<div class="flex space-x-2">
-
-	<form action="{{route('login')}}" method="post">
-		@csrf
-		<input name="email" value="admin@email.com" hidden>
-		<input name="password" value="Open8d@16" hidden>
-		<button class="uk-btn uk-btn-default" submit>Login as Admin</button>
-	</form>
-
-	<form action="{{route('login')}}" method="post">
-		@csrf
-		<input name="email" value="userone@email.com" hidden>
-		<input name="password" value="Open8d@16" hidden>
-		<button class="uk-btn uk-btn-default" submit>Login as User</button>
-	</form>
-
+	<div class="row">
+		<div class="col w-full">
+			<form action="{{route('login')}}" method="post">
+				@csrf
+				<div class="row">
+					<div class="col w-full md:w-1/2 mb-4 md:mb-0">
+						<uk-select id="user_picker" cls-custom="button: uk-input-fake justify-between w-full; dropdown: w-full" icon>
+							<select hidden>
+								@foreach ($users as $user)
+									<option data-password="{{$user['password']}}" value="{{$user['email']}}">{{$user['email']}}</option>
+								@endforeach
+							</select>
+						</uk-select>
+					</div>
+					<div class="col w-full md:w-1/2 mb-4 md:mb-0">
+						<input id="user_email" name="email" value="" autocomplete="false" hidden>
+						<input name="password" value="userpass" hidden>
+						<button class="uk-btn uk-btn-default" submit>Login as User</button>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
 
 	<x-core::form post action="{{route('login')}}" class="mt-6 space-y-6">
@@ -49,3 +55,21 @@
 
 
 @endsection
+
+@push('page-scripts')
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const user_picker = document.getElementById('user_picker')
+		const user_email = document.getElementById('user_email')
+		
+		// Listen for the Franken UI specific event
+		user_picker.addEventListener('uk-select:input', function(event) {
+			// Update the email input field
+			user_email.value = event.detail.value;
+			console.log('Email updated to:', event.detail.value);
+		})
+	})
+</script>
+
+@endpush

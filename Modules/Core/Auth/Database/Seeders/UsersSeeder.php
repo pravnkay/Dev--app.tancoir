@@ -29,14 +29,6 @@ class UsersSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('Open8d@16'),
             'remember_token' => \Str::random(10),
-        ])->assignRole(['admin']);	
-
-        User::create([
-            'name' => 'User 01',
-            'email' => 'userone@email.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('Open8d@16'),
-            'remember_token' => \Str::random(10),
-        ])->assignRole(['user']);			
+        ])->assignRole(['admin']);				
     }
 }

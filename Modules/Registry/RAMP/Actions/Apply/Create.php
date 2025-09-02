@@ -5,15 +5,14 @@ namespace Modules\Registry\RAMP\Actions\Apply;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Backend\RAMPManagement\Entities\Event;
 
-class Index
+class Create
 {
 	use AsAction;
 
-	public function handle()
+	public function handle(Event $event)
     {
-		$events = Event::all();
-		return view('ramp::apply.index')->with([
-			'events' => $events
+		return view('ramp::apply.create')->with([
+			'event' => $event
 		]);
     }
 }

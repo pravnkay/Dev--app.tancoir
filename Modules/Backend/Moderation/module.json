@@ -3,7 +3,7 @@
     "alias": "moderation",
     "description": "",
     "keywords": [],
-    "priority": 0,
+    "priority": 6,
     "providers": [
         "Modules\\Backend\\Moderation\\Providers\\ModerationServiceProvider"
     ],

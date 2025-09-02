@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Registry\Ramp\Providers;
+namespace Modules\Registry\RAMP\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -8,11 +8,11 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class RampServiceProvider extends ServiceProvider
+class RAMPServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'Ramp';
+    protected string $name = 'RAMP';
 
     protected string $nameLower = 'ramp';
 

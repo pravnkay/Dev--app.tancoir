@@ -1,11 +1,11 @@
 {
-    "name": "Ramp",
+    "name": "RAMP",
     "alias": "ramp",
     "description": "",
     "keywords": [],
-    "priority": 0,
+    "priority": 8,
     "providers": [
-        "Modules\\Registry\\Ramp\\Providers\\RampServiceProvider"
+        "Modules\\Registry\\RAMP\\Providers\\RAMPServiceProvider"
     ],
     "files": []
 }

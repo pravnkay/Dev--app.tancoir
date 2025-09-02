@@ -17,14 +17,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Registry\\Ramp\\": "/",
-            "Modules\\Registry\\Ramp\\Database\\Factories\\": "Database/Factories/",
-            "Modules\\Registry\\Ramp\\Database\\Seeders\\": "Database/Seeders/"
+            "Modules\\Registry\\RAMP\\": "/",
+            "Modules\\Registry\\RAMP\\Database\\Factories\\": "Database/Factories/",
+            "Modules\\Registry\\RAMP\\Database\\Seeders\\": "Database/Seeders/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Modules\\Registry\\Ramp\\Tests\\": "Tests/"
+            "Modules\\Registry\\RAMP\\Tests\\": "Tests/"
         }
     }
 }

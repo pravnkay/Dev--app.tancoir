@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Registry\Ramp\Actions\Apply\Index;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,16 +14,22 @@ use Modules\Registry\Ramp\Actions\Apply\Index;
 */
 
 Route::middleware(['auth', 'verified', 'role:user'])
-->prefix('ramp')
-->name('ramp.')
+->prefix('app')
+->name('app.')
 ->group(function () {
 
-	Route::middleware(['auth', 'verified', 'role:user'])
-	->prefix('apply')
-	->name('apply.')
+	Route::prefix('ramp')
+	->name('ramp.')
 	->group(function () {
 
-		Route::get('/',				Index::class)   ->name('index');
+		Route::prefix('apply')
+		->name('apply.')
+		->group(function () {
+
+			Route::get('/',				\Modules\Registry\RAMP\Actions\Apply\Index::class)						->name('index');
+			Route::get('/{event}',		\Modules\Registry\RAMP\Actions\Apply\Create::class)						->name('create');
+
+		});
 
 	});
 
