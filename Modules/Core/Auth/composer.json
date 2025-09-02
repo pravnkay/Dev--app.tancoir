@@ -1,0 +1,30 @@
+{
+    "name": "praveen/auth",
+    "description": "",
+    "authors": [
+        {
+            "name": "Praveen Kalaiarasu",
+            "email": "praveen.kalaiarasu@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Core\\Auth\\": "/",
+            "Modules\\Core\\Auth\\Database\\Factories\\": "Database/Factories/",
+            "Modules\\Core\\Auth\\Database\\Seeders\\": "Database/Seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Core\\Auth\\Tests\\": "Tests/"
+        }
+    }
+}

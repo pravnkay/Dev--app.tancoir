@@ -1,0 +1,11 @@
+{
+    "name": "App",
+    "alias": "app",
+    "description": "",
+    "keywords": [],
+    "priority": 4,
+    "providers": [
+        "Modules\\App\\App\\Providers\\RegistryServiceProvider"
+    ],
+    "files": []
+}

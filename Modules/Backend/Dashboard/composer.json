@@ -1,0 +1,30 @@
+{
+    "name": "praveen/dashboard",
+    "description": "",
+    "authors": [
+        {
+            "name": "Praveen Kalaiarasu",
+            "email": "praveen.kalaiarasu@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Backend\\Dashboard\\": "/",
+            "Modules\\Backend\\Dashboard\\Database\\Factories\\": "Database/Factories/",
+            "Modules\\Backend\\Dashboard\\Database\\Seeders\\": "Database/Seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Backend\\Dashboard\\Tests\\": "tests/"
+        }
+    }
+}

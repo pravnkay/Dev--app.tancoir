@@ -1,10 +1,6 @@
 {
     "Core": true,
     "Auth": true,
-    "Dashboard": true,
-    "Registry": true,
-    "Profile": true,
-    "Moderation": true,
-    "RAMPManagement": true,
-    "RAMP": true
+    "App": true,
+    "Dashboard": true
 }
