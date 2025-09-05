@@ -4,6 +4,7 @@ namespace Modules\App\Profile\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Core\Auth\Entities\User;
 use Modules\Core\Core\Enums\ProfileStatusEnum;
@@ -24,6 +25,16 @@ class Profile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+	public function participants() :HasMany
+    {
+        return $this->hasMany(Participant::class);
+    }
+
+	public function scopeApproved($query)
+	{
+		return $query->where('status', ProfileStatusEnum::APPROVED->value);
+	}
     
     public function association_profile() :HasOne
     {

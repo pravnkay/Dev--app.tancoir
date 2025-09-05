@@ -19,8 +19,7 @@ Route::middleware(['auth', 'verified', 'role:user'])
 ->group(function () {
 
 	
-	Route::middleware(['auth', 'verified', 'role:user'])
-	->prefix('profile')
+	Route::prefix('profile')
 	->name('profile.')
 	->group(function () {
 
@@ -34,5 +33,21 @@ Route::middleware(['auth', 'verified', 'role:user'])
 		Route::delete('/{profile}',										\Modules\App\Profile\Actions\Profiles\Destroy::class)		->name('destroy');
 		
 	});
+
+	Route::prefix('participant')
+	->name('participant.')
+	->group(function () {
+
+		Route::get('/',													\Modules\App\Profile\Actions\Participants\Index::class)			->name('index');
+		Route::get('/create',											\Modules\App\Profile\Actions\Participants\Create::class)		->name('create');
+		Route::post('/',												\Modules\App\Profile\Actions\Participants\Store::class)			->name('store');
+		Route::get('/{participant}',									\Modules\App\Profile\Actions\Participants\Show::class)			->name('show');
+		Route::get('/{participant}/edit',								\Modules\App\Profile\Actions\Participants\Edit::class)			->name('edit');
+		Route::put('/{participant}/edit',								\Modules\App\Profile\Actions\Participants\Update::class)		->name('update');
+		Route::delete('/{participant}',									\Modules\App\Profile\Actions\Participants\Destroy::class)		->name('destroy');
+			
+	});
+
+	
 
 });

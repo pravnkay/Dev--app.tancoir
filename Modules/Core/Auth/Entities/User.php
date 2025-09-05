@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Modules\App\Profile\Entities\Participant;
 use Modules\App\Profile\Entities\Profile;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -54,6 +55,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Profile::class);
     }
+
+	public function participants() :HasMany
+    {
+        return $this->hasMany(Participant::class);
+    }
     
     public function activeProfiles() :HasMany
     {
@@ -69,6 +75,11 @@ class User extends Authenticatable implements MustVerifyEmail
 						'enterprise_profile',
 						'society_profile',
 				])->get();
+	}
+
+	public function allParticipants()
+	{
+		return $this->participants()->get();
 	}
 
 }

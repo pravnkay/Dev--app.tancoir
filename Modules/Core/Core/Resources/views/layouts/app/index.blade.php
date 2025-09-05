@@ -75,20 +75,30 @@
 				]
 			],
 
-			// "RAMP" => [
-			// 	'label'		=> 'RAMP',
-			// 	'active'	=> 'app.ramp.*',
-			// 	'route'		=> 'app.ramp.apply.index',
-			// 	'icon'		=> 'gauge',
-			// 	'links'		=> [
-			// 		[
-			// 			'label'		=> 'Apply',
-			// 			'active'	=> 'app.ramp.apply.*',
-			// 			'route'		=> 'app.ramp.apply.index',
-			// 			'icon'		=> 'archive',
-			// 		],
-			// 	]
-			// ],
+			"Participant" => [
+				'label'		=> 'Participant',
+				'active'	=> 'app.participant.*',
+				'route'		=> 'app.participant.index',
+				'icon'		=> 'user-round-pen',
+				'links'		=> [
+					
+				]
+			],
+
+			"RAMP" => [
+				'label'		=> 'RAMP',
+				'active'	=> 'app.ramp.*',
+				'route'		=> 'app.ramp.apply.index',
+				'icon'		=> 'gauge',
+				'links'		=> [
+					[
+						'label'		=> 'Apply',
+						'active'	=> 'app.ramp.apply.*',
+						'route'		=> 'app.ramp.apply.index',
+						'icon'		=> 'archive',
+					],
+				]
+			],
 
 		];
 	@endphp

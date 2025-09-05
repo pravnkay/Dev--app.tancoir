@@ -1,0 +1,11 @@
+{
+    "name": "RAMP",
+    "alias": "ramp",
+    "description": "",
+    "keywords": [],
+    "priority": 8,
+    "providers": [
+        "Modules\\App\\RAMP\\Providers\\RAMPServiceProvider"
+    ],
+    "files": []
+}

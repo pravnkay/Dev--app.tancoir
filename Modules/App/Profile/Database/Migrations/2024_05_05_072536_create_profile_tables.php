@@ -83,10 +83,29 @@ return new class extends Migration
 			$table->string('contact_whatsapp')->nullable();
 			$table->userTimeStamps();
 		});
+
+		Schema::create('profile_participants', function (Blueprint $table) {
+			$table->id();
+			$table->foreignIdFor(User::class)->constrained()->casacadeOnDelete();
+			$table->foreignIdFor(Profile::class)->constrained()->casacadeOnDelete();
+			$table->string('name')->nullable();
+			$table->integer('age')->nullable();
+			$table->string('designation')->nullable();
+			$table->string('gender')->nullable();
+			$table->string('religion')->nullable();
+			$table->string('community')->nullable();
+			$table->string('whatsapp')->nullable();
+			$table->userTimeStamps();
+		});
     }
 
     public function down(): void
     {
         Schema::dropIfExists('profile_profiles');
+        Schema::dropIfExists('profile_enterprise_profiles');
+        Schema::dropIfExists('profile_cluster_profiles');
+        Schema::dropIfExists('profile_society_profiles');
+        Schema::dropIfExists('profile_association_profiles');
+        Schema::dropIfExists('profile_participants');
     }
 };

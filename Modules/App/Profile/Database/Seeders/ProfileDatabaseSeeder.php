@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\Hash;
 use Modules\App\Profile\Entities\AssociationProfile;
 use Modules\App\Profile\Entities\ClusterProfile;
 use Modules\App\Profile\Entities\EnterpriseProfile;
+use Modules\App\Profile\Entities\Participant;
 use Modules\App\Profile\Entities\Profile;
 use Modules\App\Profile\Entities\SocietyProfile;
 use Modules\Core\Auth\Entities\User;
 use Modules\Core\Core\Enums\DistrictEnum;
+use Modules\Core\Core\Enums\ParticipantCommunityEnum;
+use Modules\Core\Core\Enums\ParticipantDesignationEnum;
+use Modules\Core\Core\Enums\ParticipantGenderEnum;
+use Modules\Core\Core\Enums\ParticipantReligionEnum;
 use Modules\Core\Core\Enums\ProfileStatusEnum;
 use Modules\Core\Core\Enums\ProfileTypeEnum;
 
@@ -86,6 +91,8 @@ class ProfileDatabaseSeeder extends Seeder
 
                 // Create corresponding profile subtype
                 $this->createProfileSubtype($profile, $profileType, $districts);
+
+                $this->createProfileParticipant($profile, $user->id);
                 
                 $profileCounter++;
             }
@@ -140,5 +147,20 @@ class ProfileDatabaseSeeder extends Seeder
                 break;
         }
     }
+
+	private function createProfileParticipant(Profile $profile, $user_id): void
+	{
+		Participant::createQuietly([
+			'user_id' 		=> $user_id,
+			'profile_id' 	=> $profile->id,
+			'name'			=> 'Participant of '.$profile->name,
+			'age'			=> rand(18, 60),
+			'designation'	=> collect(ParticipantDesignationEnum::asArray())->keys()->random(),
+			'gender'		=> collect(ParticipantGenderEnum::asArray())->keys()->random(),
+			'religion'		=> collect(ParticipantReligionEnum::asArray())->keys()->random(),
+			'community'		=> collect(ParticipantCommunityEnum::asArray())->keys()->random(),
+			'whatsapp'		=> rand(9900000000, 9999999999),
+		]);
+	}
 
 }

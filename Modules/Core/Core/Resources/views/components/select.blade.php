@@ -71,6 +71,8 @@
 			}}
 			cls-custom="button: uk-input-fake justify-between w-full; dropdown: w-full"
 			icon
+			@if($readonly) disabled @endif
+			
 		>
 			<select id="{{$input_id}}" hidden>
 				@foreach ($options as $key => $value)

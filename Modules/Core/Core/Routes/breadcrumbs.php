@@ -2,6 +2,7 @@
 
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
+use Modules\App\Profile\Entities\Participant;
 use Modules\App\Profile\Entities\Profile;
 use Modules\Backend\RAMPManagement\Entities\Event;
 use Modules\Backend\RAMPManagement\Entities\Programme;
@@ -35,6 +36,40 @@ Breadcrumbs::for('app.profile.show', function (BreadcrumbTrail $trail, Profile $
     $trail->push($profile['id'], route('app.profile.show', [
 		'profile' 	=> $profile['id']
 	]));
+});
+
+Breadcrumbs::for('app.participant', function (BreadcrumbTrail $trail) {
+	$trail->parent('app');
+	$trail->push('Participants', route('app.participant.index'));
+});
+
+Breadcrumbs::for('app.participant.create', function (BreadcrumbTrail $trail) {
+	$trail->parent('app.participant');
+    $trail->push('Create', route('app.participant.create'));
+});
+
+Breadcrumbs::for('app.participant.edit', function (BreadcrumbTrail $trail, Participant $participant) {
+	$trail->parent('app.participant');
+	$trail->push('Edit Participant');
+    $trail->push($participant['id'], route('app.participant.edit', [
+		'participant' 	=> $participant['id']
+	]));
+});
+
+
+Breadcrumbs::for('app.ramp', function (BreadcrumbTrail $trail) {
+	$trail->parent('app');
+	$trail->push('RAMP');
+});
+
+Breadcrumbs::for('app.ramp.apply', function (BreadcrumbTrail $trail) {
+	$trail->parent('app.ramp');
+	$trail->push('Apply', route('app.ramp.apply.index'));
+});
+
+Breadcrumbs::for('app.ramp.apply.create', function (BreadcrumbTrail $trail, Event $event) {
+	$trail->parent('app.ramp.apply');
+    $trail->push($event['name'], route('app.ramp.apply.index', ['event' => $event['id']]));
 });
 
 Breadcrumbs::for('backend', function (BreadcrumbTrail $trail) {
@@ -109,23 +144,3 @@ Breadcrumbs::for('backend.rampmanagement.events.edit', function (BreadcrumbTrail
 	$trail->push('Edit');
     $trail->push($event['id'], route('backend.rampmanagement.events.edit', ['event' => $event['id']]));
 });
-
-
-
-// Breadcrumbs::for('ramp', function (BreadcrumbTrail $trail) {
-// 	$trail->parent('home');
-// 	$trail->push('RAMP');
-// });
-
-// Breadcrumbs::for('ramp.apply.index', function (BreadcrumbTrail $trail) {
-// 	$trail->parent('ramp');
-// 	$trail->push('Apply', route('app.ramp.apply.index'));
-// });
-
-// Breadcrumbs::for('ramp.apply.create', function (BreadcrumbTrail $trail, Event $event) {
-// 	$trail->parent('ramp.apply.index');
-//     $trail->push($event['name'], route('app.ramp.apply.index', ['event' => $event['id']]));
-// });
-
-
-

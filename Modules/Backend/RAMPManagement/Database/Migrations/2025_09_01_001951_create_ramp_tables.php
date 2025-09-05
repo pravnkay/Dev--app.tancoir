@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Modules\Backend\RAMPManagement\Entities\Event;
 use Modules\Backend\RAMPManagement\Entities\Programme;
 use Modules\Backend\RAMPManagement\Entities\Vertical;
 use Modules\Core\Core\Enums\ProgrammeSchemeEnum;
@@ -45,6 +45,15 @@ return new class extends Migration
 			$table->decimal('participant_cost', 12, 2)->default(0.00);
             $table->userTimeStamps();
         });
+
+		Schema::create('ramp_event_forms', function (Blueprint $table) {
+			$table->id();
+			$table->foreignIdFor(Event::class)->nullable()->constrained()->cascadeOnDelete();
+			$table->boolean('collect_accomodation_requirement')->default(0);
+			$table->boolean('collect_reach_by')->default(0);
+			$table->boolean('collect_food_choice')->default(0);
+			$table->userTimeStamps();
+		});
     }
 
     /**

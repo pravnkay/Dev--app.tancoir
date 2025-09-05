@@ -4,8 +4,11 @@ namespace Modules\Backend\RAMPManagement\Entities;
 
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 use Modules\Backend\RAMPManagement\Observers\EventObserver;
+
 use Modules\Core\Core\Traits\Userstamps;
 
 #[ObservedBy([EventObserver::class])]
@@ -24,8 +27,13 @@ class Event extends Model
         'participant_cost'	=> 'decimal:2',
     ];
 
-	public function programme()
+	public function programme() :BelongsTo
 	{
 		return $this->belongsTo(Programme::class);
+	}
+
+	public function event_form() :HasOne
+	{
+		return $this->hasOne(EventForm::class);
 	}
 }
