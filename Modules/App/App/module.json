@@ -5,7 +5,7 @@
     "keywords": [],
     "priority": 4,
     "providers": [
-        "Modules\\App\\App\\Providers\\RegistryServiceProvider"
+        "Modules\\App\\App\\Providers\\AppServiceProvider"
     ],
     "files": []
 }

@@ -65,50 +65,50 @@
 				]
 			],
 
-			// "Moderation" => [
-			// 	'label'		=> 'Moderation',
-			// 	'active'	=> 'backend.moderation.*',
-			// 	'route'		=> 'backend.moderation.index',
-			// 	'icon'		=> 'signature',
-			// 	'links'		=> [
-			// 		[
-			// 			'label'		=> 'Profiles',
-			// 			'active'	=> 'backend.moderation.profile.*',
-			// 			'route'		=> 'backend.moderation.profile.index',
-			// 			'icon'		=> 'file-text',
-			// 			'hr'		=> 'true'
-			// 		],
-			// 	]
-			// ],
+			"Moderation" => [
+				'label'		=> 'Moderation',
+				'active'	=> 'backend.moderation.*',
+				'route'		=> 'backend.moderation.index',
+				'icon'		=> 'signature',
+				'links'		=> [
+					[
+						'label'		=> 'Profiles',
+						'active'	=> 'backend.moderation.profile.*',
+						'route'		=> 'backend.moderation.profile.index',
+						'icon'		=> 'file-text',
+						'hr'		=> 'true'
+					],
+				]
+			],
 
-			// "RAMP Mgmt." => [
-			// 	'label'		=> 'RAMP Mgmt.',
-			// 	'active'	=> 'backend.rampmanagement.*',
-			// 	'route'		=> 'backend.rampmanagement.dashboard.index',
-			// 	'icon'		=> 'command',
-			// 	'links'		=> [
-			// 		[
-			// 			'label'		=> 'Verticals',
-			// 			'active'	=> 'backend.rampmanagement.verticals.*',
-			// 			'route'		=> 'backend.rampmanagement.verticals.index',
-			// 			'icon'		=> 'kanban',
-			// 		],					
-			// 		[
-			// 			'label'		=> 'Programmes',
-			// 			'active'	=> 'backend.rampmanagement.programmes.*',
-			// 			'route'		=> 'backend.rampmanagement.programmes.index',
-			// 			'icon'		=> 'scroll-text',
-			// 			'hr'		=> 'true'
-			// 		],
-			// 		[
-			// 			'label'		=> 'Events',
-			// 			'active'	=> 'backend.rampmanagement.events.*',
-			// 			'route'		=> 'backend.rampmanagement.events.index',
-			// 			'icon'		=> 'fan',
-			// 			'hr'		=> 'true'
-			// 		],			
-			// 	]
-			// ],
+			"RAMP Mgmt." => [
+				'label'		=> 'RAMP Mgmt.',
+				'active'	=> 'backend.rampmanagement.*',
+				'route'		=> 'backend.rampmanagement.dashboard.index',
+				'icon'		=> 'command',
+				'links'		=> [
+					[
+						'label'		=> 'Verticals',
+						'active'	=> 'backend.rampmanagement.verticals.*',
+						'route'		=> 'backend.rampmanagement.verticals.index',
+						'icon'		=> 'kanban',
+					],					
+					[
+						'label'		=> 'Programmes',
+						'active'	=> 'backend.rampmanagement.programmes.*',
+						'route'		=> 'backend.rampmanagement.programmes.index',
+						'icon'		=> 'scroll-text',
+						'hr'		=> 'true'
+					],
+					[
+						'label'		=> 'Events',
+						'active'	=> 'backend.rampmanagement.events.*',
+						'route'		=> 'backend.rampmanagement.events.index',
+						'icon'		=> 'fan',
+						'hr'		=> 'true'
+					],			
+				]
+			],
 
 		];
 	@endphp

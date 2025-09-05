@@ -2,40 +2,115 @@
 
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
+use Modules\App\Profile\Entities\Profile;
+use Modules\Backend\RAMPManagement\Entities\Event;
+use Modules\Backend\RAMPManagement\Entities\Programme;
+use Modules\Backend\RAMPManagement\Entities\Vertical;
 
-Breadcrumbs::for('app.index', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('app', function (BreadcrumbTrail $trail) {
     $trail->push('Home', route('app.index'));
 });
 
-// Breadcrumbs::for('profile', function (BreadcrumbTrail $trail) {
-// 	$trail->parent('home');
-//     $trail->push('Profile', route('app.profile.index'));
-// });
+Breadcrumbs::for('app.profile', function (BreadcrumbTrail $trail) {
+	$trail->parent('app');
+    $trail->push('Profile', route('app.profile.index'));
+});
 
-// Breadcrumbs::for('profile.create', function (BreadcrumbTrail $trail) {
-// 	$trail->parent('profile');
-//     $trail->push('Create', route('app.profile.create'));
-// });
+Breadcrumbs::for('app.profile.create', function (BreadcrumbTrail $trail) {
+	$trail->parent('app.profile');
+    $trail->push('Create', route('app.profile.create'));
+});
 
-// Breadcrumbs::for('profile.edit', function (BreadcrumbTrail $trail, $profile_type, $profile_id) {
-// 	$trail->parent('profile');
-// 	$trail->push('Edit');
-// 	$trail->push(ucwords($profile_type));
-//     $trail->push($profile_id, route('app.profile.edit', [
-// 		'profile_type'	=> $profile_type, 
-// 		'profile_id' 	=> $profile_id
-// 	]));
-// });
+Breadcrumbs::for('app.profile.edit', function (BreadcrumbTrail $trail, Profile $profile) {
+	$trail->parent('app.profile');
+	$trail->push('Edit '.ucwords($profile->type->value).' Profile');
+    $trail->push($profile['id'], route('app.profile.edit', [
+		'profile' 	=> $profile['id']
+	]));
+});
 
-// Breadcrumbs::for('profile.show', function (BreadcrumbTrail $trail, $profile_type, $profile_id) {
-// 	$trail->parent('profile');
-// 	$trail->push('Show');
-// 	$trail->push(ucwords($profile_type));
-//     $trail->push($profile_id, route('app.profile.edit', [
-// 		'profile_type'	=> $profile_type, 
-// 		'profile_id' 	=> $profile_id
-// 	]));
-// });
+Breadcrumbs::for('app.profile.show', function (BreadcrumbTrail $trail, Profile $profile) {
+	$trail->parent('app.profile');
+	$trail->push('View '.ucwords($profile->type->value).' Profile');
+    $trail->push($profile['id'], route('app.profile.show', [
+		'profile' 	=> $profile['id']
+	]));
+});
+
+Breadcrumbs::for('backend', function (BreadcrumbTrail $trail) {
+    $trail->push('Backend', route('backend.dashboard'));
+});
+
+Breadcrumbs::for('backend.moderation', function (BreadcrumbTrail $trail) {
+    $trail->parent('backend');
+    $trail->push('Moderation', route('backend.moderation.index'));
+});
+
+Breadcrumbs::for('backend.moderation.profile', function (BreadcrumbTrail $trail) {
+	$trail->parent('backend.moderation');
+    $trail->push('Profile', route('app.profile.index'));
+});
+
+Breadcrumbs::for('backend.moderation.profile.edit', function (BreadcrumbTrail $trail, Profile $profile) {
+	$trail->parent('backend.moderation.profile');
+	$trail->push('Edit '.ucwords($profile->type->value).' Profile');
+    $trail->push($profile['id']);
+});
+
+Breadcrumbs::for('backend.rampmanagement', function (BreadcrumbTrail $trail) {
+    $trail->parent('backend');
+    $trail->push('RAMP Management', route('backend.rampmanagement.dashboard.index'));
+});
+
+Breadcrumbs::for('backend.rampmanagement.verticals', function (BreadcrumbTrail $trail) {
+    $trail->parent('backend.rampmanagement');
+    $trail->push('Verticals', route('backend.rampmanagement.verticals.index'));
+});
+
+Breadcrumbs::for('backend.rampmanagement.verticals.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('backend.rampmanagement.verticals');
+    $trail->push('Create', route('backend.rampmanagement.verticals.create'));
+});
+
+Breadcrumbs::for('backend.rampmanagement.verticals.edit', function (BreadcrumbTrail $trail, Vertical $vertical) {
+    $trail->parent('backend.rampmanagement.verticals');
+	$trail->push('Edit');
+    $trail->push($vertical['id'], route('backend.rampmanagement.verticals.edit', ['vertical' => $vertical['id']]));
+});
+
+Breadcrumbs::for('backend.rampmanagement.programmes', function (BreadcrumbTrail $trail) {
+    $trail->parent('backend.rampmanagement');
+    $trail->push('Programmes', route('backend.rampmanagement.programmes.index'));
+});
+
+Breadcrumbs::for('backend.rampmanagement.programmes.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('backend.rampmanagement.programmes');
+    $trail->push('Create', route('backend.rampmanagement.programmes.create'));
+});
+
+Breadcrumbs::for('backend.rampmanagement.programmes.edit', function (BreadcrumbTrail $trail, Programme $programme) {
+    $trail->parent('backend.rampmanagement.programmes');
+	$trail->push('Edit');
+    $trail->push($programme['id'], route('backend.rampmanagement.programmes.edit', ['programme' => $programme['id']]));
+});
+
+Breadcrumbs::for('backend.rampmanagement.events', function (BreadcrumbTrail $trail) {
+    $trail->parent('backend.rampmanagement');
+    $trail->push('Events', route('backend.rampmanagement.events.index'));
+});
+
+Breadcrumbs::for('backend.rampmanagement.events.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('backend.rampmanagement.events');
+    $trail->push('Create', route('backend.rampmanagement.events.create'));
+});
+
+Breadcrumbs::for('backend.rampmanagement.events.edit', function (BreadcrumbTrail $trail, Event $event) {
+    $trail->parent('backend.rampmanagement.events');
+	$trail->push('Edit');
+    $trail->push($event['id'], route('backend.rampmanagement.events.edit', ['event' => $event['id']]));
+});
+
+
 
 // Breadcrumbs::for('ramp', function (BreadcrumbTrail $trail) {
 // 	$trail->parent('home');

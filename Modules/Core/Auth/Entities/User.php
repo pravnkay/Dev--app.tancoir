@@ -4,9 +4,10 @@ namespace Modules\Core\Auth\Entities;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Modules\App\Profile\Entities\Profile;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -47,6 +48,27 @@ class User extends Authenticatable implements MustVerifyEmail
 		self::updating(function ($user) {
 			$user->username = \Str::slug($user->name, "");
 		});
+	}
+
+	public function profiles() :HasMany
+    {
+        return $this->hasMany(Profile::class);
+    }
+    
+    public function activeProfiles() :HasMany
+    {
+        return $this->hasMany(Profile::class)->where('is_active', true);
+    }
+
+	public function allProfiles()
+	{
+		return $this->profiles()
+				->with([
+						'association_profile',
+						'cluster_profile',
+						'enterprise_profile',
+						'society_profile',
+				])->get();
 	}
 
 }

@@ -1,0 +1,11 @@
+{
+    "name": "RAMPManagement",
+    "alias": "rampmanagement",
+    "description": "",
+    "keywords": [],
+    "priority": 7,
+    "providers": [
+        "Modules\\Backend\\RAMPManagement\\Providers\\RAMPManagementServiceProvider"
+    ],
+    "files": []
+}

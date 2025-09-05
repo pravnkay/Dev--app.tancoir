@@ -5,6 +5,6 @@
 		type="submit"
 		class="uk-btn uk-btn-sm uk-btn-icon"		
 	>
-		<uk-icon icon="x"></uk-icon>
+		<uk-icon icon="{{$icon}}" cls-custom="{{$class}}"></uk-icon>
 </button>
 </form>	

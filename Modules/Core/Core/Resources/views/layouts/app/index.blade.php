@@ -65,15 +65,15 @@
 				]
 			],
 
-			// "Profile" => [
-			// 	'label'		=> 'Profile',
-			// 	'active'	=> 'app.profile.*',
-			// 	'route'		=> 'app.profile.index',
-			// 	'icon'		=> 'user-round-pen',
-			// 	'links'		=> [
+			"Profile" => [
+				'label'		=> 'Profile',
+				'active'	=> 'app.profile.*',
+				'route'		=> 'app.profile.index',
+				'icon'		=> 'user-round-pen',
+				'links'		=> [
 					
-			// 	]
-			// ],
+				]
+			],
 
 			// "RAMP" => [
 			// 	'label'		=> 'RAMP',

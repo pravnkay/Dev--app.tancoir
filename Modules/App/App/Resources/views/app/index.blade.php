@@ -3,11 +3,32 @@
 @section('main-content')
 
 	<div class="space-y-4 mb-4">
-		{{ Breadcrumbs::render('app.index') }}
+		{{ Breadcrumbs::render('app') }}
 		<div class="border-border border-t"></div>
 	</div>
 
 	<div class="row">
+
+		<div class="col w-full">
+			<div class="row">
+				<div class="col w-full md:w-1/2 mb-3">
+					<div class="uk-card uk-card-body">
+						<h3 class="uk-card-title">{{$all_profiles->count()}}</h3>
+						<p class="mt-4">
+							Total No. of Profiles
+						</p>
+					</div>
+				</div>
+				<div class="col w-full md:w-1/2 mb-3">
+					<div class="uk-card uk-card-body">
+						<h3 class="uk-card-title">{{$active_profiles->count()}}</h3>
+						<p class="mt-4">
+							Active Profiles.
+						</p>
+					</div>
+				</div>				
+			</div>
+		</div>
 
 		{{-- @if (!$profiles)
 		

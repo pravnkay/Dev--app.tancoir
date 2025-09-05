@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\App\App\Providers;
+namespace Modules\Backend\Moderation\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -8,13 +8,13 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class RegistryServiceProvider extends ServiceProvider
+class ModerationServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'App';
+    protected string $name = 'Moderation';
 
-    protected string $nameLower = 'app';
+    protected string $nameLower = 'moderation';
 
     /**
      * Boot the application events.

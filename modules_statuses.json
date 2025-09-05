@@ -2,5 +2,8 @@
     "Core": true,
     "Auth": true,
     "App": true,
-    "Dashboard": true
+    "Dashboard": true,
+    "Profile": true,
+    "Moderation": true,
+    "RAMPManagement": true
 }

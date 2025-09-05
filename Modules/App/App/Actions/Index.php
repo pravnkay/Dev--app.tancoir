@@ -11,8 +11,14 @@ class Index
 
 	public function handle()
     {
+		$user = Auth::user();
+		$all_profiles = $user->allProfiles();
+		$active_profiles = $user->activeProfiles();
+
 		return view('app::app.index', [
-			'user'	=> Auth::user(),
+			'user'	=> $user,
+			'all_profiles'	=> $all_profiles,
+			'active_profiles'	=> $active_profiles,
 		]);
     }
 }

@@ -1,0 +1,30 @@
+{
+    "name": "praveen/rampmanagement",
+    "description": "",
+    "authors": [
+        {
+            "name": "Praveen Kalaiarasu",
+            "email": "praveen.kalaiarasu@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Backend\\RAMPManagement\\": "/",
+            "Modules\\Backend\\RAMPManagement\\Database\\Factories\\": "Database/Factories/",
+            "Modules\\Backend\\RAMPManagement\\Database\\Seeders\\": "Database/Seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Backend\\RAMPManagement\\Tests\\": "Tests/"
+        }
+    }
+}
