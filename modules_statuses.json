@@ -5,6 +5,5 @@
     "Dashboard": true,
     "Profile": true,
     "Moderation": true,
-    "RAMPManagement": true,
-    "RAMP": true
+    "RAMPManagement": true
 }

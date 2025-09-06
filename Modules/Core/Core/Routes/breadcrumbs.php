@@ -56,22 +56,6 @@ Breadcrumbs::for('app.participant.edit', function (BreadcrumbTrail $trail, Parti
 	]));
 });
 
-
-Breadcrumbs::for('app.ramp', function (BreadcrumbTrail $trail) {
-	$trail->parent('app');
-	$trail->push('RAMP');
-});
-
-Breadcrumbs::for('app.ramp.apply', function (BreadcrumbTrail $trail) {
-	$trail->parent('app.ramp');
-	$trail->push('Apply', route('app.ramp.apply.index'));
-});
-
-Breadcrumbs::for('app.ramp.apply.create', function (BreadcrumbTrail $trail, Event $event) {
-	$trail->parent('app.ramp.apply');
-    $trail->push($event['name'], route('app.ramp.apply.index', ['event' => $event['id']]));
-});
-
 Breadcrumbs::for('backend', function (BreadcrumbTrail $trail) {
     $trail->push('Backend', route('backend.dashboard'));
 });
