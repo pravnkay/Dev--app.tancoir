@@ -18,7 +18,8 @@ class Profile extends Model
 	protected $casts = [
 		'type' => ProfileTypeEnum::class,
 		'status' => ProfileStatusEnum::class,
-		'is_active' => 'boolean'
+		'is_active' => 'boolean',
+		'is_allowed_for_ramp' => 'boolean'
 	];
 
 	public function user() :BelongsTo

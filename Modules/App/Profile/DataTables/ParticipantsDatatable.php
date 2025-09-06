@@ -186,7 +186,7 @@ class ParticipantsDatatable extends DataTable
 			],
 			[
 				"title"					=> __('Gender'),
-				"data"					=> "gender_label",
+				"data"					=> "gender",
 				"responsivePriority"	=> "1",
 				"orderable"				=> true,
 				"searchable"			=> true,

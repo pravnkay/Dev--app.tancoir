@@ -19,6 +19,7 @@ return new class extends Migration
 			$table->string('type');
             $table->string('status')->default(ProfileStatusEnum::DRAFT->value);
 			$table->boolean('is_active')->default(0);
+			$table->boolean('is_allowed_for_ramp')->default(0);
 
 			$table->dateTime('submitted_at')->nullable();
 			$table->text('review_remarks')->nullable();

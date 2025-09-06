@@ -18,10 +18,10 @@
 
 	<div class="col w-full">
 		<div class="uk-card uk-card-body">
-			<h3 class="uk-card-title">List of events you can apply to</h3>
-			<ul class="uk-list uk-list-hyphen mt-4">
+			<h3 class="uk-card-title">List of events open for applications</h3>
+			<ul class="uk-list uk-list-hyphen mt-8">
 				@foreach ($events as $event)
-					<li>
+					<li class="mb-4">
 						<a class="uk-link" href="{{route('app.ramp.apply.create', ['event' => $event['id']])}}"> 
 							<span class="mr-2">{{$event['name']}} - {{$event['title']}}</span>
 						</a>

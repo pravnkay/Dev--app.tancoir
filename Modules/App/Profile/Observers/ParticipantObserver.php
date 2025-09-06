@@ -29,7 +29,7 @@ class ParticipantObserver
      */
     public function retrieved(Participant $participant): void
     {
-       $participant->gender_label = $participant->gender->label();
+       //
     }
  
     /**

@@ -18,9 +18,7 @@ class EventForm extends Model
 	protected $guarded = [];
 
 	protected $casts = [
-        'date'				=> 'datetime:d/m/Y',
-        'cost'				=> 'decimal:2',
-        'participant_cost'	=> 'decimal:2',
+       //
     ];
 
 	public function event()

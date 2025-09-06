@@ -5,9 +5,12 @@ namespace Modules\Backend\RAMPManagement\Entities;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 use Modules\Backend\RAMPManagement\Observers\EventObserver;
+use Modules\Backend\RAMPManagement\Entities\EventRegistration;
 
 use Modules\Core\Core\Traits\Userstamps;
 
@@ -35,5 +38,15 @@ class Event extends Model
 	public function event_form() :HasOne
 	{
 		return $this->hasOne(EventForm::class);
+	}
+
+	public function registrations() :HasMany
+	{
+		return $this->hasMany(EventRegistration::class);
+	}
+
+	public function participations() :HasManyThrough
+	{
+		return $this->hasManyThrough(EventParticipation::class, EventRegistration::class);
 	}
 }

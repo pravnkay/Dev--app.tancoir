@@ -14,7 +14,7 @@
 					{{ Breadcrumbs::render('app.ramp.apply.create', $event) }}
 				</div>
 				<div class="col w-6/12 flex items-end justify-end">
-					{{--  --}}
+					<x-core::button submit primary>Submit Application</x-core::button>
 				</div>
 			</div>
 			<div class="col w-full border-border border-t my-6"></div>
@@ -33,24 +33,17 @@
 					<div class="col w-full mb-4">
 						<div class="uk-form-element mt-4">
 
-							<label class="uk-form-label uk-form-label-custom uk-form-label-required" for="profile_picker">
+							<label class="uk-form-label uk-form-label-custom uk-form-label-required" for="profile_picker_select">
 								{{__('Profile')}}
 							</label>
 
 							<div class="uk-form-controls">
-
-								<uk-select 
-									name="profile_id"
-									id="profile_picker"
-									cls-custom="button: uk-input-fake justify-between w-full; dropdown: w-full" icon
-								>
-									<select hidden id="profile_picker_select">
-										@foreach ($active_profiles as $key => $value)
-											<option value="{{$key}}">{{$value}}</option>
-										@endforeach
-									</select>
-								</uk-select>
-
+								<select id="profile_picker" class="uk-select" name="profile_id" required>
+									<option value="" selected disabled hidden>Select the profile to register for the event</option>
+									@foreach ($active_profiles as $key => $value)
+										<option value="{{$key}}">{{$value}}</option>
+									@endforeach
+								</select>
 							</div>
 
 							@error('profile_id')
@@ -70,29 +63,23 @@
 						<div class="border-border border-t my-3"></div>
 					</div>
 
-					<div class="col w-full mb-4">
+					<div class="col w-full mb-4 hidden" id="participant_picker_holder">
 						<div class="uk-form-element mt-4">
 
-							<label class="uk-form-label uk-form-label-custom uk-form-label-required" for="profile_picker">
+							<label class="uk-form-label uk-form-label-custom uk-form-label-required" for="participant_picker_select">
 								{{__('Participant')}}
 							</label>
 
+
 							<div class="uk-form-controls">
-
-								<uk-select 
-									name="participant_id"
-									id="participant_picker"
-									cls-custom="button: uk-input-fake justify-between w-full; dropdown: w-full" icon reactive
-								>
-									<select hidden id="participant_picker_select">
-										@foreach ($participants_grouped as $profile_id => $participants)
-											@foreach ($participants as $participant)
-												<option disabled data-profile-id="{{$profile_id}}" value="{{$participant['id']}}">{{$participant['name']}}</option>
-											@endforeach
+								<select id="participant_picker" class="uk-select" name="participant_id" required disabled>
+									<option value="" selected disabled hidden>Select the participant to register for the event</option>
+									@foreach ($participants_grouped as $profile_id => $participants)
+										@foreach ($participants as $participant)
+											<option disabled hidden data-profile-id="{{$profile_id}}" value="{{$participant['id']}}">{{$participant['name']}}</option>
 										@endforeach
-									</select>
-								</uk-select>
-
+									@endforeach
+								</select>
 							</div>
 
 							@error('participant_id')
@@ -131,35 +118,33 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		const profile_picker = document.getElementById('profile_picker')
-		const participant_picker = document.getElementById('participant_picker')
+		
+		const profile_picker 			= document.getElementById('profile_picker')
+		const participant_picker 		= document.getElementById('participant_picker')
 		
 		// Listen for the Franken UI specific event
-		profile_picker.addEventListener('uk-select:input', function(event) {
+		profile_picker.addEventListener('change', function(event) {
 
-			selected_profile_id = event.detail.value;
+			participant_picker.value = ''
 
-			const participant_picker_select = document.getElementById('participant_picker_select');
+			document.getElementById('participant_picker_holder').classList.remove('hidden')
+			participant_picker.disabled = false
 
-			if (participant_picker_select) {
+			selected_profile_id = event.target.value;
 
-				const non_disabled_options = participant_picker_select.querySelectorAll('option:not([disabled])');
+			const non_disabled_options = participant_picker.querySelectorAll('option:not([disabled]):not([hidden])');
 
-				non_disabled_options.forEach(option => {
-					option.disabled = true;
-				});
-				
-				const matched_options = participant_picker_select.querySelectorAll(`option[data-profile-id="${selected_profile_id}"]`);
+			non_disabled_options.forEach(option => {
+				option.disabled = true;
+				option.hidden = true;
+			});
+			
+			const matched_options = participant_picker.querySelectorAll(`option[data-profile-id="${selected_profile_id}"]`);
 
-				matched_options.forEach(option => {
-					option.disabled = false;
-				});
-
-			} else {
-
-				console.warn(`Select element with ID participant_picker_select not found.`);
-
-			}
+			matched_options.forEach(option => {
+				option.disabled = false;
+				option.hidden = false;
+			});
 		})
 	})
 </script>

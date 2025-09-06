@@ -78,15 +78,16 @@ class ProfileDatabaseSeeder extends Seeder
                 
                 // Create main profile
                 $profile = Profile::create([
-                    'user_id' => $user->id,
-                    'name' => $profileName,
-                    'type' => $profileType->value,
-                    'status' => $status->value,
-                    'is_active' => $shouldApprove,
-                    'submitted_at' => $shouldApprove ? now()->subDays(rand(1, 30)) : null,
-                    'review_remarks' => $shouldApprove ? 'Approved' : null,
-                    'reviewed_at' => $shouldApprove ? now()->subDays(rand(0, 10)) : null,
-                    'reviewed_by' => $shouldApprove ? $adminUser->id : null,
+                    'user_id' 				=> $user->id,
+                    'name' 					=> $profileName,
+                    'type' 					=> $profileType->value,
+                    'status' 				=> $status->value,
+                    'is_active' 			=> $shouldApprove,
+                    'is_allowed_for_ramp' 	=> $shouldApprove,
+                    'submitted_at' 			=> $shouldApprove ? now()->subDays(rand(1, 30)) : null,
+                    'review_remarks' 		=> $shouldApprove ? 'Approved' : null,
+                    'reviewed_at' 			=> $shouldApprove ? now()->subDays(rand(0, 10)) : null,
+                    'reviewed_by' 			=> $shouldApprove ? $adminUser->id : null,
                 ]);
 
                 // Create corresponding profile subtype
