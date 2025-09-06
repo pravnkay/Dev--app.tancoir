@@ -59,24 +59,6 @@ return new class extends Migration
 			$table->userTimeStamps();
 		});
 
-		Schema::create('ramp_event_registrations', function (Blueprint $table) {
-			$table->id();
-			$table->foreignIdFor(Event::class)->nullable()->constrained()->cascadeOnDelete();
-			$table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
-			$table->foreignIdFor(Profile::class)->nullable()->constrained()->nullOnDelete();
-			$table->foreignIdFor(Participant::class)->nullable()->constrained()->nullOnDelete();
-			$table->userTimeStamps();
-			
-			$table->unique(['event_id', 'profile_id', 'participant_id'], 'unique_event_profile_participant');
-		});
-
-		Schema::create('ramp_event_participations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(EventRegistration::class)->constrained()->cascadeOnDelete();
-            $table->boolean('has_participated')->default(false);
-            $table->boolean('has_feedbacked')->default(false);
-            $table->userTimeStamps();
-        });
     }
 
     /**
@@ -88,7 +70,5 @@ return new class extends Migration
         Schema::drop('ramp_programmes');
         Schema::drop('ramp_events');
         Schema::drop('ramp_event_forms');
-        Schema::drop('ramp_event_registrations');
-		Schema::dropIfExists('ramp_event_participations');
     }
 };
