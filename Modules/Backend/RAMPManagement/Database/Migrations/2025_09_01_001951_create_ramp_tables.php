@@ -62,6 +62,19 @@ return new class extends Migration
 			$table->userTimeStamps();
 		});
 
+		Schema::create('ramp_enterprises', function (Blueprint $table) {
+			$table->id();
+			$table->string('udyam')->unique();
+			$table->string('name')->nullable();
+			$table->string('place')->nullable();
+			$table->string('district')->nullable();
+			$table->string('contact_name')->nullable();
+			$table->string('contact_designation')->nullable();
+			$table->string('contact_email')->nullable();
+			$table->boolean('is_a_valid_enterprise')->default(0);
+			$table->userTimeStamps();
+		});
+
     }
 
     /**
@@ -74,5 +87,6 @@ return new class extends Migration
         Schema::drop('ramp_events');
         Schema::drop('ramp_event_forms');
         Schema::drop('ramp_event_registrations');
+        Schema::drop('ramp_enterprises');
     }
 };

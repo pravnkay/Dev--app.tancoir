@@ -40,7 +40,7 @@ class Store
 				});
 
 				\DB::commit();
-				notify($created_models.' Records Registrationed!', ['icon' => 'circle-check-big']);
+				notify($created_models.' Registrations created!', ['icon' => 'circle-check-big']);
 
 			}, 3);	
 

@@ -12,7 +12,6 @@ class Create
 
 	public function handle(Event $event)
 	{
-		clock($event);
 		return view('rampmanagement::event_registrations.create')->with([
 			'event' => $event
 		]);
