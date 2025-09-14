@@ -14,7 +14,7 @@ class EventRegistrationObserver
      */
     public function creating(EventRegistration $event_registration): void
     {
-		Enterprise::firstOrCreate(
+		$enterprise = Enterprise::firstOrCreate(
 			['udyam' => $event_registration->registration_data['உதயம் எண் / UDYAM No. (Format: UDYAM-TN-00-0000000)']],
 			[
 				'name'					=> Str::of($event_registration->registration_data['நிறுவனத்தின் பெயர் / Company Name'])->replace('.', ' ')->upper()->squish()->toString(),
@@ -25,6 +25,8 @@ class EventRegistrationObserver
 				'contact_email'			=> $event_registration->registration_data['Email Address'],
 			]
 		);
+
+		$event_registration->enterprise_id = $enterprise->id;
     }
 
     /**

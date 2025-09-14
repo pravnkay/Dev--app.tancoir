@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\Backend\RAMPManagement\Entities\Enterprise;
 use Modules\Backend\RAMPManagement\Entities\Event;
 use Modules\Backend\RAMPManagement\Entities\Programme;
 use Modules\Backend\RAMPManagement\Entities\Vertical;
@@ -55,13 +56,6 @@ return new class extends Migration
 			$table->userTimeStamps();
 		});
 
-		Schema::create('ramp_event_registrations', function (Blueprint $table) {
-			$table->id();
-			$table->foreignIdFor(Event::class)->nullable()->constrained()->cascadeOnDelete();
-			$table->json('registration_data')->nullable();
-			$table->userTimeStamps();
-		});
-
 		Schema::create('ramp_enterprises', function (Blueprint $table) {
 			$table->id();
 			$table->string('udyam')->unique();
@@ -74,6 +68,16 @@ return new class extends Migration
 			$table->boolean('is_a_valid_enterprise')->default(0);
 			$table->userTimeStamps();
 		});
+
+		Schema::create('ramp_event_registrations', function (Blueprint $table) {
+			$table->id();
+			$table->foreignIdFor(Event::class)->nullable()->constrained()->cascadeOnDelete();
+			$table->foreignIdFor(Enterprise::class)->nullable()->constrained()->cascadeOnDelete();
+			$table->json('registration_data')->nullable();
+			$table->userTimeStamps();
+		});
+
+
 
     }
 
