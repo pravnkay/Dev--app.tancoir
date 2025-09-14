@@ -1,6 +1,6 @@
 @extends('core::layouts.backend.index')
 
-@section('breadcrumbs', Breadcrumbs::render('backend.rampmanagement.events'))
+@section('breadcrumbs', Breadcrumbs::render('backend.rampmanagement.events.registrations', $event))
 
 @section('action-button')
 	<a type="button" href="{{route('backend.rampmanagement.events.create')}}" class="uk-btn uk-btn-primary self-end">{{__('New Event')}}</a>
@@ -10,7 +10,7 @@
 
 	<div class="row">
 		<div class="col w-full">
-			{!! $dataTable->table([], true) !!}
+			{!! $dataTable->table([]) !!}
 		</div>
 	</div>
 

@@ -135,3 +135,15 @@ Breadcrumbs::for('backend.rampmanagement.events.edit', function (BreadcrumbTrail
 	$trail->push('Edit');
     $trail->push($event['id'], route('backend.rampmanagement.events.edit', ['event' => $event['id']]));
 });
+
+Breadcrumbs::for('backend.rampmanagement.events.registrations', function (BreadcrumbTrail $trail, Event $event) {
+	$trail->parent('backend.rampmanagement.events');
+	$trail->push($event->name);
+	$trail->push('Registrations', route('backend.rampmanagement.events.registrations.index', ['event' => $event->id]));
+});
+
+Breadcrumbs::for('backend.rampmanagement.events.registrations.create', function (BreadcrumbTrail $trail, Event $event) {
+    $trail->parent('backend.rampmanagement.events.registrations', $event);
+	$trail->push('Upload');
+});
+

@@ -46,3 +46,9 @@
 	</button>
 	</form>	
 @endisset
+
+@isset($registration)
+	<a href="{{ $registration }}" class="uk-btn uk-btn-sm uk-btn-icon">
+		<uk-icon icon="folder-up"></uk-icon>
+	</a>
+@endisset

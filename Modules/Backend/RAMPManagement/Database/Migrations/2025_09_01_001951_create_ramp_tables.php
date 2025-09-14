@@ -55,10 +55,10 @@ return new class extends Migration
 			$table->userTimeStamps();
 		});
 
-		Schema::create('ramp_event_dumps', function (Blueprint $table) {
+		Schema::create('ramp_event_registrations', function (Blueprint $table) {
 			$table->id();
 			$table->foreignIdFor(Event::class)->nullable()->constrained()->cascadeOnDelete();
-			$table->json('dump_data')->nullable();
+			$table->json('registration_data')->nullable();
 			$table->userTimeStamps();
 		});
 
@@ -73,6 +73,6 @@ return new class extends Migration
         Schema::drop('ramp_programmes');
         Schema::drop('ramp_events');
         Schema::drop('ramp_event_forms');
-        Schema::drop('ramp_event_dumps');
+        Schema::drop('ramp_event_registrations');
     }
 };

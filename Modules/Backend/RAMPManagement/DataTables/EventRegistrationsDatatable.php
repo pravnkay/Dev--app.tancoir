@@ -2,10 +2,10 @@
 
 namespace Modules\Backend\RAMPManagement\DataTables;
 
-use Modules\Backend\RAMPManagement\Entities\Event;
+use Modules\Backend\RAMPManagement\Entities\EventRegistration;
 use Yajra\DataTables\Services\DataTable;
 
-class EventsDatatable extends DataTable
+class EventRegistrationsDatatable extends DataTable
 {
     public function dataTable($query)
     {
@@ -13,23 +13,14 @@ class EventsDatatable extends DataTable
             ->eloquent($query)
             ->addIndexColumn()
 
-			->addColumn('selector', function ($event) {
-                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$event->id.'">';
+			->addColumn('selector', function ($event_registration) {
+                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$event_registration->id.'">';
             })
 
-			->addColumn('registrations', function($event) {
+			->addColumn('action', function ($event_registration) {
 				return view('core::components.datatable.action_column')->with([
-					'show' 		=> route('backend.rampmanagement.events.registrations.index', 		["event"	=> $event->id]),
-					'registration' 		=> route('backend.rampmanagement.events.registrations.create', 		["event"	=> $event->id]),
+					'delete' 	=> route('backend.rampmanagement.events.registrations.destroy', ["event_registration" 	=> $event_registration->id]),
 				])->render();
-			})
-
-			->addColumn('action', function ($event) {
-				return view('core::components.datatable.action_column')->with([
-					'edit' 		=> route('backend.rampmanagement.events.edit', 		["event"	=> $event->id]),
-					'delete' 	=> route('backend.rampmanagement.events.destroy', 	["event" 	=> $event->id]),
-				])->render();
-	
 			})
 
 			->rawColumns(['selector', 'registrations', 'action']);
@@ -37,14 +28,15 @@ class EventsDatatable extends DataTable
 
     public function query()
     {
-		$event = Event::select();
-		return $this->applyScopes($event);
+		$event_id = $this->event_id;
+		$event_registrations = EventRegistration::where('event_id', $event_id);
+		return $this->applyScopes($event_registrations);
     }
 
     public function html()
     {
-		$table_id  = 'events-table';
-		$importer_route = route('backend.bulk.import.create', ['model' => 'events']);
+		$table_id  = 'event-registrations-table';
+		$importer_route = route('backend.rampmanagement.events.registrations.create', ['event', $this->event_id]);
 
         return $this->builder()
                     ->columns($this->getColumns())
@@ -54,14 +46,12 @@ class EventsDatatable extends DataTable
 					
 					->setTableId($table_id)
 					
-					->orderBy(3, 'asc')
+					->orderBy(1, 'desc')
 					
 					->parameters([          
 						'searchDelay' => 1000,
-						'pageLength' => 10,
-						'initComplete' => "						
-						
-						function (master, json) {
+						'pageLength' => 10,						
+						'initComplete' => "function (master, json) {
 
 							var tableId  = '#{$table_id}';
 
@@ -97,7 +87,7 @@ class EventsDatatable extends DataTable
 									$(this).closest('tr').toggleClass('selected', on);
 								});
 							});
-					  
+					
 							$(document).on('change', tableId + ' tbody input[name=\"ids[]\"]', function () {
 								$(this).closest('tr').toggleClass('selected', this.checked);
 								if (!this.checked) $('#select-all').prop('checked', false);
@@ -105,9 +95,7 @@ class EventsDatatable extends DataTable
 
 						}",
 
-						'drawCallback' => "function (master) {
-							
-						}",
+						'drawCallback' => "function (master) {}",
 
 						'buttons' => [
 							'dom' => [
@@ -128,7 +116,7 @@ class EventsDatatable extends DataTable
 									'className' => 'uk-btn uk-btn-default',
 									'action' => 'function (e, dt, node, config, cb) {
 										e.stopPropagation();
-      									window.open_bulk_delete_confirm(dt, "#bulk-delete-form");
+										window.open_bulk_delete_confirm(dt, "#bulk-delete-form");
 									}'
 								],
 								[
@@ -194,6 +182,12 @@ class EventsDatatable extends DataTable
 				'printable'      => true,
 				'width'          => '10px',
 			],
+			[
+				"title"					=> __('UA'),
+				"data"					=> "updated_at",
+				"visible"				=> false,
+				"orderable"				=> true,
+			],
             [
 				"title"					=> __('S.No'),
 				"data"					=> "DT_RowIndex",
@@ -202,52 +196,52 @@ class EventsDatatable extends DataTable
 				"searchable"			=> false,
 				"width"					=> "25"
 			],
-			[
-				"title"					=> __('Name'),
-				"data"					=> "name",
+            [
+				"title"					=> __('Ent. Name'),
+				"data"					=> "registration_data.நிறுவனத்தின் பெயர் / Company Name",
 				"responsivePriority"	=> "1",
-				"orderable"				=> true,
-				"searchable"			=> true,
-			],
-			[
-				"title"					=> __('Date'),
-				"data"					=> "date",
-				"responsivePriority"	=> "2",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],
-			[
-				"title"					=> __('Days'),
-				"data"					=> "days",
-				"responsivePriority"	=> "2",
+            [
+				"title"					=> __('UDYAM'),
+				"data"					=> "registration_data.உதயம் எண் / UDYAM No. (Format: UDYAM-TN-00-0000000)",
+				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],
-			[
-				"title"					=> __('Cost'),
-				"data"					=> "cost",
-				"responsivePriority"	=> "2",
+            [
+				"title"					=> __('Place'),
+				"data"					=> "registration_data.ஊர் / Place",
+				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],
-			[
-				"title"					=> __('Participant Count'),
-				"data"					=> "participant_count",
-				"responsivePriority"	=> "2",
+            [
+				"title"					=> __('District'),
+				"data"					=> "registration_data.மாவட்டம் / District",
+				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],
-			[
-				"title"					=> __('Participant Cost'),
-				"data"					=> "participant_cost",
-				"responsivePriority"	=> "2",
+            [
+				"title"					=> __('Participant'),
+				"data"					=> "registration_data.பங்கேற்பவரின் பெயர் / Participant Name",
+				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],
-			[
-				"title"					=> __('Registrations'),
-				"data"					=> "registrations",
-				"responsivePriority"	=> "2",
+            [
+				"title"					=> __('Contact Person'),
+				"data"					=> "registration_data.ஒப்புக்கொள்ளும் நபர் பெயர் / Name",
+				"responsivePriority"	=> "1",
+				"orderable"				=> false,
+				"searchable"			=> false,
+			],
+            [
+				"title"					=> __('Contact Number'),
+				"data"					=> "registration_data.வாட்ஸ்அப் எண் / Whatsapp No\.",
+				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],

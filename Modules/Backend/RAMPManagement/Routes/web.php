@@ -67,8 +67,15 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 			Route::put('/{event}', 				\Modules\Backend\RAMPManagement\Actions\Events\Update::class)			->name('update');
 			Route::delete('/{event}', 			\Modules\Backend\RAMPManagement\Actions\Events\Destroy::class)			->name('destroy');
 
-			Route::get('/{event}/dump', 		\Modules\Backend\RAMPManagement\Actions\EventDumps\Create::class)		->name('create_dump');
-			Route::post('/{event}/dump', 		\Modules\Backend\RAMPManagement\Actions\EventDumps\Store::class)		->name('store_dump');
+			Route::name('registrations.')
+			->group(function () {
+
+				Route::get('/{event}/registrations', 				\Modules\Backend\RAMPManagement\Actions\EventRegistrations\Index::class)		->name('index');
+				Route::get('/{event}/registrations/create', 		\Modules\Backend\RAMPManagement\Actions\EventRegistrations\Create::class)		->name('create');
+				Route::post('/{event}/registrations', 				\Modules\Backend\RAMPManagement\Actions\EventRegistrations\Store::class)		->name('store');
+				Route::delete('delete/{event_registration}',	 	\Modules\Backend\RAMPManagement\Actions\EventRegistrations\Destroy::class)		->name('destroy');
+
+			});
 
 		});
 

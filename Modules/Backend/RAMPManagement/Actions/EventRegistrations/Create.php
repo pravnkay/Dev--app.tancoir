@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Backend\RAMPManagement\Actions\EventDumps;
+namespace Modules\Backend\RAMPManagement\Actions\EventRegistrations;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -12,7 +12,8 @@ class Create
 
 	public function handle(Event $event)
 	{
-		return view('rampmanagement::event_dumps.create')->with([
+		clock($event);
+		return view('rampmanagement::event_registrations.create')->with([
 			'event' => $event
 		]);
 	}

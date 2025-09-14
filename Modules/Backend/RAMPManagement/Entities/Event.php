@@ -49,4 +49,9 @@ class Event extends Model
 	{
 		return $this->hasManyThrough(EventParticipation::class, EventRegistration::class);
 	}
+
+	public function registration_data() :HasMany
+	{
+		return $this->hasMany(EventRegistration::class);
+	}
 }
