@@ -1,22 +1,8 @@
 @extends('core::layouts.backend.index')
 
+@section('breadcrumbs', Breadcrumbs::render('backend.moderation.profile'))
+
 @section('main-content')
-
-<div class="uk-container uk-container-lg">
-
-	<div class="row">
-		<div class="col w-full">	
-			<div class="row">
-				<div class="col w-6/12 content-end">
-					{{ Breadcrumbs::render('backend.moderation.profile')}}
-				</div>
-				<div class="col w-6/12 flex items-end justify-end">
-					{{--  --}}
-				</div>
-			</div>
-		</div>
-		<div class="col w-full border-border border-t my-6"></div>
-	</div>
 
 	<div class="row">
 		<div class="col w-full">
@@ -24,8 +10,6 @@
 			{!! $dataTable->table([], true) !!}
 		</div>
 	</div>
-
-</div>
 
 @endsection
 

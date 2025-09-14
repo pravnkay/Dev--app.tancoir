@@ -1,0 +1,11 @@
+{
+    "name": "PubForm",
+    "alias": "pubform",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Backend\\PubForm\\Providers\\PubFormServiceProvider"
+    ],
+    "files": []
+}

@@ -1,47 +1,41 @@
 @extends('core::layouts.backend.index')
 
+@section('breadcrumbs', Breadcrumbs::render('backend.rampmanagement.verticals.create'))	
+
+@section('action-button')
+	<button type="submit" form="create-vertical-form" class="uk-btn uk-btn-primary">{{__('Save Vertical')}}</button>
+@endsection
+
 @section('main-content')
 
-<div class="uk-container uk-container-lg">
+	<div class="row">
+		<div class="col w-full">
+			
+			<x-core::form action="{{route('backend.rampmanagement.verticals.store')}}" id="create-vertical-form"> 
 
-	<x-core::form action="{{route('backend.rampmanagement.verticals.store')}}"> 
+				<fieldset class="uk-fieldset space-y-4">
+					<div class="row">
+						<div class="col w-full xl:w-6/12 mb-4">
+							<x-core::input name="name" :100/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col w-4/12">
+							<x-core::input name="allocated_funds" type="number" :100/>
+						</div>
+						<div class="col w-4/12">
+							<x-core::input name="utilised_funds" type="number" :100/>
+						</div>
+						<div class="col w-4/12">
+							<x-core::input name="remaining_funds" type="number" :110/>
+						</div>
+					</div>
+				</fieldset>
 
-		<div class="row">
-			<div class="col w-full">	
-				<div class="row">
-					<div class="col w-6/12 content-end">
-						{{ Breadcrumbs::render('backend.rampmanagement.verticals.create')}}
-					</div>
-					<div class="col w-6/12 flex items-end justify-end">
-						<button type="submit" class="uk-btn uk-btn-primary">{{__('Save Vertical')}}</button>
-					</div>
-				</div>
-			</div>
-			<div class="col w-full border-border border-t my-6"></div>
+			</x-core::form>
+			
 		</div>
-
-		<fieldset class="uk-fieldset space-y-4">
-			<div class="row">
-				<div class="col w-full xl:w-6/12 mb-4">
-					<x-core::input name="name" :100/>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col w-4/12">
-					<x-core::input name="allocated_funds" type="number" :100/>
-				</div>
-				<div class="col w-4/12">
-					<x-core::input name="utilised_funds" type="number" :100/>
-				</div>
-				<div class="col w-4/12">
-					<x-core::input name="remaining_funds" type="number" :110/>
-				</div>
-			</div>
-		</fieldset>
-
-	</x-core::form>
-
-</div>
+	</div>
 
 @endsection
 

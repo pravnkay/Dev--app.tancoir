@@ -60,6 +60,13 @@ Breadcrumbs::for('backend', function (BreadcrumbTrail $trail) {
     $trail->push('Backend', route('backend.dashboard'));
 });
 
+Breadcrumbs::for('backend.bulk.import.create', function (BreadcrumbTrail $trail, $model, $studly) {
+	$trail->parent('backend');
+    $trail->push('Bulk');
+    $trail->push('Import');
+    $trail->push(\Illuminate\Support\Str::studly($model), route('backend.bulk.import.create', ['model' => $model]));
+});
+
 Breadcrumbs::for('backend.moderation', function (BreadcrumbTrail $trail) {
     $trail->parent('backend');
     $trail->push('Moderation', route('backend.moderation.index'));

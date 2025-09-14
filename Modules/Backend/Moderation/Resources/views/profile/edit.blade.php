@@ -1,21 +1,18 @@
 @extends('core::layouts.backend.index')
 
-@section('main-content')
+@section('breadcrumbs', Breadcrumbs::render('backend.moderation.profile.edit', $profile))	
 
-<div class="uk-container uk-container-lg">
+@section('action-button')
+	<x-core::anchor back />
+@endsection
+
+@section('main-content')
 
 	<div class="row">
 
 		<div class="col w-full">		
 			<x-core::form action="{{route('backend.moderation.profile.update', ['profile' => $profile['id']])}}" :model="$profile">
-				<div class="row">
-					<div class="col w-full">
-						<div class="flex justify-between items-center">
-							{{ Breadcrumbs::render('backend.moderation.profile.edit', $profile)}}
-							<x-core::anchor back />
-						</div>
-						<div class="border-border border-t my-4"></div>
-					</div>			
+				<div class="row">		
 					<div class="col w-full">
 						<fieldset class="uk-fieldset">
 							<div class="uk-form-element mt-4">
@@ -78,7 +75,6 @@
 		</div>
 
 	</div>
-</div>
 
 @endsection
 

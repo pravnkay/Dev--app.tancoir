@@ -67,6 +67,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 			Route::put('/{event}', 				\Modules\Backend\RAMPManagement\Actions\Events\Update::class)			->name('update');
 			Route::delete('/{event}', 			\Modules\Backend\RAMPManagement\Actions\Events\Destroy::class)			->name('destroy');
 
+			Route::get('/{event}/dump', 		\Modules\Backend\RAMPManagement\Actions\EventDumps\Create::class)		->name('create_dump');
+			Route::post('/{event}/dump', 		\Modules\Backend\RAMPManagement\Actions\EventDumps\Store::class)		->name('store_dump');
+
 		});
 
 	});

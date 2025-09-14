@@ -127,7 +127,25 @@
 		@include('core::layouts.backend.includes.aside')
 			
 			<section class="flex-1 overflow-y-auto p-4">
-				@yield('main-content')
+				<div class="uk-container uk-container-lg">
+
+					<div class="row">
+						<div class="col w-full">	
+							<div class="row h-10">
+								<div class="col w-6/12 content-end">
+									@yield('breadcrumbs')
+								</div>
+								<div class="col w-6/12 flex items-end justify-end">
+									@yield('action-button')
+								</div>
+							</div>
+						</div>
+						<div class="col w-full border-border border-t mt-3 mb-6"></div>
+					</div>
+
+					@yield('main-content')
+
+				</div>
 			</section>
 
 	</main>

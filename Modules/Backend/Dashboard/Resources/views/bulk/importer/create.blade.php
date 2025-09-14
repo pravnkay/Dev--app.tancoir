@@ -1,20 +1,8 @@
 @extends('core::layouts.backend.index')
 
+@section('breadcrumbs', Breadcrumbs::render('backend.bulk.import.create', $model, $studly))
+
 @section('main-content')
-
-<div class="uk-container uk-container-lg">
-
-	<div class="space-y-4 mb-4">
-		<div class="space-y-1">
-			<p class="uk-text-lead mt-2">
-				{{__('Backend')}}
-			</p>
-			<h3 class="uk-h3">
-				{{__('Bulk Importer')}}
-			</h3>		
-		</div>
-		<div class="border-border border-t"></div>
-	</div>
 
 	<form class="uk-form-stacked" action="{{route('backend.bulk.import.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data">
 	@csrf
@@ -113,8 +101,6 @@
 		</fieldset>
 
 	</form>
-
-</div>
 
 @endsection
 
