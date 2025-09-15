@@ -2,10 +2,11 @@
 
 namespace Modules\Backend\RAMPManagement\DataTables;
 
-use Modules\Backend\RAMPManagement\Entities\Event;
+use Modules\Backend\RAMPManagement\Entities\Enterprise;
+use Modules\Core\Core\Enums\DistrictEnum;
 use Yajra\DataTables\Services\DataTable;
 
-class EventsDatatable extends DataTable
+class EnterprisesDatatable extends DataTable
 {
     public function dataTable($query)
     {
@@ -13,38 +14,60 @@ class EventsDatatable extends DataTable
             ->eloquent($query)
             ->addIndexColumn()
 
-			->addColumn('selector', function ($event) {
-                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$event->id.'">';
+			->addColumn('selector', function ($enterprise) {
+                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$enterprise->id.'">';
+            })	
+
+			->addColumn('district', function ($msme) {
+                return $msme->district->label();
             })
 
-			->addColumn('registrations', function($event) {
-				return view('core::components.datatable.action_column')->with([
-					'show' 		=> route('backend.rampmanagement.events.registrations.index', 		["event"	=> $event->id]),
-					'registration' 		=> route('backend.rampmanagement.events.registrations.create', 		["event"	=> $event->id]),
-				])->render();
+			->filterColumn('district', fn($query, $keyword) => $query->where('district', '=', "$keyword"))
+			
+			->addColumn('is_valid', function ($enterprise) {
+                $text = $enterprise->is_a_valid_enterprise ? "" : "text-destructive";				
+                $icon = $enterprise->is_a_valid_enterprise ? "check-check" : "x";
+				return 
+				'<form action="'.route('backend.rampmanagement.enterprises.toggle_valid_status', ['enterprise' => $enterprise->id]).'" method="POST" class="d-inline">
+					'.csrf_field().'
+					<button type="submit">
+						<uk-icon class="flex justify-center '.$text.'" icon="'.$icon.'"></uk-icon>
+					</button>
+				</form>';
+            })
+
+			->filterColumn('is_valid', function ($query, $keyword) {
+				$keyword = $keyword == 'Valid' ? 1 : 0;
+				return  $query->where('is_a_valid_enterprise', '=', "$keyword");
 			})
 
-			->addColumn('action', function ($event) {
+			->addColumn('action', function ($enterprise) {
 				return view('core::components.datatable.action_column')->with([
-					'edit' 		=> route('backend.rampmanagement.events.edit', 		["event"	=> $event->id]),
-					'delete' 	=> route('backend.rampmanagement.events.destroy', 	["event" 	=> $event->id]),
+					// 'edit' 		=> route('backend.rampmanagement.enterprises.edit', 		["enterprise"	=> $enterprise->id]),
+					'delete' 	=> route('backend.rampmanagement.enterprises.destroy', 	["enterprise" 	=> $enterprise->id]),
 				])->render();
 	
 			})
 
-			->rawColumns(['selector', 'registrations', 'action']);
+			->rawColumns(['selector', 'is_valid', 'action']);
     }
 
     public function query()
     {
-		$event = Event::select();
-		return $this->applyScopes($event);
+		$enterprise = Enterprise::select();
+		return $this->applyScopes($enterprise);
     }
 
     public function html()
     {
-		$table_id  = 'events-table';
-		$importer_route = route('backend.bulk.import.create', ['model' => 'events']);
+		$table_id  = 'enterprises-table';
+		$importer_route = route('backend.bulk.import.create', ['model' => 'enterprises']);
+
+		$is_valid = [0 => 'Not Valid', 1 => 'Valid'];
+		$valid_selector = view('core::components.datatable.select_filter', ['options' => $is_valid])->render();
+
+		$districts = DistrictEnum::asArray();
+		$districts_selector = view('core::components.datatable.select_filter', ['options' => $districts])->render();
 
         return $this->builder()
                     ->columns($this->getColumns())
@@ -54,7 +77,7 @@ class EventsDatatable extends DataTable
 					
 					->setTableId($table_id)
 					
-					->orderBy(1, 'asc')
+					->orderBy(1, 'desc')
 					
 					->parameters([          
 						'searchDelay' => 1000,
@@ -85,6 +108,34 @@ class EventsDatatable extends DataTable
 									.on('change', function () {
 										column.search($(this).val(), false, false, true).draw();
 									});
+
+									if(colDef.data === 'is_valid') {
+
+										var select = `".$valid_selector."`
+
+										$(select).appendTo($(column.footer()).empty())
+										.on('click', function (e) {
+											e.stopPropagation()
+										})
+										.on('change', function () {
+											column.search($(this).val()).draw()
+										})
+
+									}
+
+									if(colDef.data === 'district') {
+
+										var select = `".$districts_selector."`
+
+										$(select).appendTo($(column.footer()).empty())
+										.on('click', function (e) {
+											e.stopPropagation()
+										})
+										.on('change', function () {
+											column.search($(this).val()).draw()
+										})
+
+									}
 
 								}
 								
@@ -216,46 +267,40 @@ class EventsDatatable extends DataTable
 				"searchable"			=> true,
 			],
 			[
-				"title"					=> __('Date'),
-				"data"					=> "date",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
+				"title"					=> __('UDYAM'),
+				"data"					=> "udyam",
+				"responsivePriority"	=> "1",
+				"orderable"				=> true,
+				"searchable"			=> true,
 			],
 			[
-				"title"					=> __('Days'),
-				"data"					=> "days",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
+				"title"					=> __('Ent. District'),
+				"data"					=> "district",
+				"responsivePriority"	=> "1",
+				"orderable"				=> true,
+				"searchable"			=> true,
 			],
 			[
-				"title"					=> __('Cost'),
-				"data"					=> "cost",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
+				"title"					=> __('Contact Name'),
+				"data"					=> "contact_name",
+				"responsivePriority"	=> "1",
+				"orderable"				=> true,
+				"searchable"			=> true,
 			],
 			[
-				"title"					=> __('Participant Count'),
-				"data"					=> "participant_count",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
+				"title"					=> __('Contact Email'),
+				"data"					=> "contact_email",
+				"responsivePriority"	=> "1",
+				"orderable"				=> true,
+				"searchable"			=> true,
 			],
 			[
-				"title"					=> __('Participant Cost'),
-				"data"					=> "participant_cost",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Registrations'),
-				"data"					=> "registrations",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
+				"title"					=> __('Valid'),
+				"data"					=> "is_valid",
+				"responsivePriority"	=> "1",
+				"orderable"				=> true,
+				"searchable"			=> true,
+				"width"					=> "100",
 			],
 			[
 				"title"					=> __('Action'),

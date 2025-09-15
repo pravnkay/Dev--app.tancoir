@@ -107,6 +107,13 @@
 						'icon'		=> 'fan',
 						'hr'		=> 'true'
 					],			
+					[
+						'label'		=> 'Enterprises',
+						'active'	=> 'backend.rampmanagement.enterprises.*',
+						'route'		=> 'backend.rampmanagement.enterprises.index',
+						'icon'		=> 'building-2',
+						'hr'		=> 'true'
+					],			
 				]
 			],
 

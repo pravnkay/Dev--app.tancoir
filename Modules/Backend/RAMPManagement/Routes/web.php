@@ -79,6 +79,21 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 
 		});
 
+		Route::prefix('enterprises')
+		->name('enterprises.')
+		->group(function () {
+
+			Route::get('/',								\Modules\Backend\RAMPManagement\Actions\Enterprises\Index::class)					->name('index');
+			// Route::get('/create',					\Modules\Backend\RAMPManagement\Actions\Enterprises\Create::class)					->name('create');
+			// Route::post('/',							\Modules\Backend\RAMPManagement\Actions\Enterprises\Store::class)					->name('store');
+			// Route::get('/{enterprise}/edit',			\Modules\Backend\RAMPManagement\Actions\Enterprises\Edit::class)					->name('edit');
+			// Route::put('/{enterprise}',				\Modules\Backend\RAMPManagement\Actions\Enterprises\Update::class)					->name('update');
+			Route::delete('/{enterprise}',				\Modules\Backend\RAMPManagement\Actions\Enterprises\Destroy::class)					->name('destroy');
+
+			Route::post('/{enterprise}/togglevalid',	\Modules\Backend\RAMPManagement\Actions\Enterprises\ToggleValidStatus::class)		->name('toggle_valid_status');
+
+		});
+
 	});
 
 });
