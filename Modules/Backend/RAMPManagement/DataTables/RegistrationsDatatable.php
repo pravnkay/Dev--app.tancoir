@@ -34,7 +34,13 @@ class RegistrationsDatatable extends DataTable
 
     public function query()
     {
-		$registration = EventRegistration::select();
+		$filtered_event = $this->filtered_event;
+		$registration = EventRegistration::with('event');
+
+		if ($filtered_event) {
+			$registration->where('event_id', $filtered_event->id);
+		}
+
 		return $this->applyScopes($registration);
     }
 

@@ -83,7 +83,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 		->name('registrations.')
 		->group(function () {
 
-			Route::get('/', 				\Modules\Backend\RAMPManagement\Actions\Registrations\Index::class)			->name('index');
+			Route::get('/{filtered_event?}', 				\Modules\Backend\RAMPManagement\Actions\Registrations\Index::class)			->name('index');
 
 		});
 

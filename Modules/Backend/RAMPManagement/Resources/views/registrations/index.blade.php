@@ -8,6 +8,21 @@
 
 @section('main-content')
 
+<div class="row">
+	<div class="col w-full md:w-1/2">
+		{{-- <select id="event-picker" name="event" class="uk-select" _="on change log `{{route('backend.rampmanagement.registrations.index')}}/${me.value}`"> --}}
+		<select id="event-picker" name="event" class="uk-select" _="on change go to url `{{route('backend.rampmanagement.registrations.index')}}/${me.value}`">
+			<option value="">All Events</option>
+			@foreach ($all_events as $event)
+				<option value="{{$event->id}}" @selected($filtered_event ? $event->id === $filtered_event->id : false) : >{{$event->name}}</option>
+			@endforeach
+		</select>
+	</div>
+	<div class="col w-full border-border border-t mt-6 mb-6"></div>
+</div>
+
+	
+
 	<div class="row">
 		<div class="col w-full">
 			{!! $dataTable->table([], true) !!}

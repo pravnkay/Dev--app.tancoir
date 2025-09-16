@@ -13,6 +13,8 @@
 	<link rel="stylesheet" href="{{asset('assets/css/custom/tables.css')}}">
 
 	<script src={{asset("assets/libs/jquery/jquery_v3.7.1.js")}}></script>
+	<script src={{asset("assets/libs/htmx/htmx.min.js")}}></script>
+	<script src={{asset("assets/libs/hyperscript/hyperscript_v0.9.14.min.js")}}></script>
 
 	<script src={{asset("assets/libs/datatables/2.3.2/js/dataTables.js")}}></script>
 	<script src={{asset("assets/libs/datatables/2.3.2/js/dataTables.dataTables.js")}}></script>
