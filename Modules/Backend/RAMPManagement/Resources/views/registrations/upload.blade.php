@@ -1,12 +1,12 @@
 @extends('core::layouts.backend.index')
 
-@section('breadcrumbs', Breadcrumbs::render('backend.rampmanagement.events.registrations.create', $event))
+@section('breadcrumbs', Breadcrumbs::render('backend.rampmanagement.registrations.upload', $event))
 
 @section('main-content')
 
 	<div class="row">
 		<div class="col w-full">
-			<form class="uk-form-stacked" action="{{route('backend.rampmanagement.events.registrations.store', ['event' => $event->id])}}" method="POST" autocomplete="off" enctype="multipart/form-data">
+			<form class="uk-form-stacked" action="{{route('backend.rampmanagement.registrations.store_upload', ['filtered_event' => $event->id])}}" method="POST" autocomplete="off" enctype="multipart/form-data">
 				@csrf
 		
 				<div class="row">

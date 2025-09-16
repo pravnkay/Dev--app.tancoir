@@ -20,7 +20,7 @@ class EventsDatatable extends DataTable
 			->addColumn('registrations', function($event) {
 				return view('core::components.datatable.action_column')->with([
 					'show'			=> route('backend.rampmanagement.registrations.index',			["filtered_event"	=> $event->id]),
-					'registration'	=> route('backend.rampmanagement.events.registrations.create',	["event"	=> $event->id]),
+					'registration'	=> route('backend.rampmanagement.registrations.upload',			["filtered_event"	=> $event->id]),
 				])->render();
 			})
 

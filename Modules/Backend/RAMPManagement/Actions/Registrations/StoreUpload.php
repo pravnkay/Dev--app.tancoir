@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Backend\RAMPManagement\Actions\EventRegistrations;
+namespace Modules\Backend\RAMPManagement\Actions\Registrations;
 
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -8,17 +8,17 @@ use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Backend\RAMPManagement\Entities\Event;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
-class Store
+class StoreUpload
 {
 	use AsAction;
 
-	public function handle(ActionRequest $request, Event $event)
+	public function handle(ActionRequest $request, Event $filtered_event)
 	{
 		$validated = $request->validated();
 
 		try {
 
-			\DB::transaction(function () use ($validated, &$event) {
+			\DB::transaction(function () use ($validated, &$filtered_event) {
 
 				$file = $validated['file'];
 				$ext = strtolower($file->getClientOriginalExtension() ?: $file->extension());
@@ -29,9 +29,9 @@ class Store
 
 				$created_models = 0;
 
-				$rows->each(function (array $row, int $index) use (&$created_models, &$event) {
+				$rows->each(function (array $row, int $index) use (&$created_models, &$filtered_event) {
 
-					$event->registration_data()->create([
+					$filtered_event->registrations()->create([
 						'registration_data' => $row
 					]);
 

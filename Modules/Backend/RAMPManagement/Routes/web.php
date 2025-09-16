@@ -67,23 +67,16 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 			Route::put('/{event}', 				\Modules\Backend\RAMPManagement\Actions\Events\Update::class)			->name('update');
 			Route::delete('/{event}', 			\Modules\Backend\RAMPManagement\Actions\Events\Destroy::class)			->name('destroy');
 
-			Route::name('registrations.')
-			->group(function () {
-
-				Route::get('/{event}/registrations', 				\Modules\Backend\RAMPManagement\Actions\EventRegistrations\Index::class)		->name('index');
-				Route::get('/{event}/registrations/create', 		\Modules\Backend\RAMPManagement\Actions\EventRegistrations\Create::class)		->name('create');
-				Route::post('/{event}/registrations', 				\Modules\Backend\RAMPManagement\Actions\EventRegistrations\Store::class)		->name('store');
-				Route::delete('delete/{event_registration}',	 	\Modules\Backend\RAMPManagement\Actions\EventRegistrations\Destroy::class)		->name('destroy');
-
-			});
-
 		});
 
 		Route::prefix('registrations')
 		->name('registrations.')
 		->group(function () {
 
-			Route::get('/{filtered_event?}', 				\Modules\Backend\RAMPManagement\Actions\Registrations\Index::class)			->name('index');
+			Route::get('/{filtered_event?}', 							\Modules\Backend\RAMPManagement\Actions\Registrations\Index::class)			->name('index');
+			Route::get('/{filtered_event}/upload', 						\Modules\Backend\RAMPManagement\Actions\Registrations\Upload::class)		->name('upload');
+			Route::post('/{filtered_event}', 							\Modules\Backend\RAMPManagement\Actions\Registrations\StoreUpload::class)	->name('store_upload');
+			Route::delete('delete/{registration}',	 					\Modules\Backend\RAMPManagement\Actions\Registrations\Destroy::class)		->name('destroy');
 
 		});
 

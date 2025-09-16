@@ -157,4 +157,10 @@ Breadcrumbs::for('backend.rampmanagement.registrations', function (BreadcrumbTra
 	$trail->push('Registrations', route('backend.rampmanagement.registrations.index'));
 });
 
+Breadcrumbs::for('backend.rampmanagement.registrations.upload', function (BreadcrumbTrail $trail, Event $event) {
+	$trail->parent('backend.rampmanagement');
+	$trail->push('Registrations', route('backend.rampmanagement.registrations.index'));
+	$trail->push('Upload', route('backend.rampmanagement.registrations.upload', ['filtered_event' => $event->id]));
+});
+
 

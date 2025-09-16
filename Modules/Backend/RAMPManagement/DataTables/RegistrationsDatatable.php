@@ -2,7 +2,7 @@
 
 namespace Modules\Backend\RAMPManagement\DataTables;
 
-use Modules\Backend\RAMPManagement\Entities\EventRegistration;
+use Modules\Backend\RAMPManagement\Entities\Registration;
 use Yajra\DataTables\Services\DataTable;
 
 class RegistrationsDatatable extends DataTable
@@ -23,8 +23,7 @@ class RegistrationsDatatable extends DataTable
 
 			->addColumn('action', function ($registration) {
 				return view('core::components.datatable.action_column')->with([
-					// 'edit' 		=> route('backend.rampmanagement.registrations.edit', 		["registration"	=> $registration->id]),
-					// 'delete' 	=> route('backend.rampmanagement.registrations.destroy', 	["registration" 	=> $registration->id]),
+					'delete' 	=> route('backend.rampmanagement.registrations.destroy', 	["registration" 	=> $registration->id]),
 				])->render();
 	
 			})
@@ -35,7 +34,7 @@ class RegistrationsDatatable extends DataTable
     public function query()
     {
 		$filtered_event = $this->filtered_event;
-		$registration = EventRegistration::with('event');
+		$registration = Registration::with('event');
 
 		if ($filtered_event) {
 			$registration->where('event_id', $filtered_event->id);
@@ -47,7 +46,7 @@ class RegistrationsDatatable extends DataTable
     public function html()
     {
 		$table_id  = 'registrations-table';
-		$importer_route = route('backend.bulk.import.create', ['model' => 'registrations']);
+		$importer_route = $this->filtered_event ? route('backend.rampmanagement.registrations.upload', ['filtered_event' => $this->filtered_event->id]) : 'javascript:;';
 
         return $this->builder()
                     ->columns($this->getColumns())
@@ -57,7 +56,7 @@ class RegistrationsDatatable extends DataTable
 					
 					->setTableId($table_id)
 					
-					->orderBy(1, 'asc')
+					->orderBy(1, 'desc')
 					
 					->parameters([          
 						'searchDelay' => 1000,

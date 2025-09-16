@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-use Modules\Backend\RAMPManagement\Observers\EventRegistrationObserver;
+use Modules\Backend\RAMPManagement\Observers\RegistrationObserver;
 
 use Modules\Core\Core\Traits\Userstamps;
 
-#[ObservedBy([EventRegistrationObserver::class])]
-class EventRegistration extends Model
+#[ObservedBy([RegistrationObserver::class])]
+class Registration extends Model
 {
 	use Userstamps;
 	
-	protected $table 			= "ramp_event_registrations";
+	protected $table 			= "ramp_registrations";
 
 	protected $guarded = [];
 
