@@ -79,6 +79,14 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 
 		});
 
+		Route::prefix('registrations')
+		->name('registrations.')
+		->group(function () {
+
+			Route::get('/', 				\Modules\Backend\RAMPManagement\Actions\Registrations\Index::class)			->name('index');
+
+		});
+
 		Route::prefix('enterprises')
 		->name('enterprises.')
 		->group(function () {

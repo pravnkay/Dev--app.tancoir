@@ -105,6 +105,12 @@
 						'active'	=> 'backend.rampmanagement.events.*',
 						'route'		=> 'backend.rampmanagement.events.index',
 						'icon'		=> 'fan',
+					],			
+					[
+						'label'		=> 'Registrations',
+						'active'	=> 'backend.rampmanagement.registrations.*',
+						'route'		=> 'backend.rampmanagement.registrations.index',
+						'icon'		=> 'clipboard-pen-line',
 						'hr'		=> 'true'
 					],			
 					[

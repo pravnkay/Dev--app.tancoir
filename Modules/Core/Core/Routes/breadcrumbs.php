@@ -152,4 +152,9 @@ Breadcrumbs::for('backend.rampmanagement.enterprises', function (BreadcrumbTrail
     $trail->push('Enterprises', route('backend.rampmanagement.enterprises.index'));
 });
 
+Breadcrumbs::for('backend.rampmanagement.registrations', function (BreadcrumbTrail $trail) {
+	$trail->parent('backend.rampmanagement');
+	$trail->push('Registrations', route('backend.rampmanagement.registrations.index'));
+});
+
 
