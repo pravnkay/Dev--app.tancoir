@@ -3,6 +3,7 @@
  namespace Modules\Backend\RAMPManagement\Observers;
 
 use Illuminate\Support\Str;
+use Modules\Backend\RAMPManagement\Actions\Registrations\ToggleEligibleToParticipate;
 use Modules\Backend\RAMPManagement\Entities\Enterprise;
 use Modules\Backend\RAMPManagement\Entities\Registration;
 use Modules\Core\Core\Enums\ContactDesignationEnum;
@@ -34,7 +35,7 @@ class RegistrationObserver
      */
     public function created(Registration $registration): void
     {
-		//
+		ToggleEligibleToParticipate::run($registration);
     }
  
     /**

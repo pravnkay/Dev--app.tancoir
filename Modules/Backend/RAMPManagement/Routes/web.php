@@ -73,10 +73,11 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 		->name('registrations.')
 		->group(function () {
 
-			Route::get('/{filtered_event?}', 							\Modules\Backend\RAMPManagement\Actions\Registrations\Index::class)			->name('index');
-			Route::get('/{filtered_event}/upload', 						\Modules\Backend\RAMPManagement\Actions\Registrations\Upload::class)		->name('upload');
-			Route::post('/{filtered_event}', 							\Modules\Backend\RAMPManagement\Actions\Registrations\StoreUpload::class)	->name('store_upload');
-			Route::delete('delete/{registration}',	 					\Modules\Backend\RAMPManagement\Actions\Registrations\Destroy::class)		->name('destroy');
+			Route::get('/{filtered_event?}', 							\Modules\Backend\RAMPManagement\Actions\Registrations\Index::class)							->name('index');
+			Route::get('/{filtered_event}/upload', 						\Modules\Backend\RAMPManagement\Actions\Registrations\Upload::class)						->name('upload');
+			Route::post('/{filtered_event}', 							\Modules\Backend\RAMPManagement\Actions\Registrations\StoreUpload::class)					->name('store_upload');
+			Route::delete('delete/{registration}',	 					\Modules\Backend\RAMPManagement\Actions\Registrations\Destroy::class)						->name('destroy');
+			Route::post('/{registration}/approve',						\Modules\Backend\RAMPManagement\Actions\Registrations\ToggleApprovedToParticipate::class)		->name('toggle_approved_to_participate');
 
 		});
 

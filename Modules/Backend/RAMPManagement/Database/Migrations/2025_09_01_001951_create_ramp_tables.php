@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Modules\Backend\RAMPManagement\Entities\Enterprise;
 use Modules\Backend\RAMPManagement\Entities\Event;
 use Modules\Backend\RAMPManagement\Entities\Programme;
+use Modules\Backend\RAMPManagement\Entities\Registration;
 use Modules\Backend\RAMPManagement\Entities\Vertical;
 use Modules\Core\Core\Enums\ProgrammeSchemeEnum;
 
@@ -27,7 +28,7 @@ return new class extends Migration
 
 		Schema::create('ramp_programmes', function (Blueprint $table) {
 			$table->id();
-			$table->foreignIdFor(Vertical::class)->nullable()->constrained()->nullOnDelete();
+			$table->foreignIdFor(Vertical::class)->nullable()->constrained()->cascadeOnDelete();
 			$table->string('name')->unique();
 			$table->string('scheme')->default(ProgrammeSchemeEnum::NORMAL);
             $table->userTimeStamps();
@@ -35,7 +36,7 @@ return new class extends Migration
 
 		Schema::create('ramp_events', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Programme::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Programme::class)->nullable()->constrained()->cascadeOnDelete();
 			$table->string('name')->nullable();
 			$table->string('title')->nullable();
 			$table->integer('iteration')->nullable();
@@ -74,6 +75,15 @@ return new class extends Migration
 			$table->foreignIdFor(Event::class)->nullable()->constrained()->cascadeOnDelete();
 			$table->foreignIdFor(Enterprise::class)->nullable()->constrained()->cascadeOnDelete();
 			$table->json('registration_data')->nullable();
+			$table->boolean('is_eligible_to_participate')->default(0);
+			$table->boolean('is_approved_to_participate')->default(0);
+			$table->userTimeStamps();
+		});
+
+		Schema::create('ramp_participations', function (Blueprint $table) {
+			$table->id();
+			$table->foreignIdFor(Registration::class)->nullable()->constrained()->cascadeOnDelete();			
+			$table->boolean('participation')->default(0);
 			$table->userTimeStamps();
 		});
 
@@ -92,5 +102,6 @@ return new class extends Migration
         Schema::drop('ramp_event_forms');
         Schema::drop('ramp_registrations');
         Schema::drop('ramp_enterprises');
+        Schema::drop('ramp_participations');
     }
 };

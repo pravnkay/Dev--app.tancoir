@@ -2,6 +2,7 @@
  
  namespace Modules\Backend\RAMPManagement\Observers;
 
+use Modules\Backend\RAMPManagement\Actions\Registrations\ToggleEligibleToParticipate;
 use Modules\Backend\RAMPManagement\Entities\Enterprise;
 
 class EnterpriseObserver
@@ -27,7 +28,7 @@ class EnterpriseObserver
      */
     public function updating(Enterprise $enterprise): void
     {
-        //
+		//
     }
 
     /**
@@ -35,7 +36,12 @@ class EnterpriseObserver
      */
     public function updated(Enterprise $enterprise): void
     {
-        //
+        $registrations = $enterprise->registrations()->get();
+		clock($registrations);
+		foreach ($registrations as $registration) {
+			clock('updated');
+			ToggleEligibleToParticipate::run($registration);
+		}
     }
  
     /**

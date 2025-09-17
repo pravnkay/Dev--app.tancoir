@@ -3,7 +3,8 @@
 namespace Modules\Backend\RAMPManagement\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Core\Core\Enums\ProgrammeSchemeEnum;
 
 use Modules\Core\Core\Traits\Userstamps;
@@ -21,12 +22,12 @@ class Programme extends Model
 		'scheme' => ProgrammeSchemeEnum::class,
 	];
 
-	public function vertical()
+	public function vertical() :BelongsTo
 	{
 		return $this->belongsTo(Vertical::class);
 	}
 
-	public function events()
+	public function events() :HasMany
 	{
 		return $this->hasMany(Event::class);
 	}

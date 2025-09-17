@@ -2,6 +2,7 @@
 
 namespace Modules\Backend\RAMPManagement\DataTables;
 
+use Illuminate\Support\Str;
 use Modules\Backend\RAMPManagement\Entities\Registration;
 use Yajra\DataTables\Services\DataTable;
 
@@ -21,6 +22,42 @@ class RegistrationsDatatable extends DataTable
                 return $registration->event->name;
             })
 
+			->addColumn('enterprise_name', function ($registration) {
+                return Str::of($registration->registration_data['நிறுவனத்தின் பெயர் / Company Name'])->replace('.', ' ')->upper()->squish()->toString();
+            })
+
+			->addColumn('place', function ($registration) {
+                return Str::of($registration->registration_data['ஊர் / Place'])->replace('.', ' ')->squish()->title()->toString();
+            })
+
+			->addColumn('district', function ($registration) {
+                return Str::of($registration->registration_data['மாவட்டம் / District'])->before('/')->lower()->replaceMatches('/[^a-z]+/u', ' ')->squish()->replace(' ', '_')->title()->toString();
+            })
+
+			->addColumn('eligible', function ($registration) {
+
+				$text = $registration->is_eligible_to_participate ? "" : "text-destructive";				
+                $icon = $registration->is_eligible_to_participate ? "check-check" : "x";
+
+				return '<uk-icon class="flex justify-center '.$text.'" icon="'.$icon.'"></uk-icon>';
+
+            })
+
+			->addColumn('approved', function ($registration) {
+
+				$text = $registration->is_approved_to_participate ? "" : "text-destructive";				
+                $icon = $registration->is_approved_to_participate ? "check-check" : "x";
+
+				return 
+				'<form action="'.route('backend.rampmanagement.registrations.toggle_approved_to_participate', ['registration' => $registration->id]).'" method="POST" class="d-inline">
+					'.csrf_field().'
+					<button type="submit">
+						<uk-icon class="flex justify-center '.$text.'" icon="'.$icon.'"></uk-icon>
+					</button>
+				</form>';
+
+            })
+
 			->addColumn('action', function ($registration) {
 				return view('core::components.datatable.action_column')->with([
 					'delete' 	=> route('backend.rampmanagement.registrations.destroy', 	["registration" 	=> $registration->id]),
@@ -28,7 +65,7 @@ class RegistrationsDatatable extends DataTable
 	
 			})
 
-			->rawColumns(['selector', 'action']);
+			->rawColumns(['selector', 'action', 'eligible', 'approved']);
     }
 
     public function query()
@@ -219,7 +256,7 @@ class RegistrationsDatatable extends DataTable
 			],
 			[
 				"title"					=> __('Ent. Name'),
-				"data"					=> "registration_data.நிறுவனத்தின் பெயர் / Company Name",
+				"data"					=> "enterprise_name",
 				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
@@ -233,14 +270,28 @@ class RegistrationsDatatable extends DataTable
 			],
             [
 				"title"					=> __('Place'),
-				"data"					=> "registration_data.ஊர் / Place",
+				"data"					=> "place",
 				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],
             [
 				"title"					=> __('District'),
-				"data"					=> "registration_data.மாவட்டம் / District",
+				"data"					=> "district",
+				"responsivePriority"	=> "1",
+				"orderable"				=> false,
+				"searchable"			=> false,
+			],
+            [
+				"title"					=> __('Eligible'),
+				"data"					=> "eligible",
+				"responsivePriority"	=> "1",
+				"orderable"				=> false,
+				"searchable"			=> false,
+			],
+            [
+				"title"					=> __('Participated'),
+				"data"					=> "approved",
 				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,

@@ -6,29 +6,22 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-use Modules\Backend\RAMPManagement\Observers\RegistrationObserver;
+use Modules\Backend\RAMPManagement\Observers\ParticipationObserver;
 
 use Modules\Core\Core\Traits\Userstamps;
 
-#[ObservedBy([RegistrationObserver::class])]
-class Registration extends Model
+#[ObservedBy([ParticipationObserver::class])]
+class Participation extends Model
 {
 	use Userstamps;
 	
-	protected $table 			= "ramp_registrations";
+	protected $table 			= "ramp_participations";
 
 	protected $guarded = [];
 
 	protected $casts = [
-       'registration_data' => 'array',
-	   'is_eligible_to_participate' => 'boolean',
-	   'is_approved_to_participate' => 'boolean',
+       'participation' => 'boolean'
     ];
-
-	public function event() :BelongsTo
-	{
-		return $this->belongsTo(Event::class);
-	}
 
 	public function enterprise() :BelongsTo
 	{

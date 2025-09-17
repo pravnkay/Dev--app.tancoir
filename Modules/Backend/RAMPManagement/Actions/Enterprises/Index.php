@@ -12,7 +12,7 @@ class Index
 	public function handle(EnterprisesDatatable $datatable)
     {
 		return $datatable->render('rampmanagement::enterprises.index', [
-			'model' => 'Modules\\Backend\\RAMPManagement\\Entities\\Enterprises'
+			'model' => 'Modules\\Backend\\RAMPManagement\\Entities\\Enterprise'
 		]);
     }
 }

@@ -29,6 +29,6 @@ class Enterprise extends Model
 
 	public function registrations() :HasMany
 	{
-		return $this->hasMany(EventRegistration::class);
+		return $this->hasMany(Registration::class);
 	}
 }
