@@ -59,6 +59,9 @@ class Update
 
         $currentTable = $profile->profile_data->getTable();
 
+		clock($currentTable);
+		clock($profile_id);
+
         $baseRules = [
             'udyam' 					=> ['required', 'string', 'regex:/^UDYAM-TN-\d{2}-\d{7}$/', new UniqueAcrossProfileTables('udyam', $currentTable, $profile_id)],
             'contact_person_name' 		=> ['required', 'string', 'max:255', new AlphaDotSpace],

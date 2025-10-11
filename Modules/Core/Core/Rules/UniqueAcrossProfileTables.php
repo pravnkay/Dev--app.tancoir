@@ -36,7 +36,7 @@ class UniqueAcrossProfileTables implements ValidationRule
             
             // Skip the current record when updating
             if ($this->excludeTable === $table && $this->excludeId) {
-                $query->where('id', '!=', $this->excludeId);
+                $query->where('profile_id', '!=', $this->excludeId);
             }
 
             if ($query->exists()) {

@@ -3,11 +3,14 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\App\Profile\Entities\Participant;
+use Modules\App\Profile\Entities\Profile;
 use Modules\Backend\RAMPManagement\Entities\Enterprise;
 use Modules\Backend\RAMPManagement\Entities\Event;
 use Modules\Backend\RAMPManagement\Entities\Programme;
 use Modules\Backend\RAMPManagement\Entities\Registration;
 use Modules\Backend\RAMPManagement\Entities\Vertical;
+use Modules\Core\Auth\Entities\User;
 use Modules\Core\Core\Enums\ProgrammeSchemeEnum;
 
 return new class extends Migration
@@ -45,6 +48,7 @@ return new class extends Migration
 			$table->decimal('cost', 12, 2)->default(0.00);
 			$table->integer('participant_count')->default(20);
 			$table->decimal('participant_cost', 12, 2)->default(0.00);
+			$table->boolean('is_registration_open')->default(0);
             $table->userTimeStamps();
         });
 
@@ -72,10 +76,11 @@ return new class extends Migration
 
 		Schema::create('ramp_registrations', function (Blueprint $table) {
 			$table->id();
-			$table->foreignIdFor(Event::class)->nullable()->constrained()->cascadeOnDelete();
-			$table->foreignIdFor(Enterprise::class)->nullable()->constrained()->cascadeOnDelete();
-			$table->json('registration_data')->nullable();
-			$table->boolean('is_eligible_to_participate')->default(0);
+			$table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+			$table->foreignIdFor(Event::class)->constrained()->cascadeOnDelete();
+			$table->foreignIdFor(Profile::class)->constrained()->cascadeOnDelete();
+			$table->foreignIdFor(Participant::class)->constrained()->cascadeOnDelete();
+			$table->integer('registration_serial');
 			$table->boolean('is_approved_to_participate')->default(0);
 			$table->userTimeStamps();
 		});
@@ -83,11 +88,9 @@ return new class extends Migration
 		Schema::create('ramp_participations', function (Blueprint $table) {
 			$table->id();
 			$table->foreignIdFor(Registration::class)->nullable()->constrained()->cascadeOnDelete();			
-			$table->boolean('participation')->default(0);
+			$table->boolean('has_participated')->default(0);
 			$table->userTimeStamps();
 		});
-
-
 
     }
 

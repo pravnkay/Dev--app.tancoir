@@ -1,5 +1,5 @@
 {
-    "name": "praveen/pubform",
+    "name": "praveen/rampregistration",
     "description": "",
     "authors": [
         {
@@ -17,14 +17,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Backend\\PubForm\\": "/",
-            "Modules\\Backend\\PubForm\\Database\\Factories\\": "Database/Factories/",
-            "Modules\\Backend\\PubForm\\Database\\Seeders\\": "Database/Seeders/"
+            "Modules\\App\\RAMPRegistration\\": "/",
+            "Modules\\App\\RAMPRegistration\\Database\\Factories\\": "Database/Factories/",
+            "Modules\\App\\RAMPRegistration\\Database\\Seeders\\": "Database/Seeders/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Modules\\Backend\\PubForm\\Tests\\": "Tests/"
+            "Modules\\App\\RAMPRegistration\\Tests\\": "Tests/"
         }
     }
 }

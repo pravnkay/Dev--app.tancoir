@@ -23,8 +23,8 @@ class Participation extends Model
        'participation' => 'boolean'
     ];
 
-	public function enterprise() :BelongsTo
+	public function registration() :BelongsTo
 	{
-		return $this->belongsTo(Enterprise::class);
+		return $this->belongsTo(Registration::class);
 	}
 }

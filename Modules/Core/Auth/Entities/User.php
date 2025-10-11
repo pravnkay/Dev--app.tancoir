@@ -77,6 +77,19 @@ class User extends Authenticatable implements MustVerifyEmail
 				])->get();
 	}
 
+	public function allApprovedProfiles()
+	{
+		return $this->profiles()
+			->approved()
+			->with([
+				'association_profile',
+				'cluster_profile',
+				'enterprise_profile',
+				'society_profile',
+			])
+			->get();
+	}
+
 	public function allParticipants()
 	{
 		return $this->participants()->get();

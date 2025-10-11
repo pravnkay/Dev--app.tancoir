@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Backend\PubForm\Providers;
+namespace Modules\App\RAMPRegistration\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -8,13 +8,13 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class PubFormServiceProvider extends ServiceProvider
+class RAMPRegistrationServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'PubForm';
+    protected string $name = 'RAMPRegistration';
 
-    protected string $nameLower = 'pubform';
+    protected string $nameLower = 'rampregistration';
 
     /**
      * Boot the application events.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Backend\PubForm\Providers;
+namespace Modules\App\RAMPRegistration\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 

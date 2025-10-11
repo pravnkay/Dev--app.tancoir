@@ -73,25 +73,27 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 		->name('registrations.')
 		->group(function () {
 
-			Route::get('/{filtered_event?}', 							\Modules\Backend\RAMPManagement\Actions\Registrations\Index::class)							->name('index');
-			Route::get('/{filtered_event}/upload', 						\Modules\Backend\RAMPManagement\Actions\Registrations\Upload::class)						->name('upload');
-			Route::post('/{filtered_event}', 							\Modules\Backend\RAMPManagement\Actions\Registrations\StoreUpload::class)					->name('store_upload');
-			Route::delete('delete/{registration}',	 					\Modules\Backend\RAMPManagement\Actions\Registrations\Destroy::class)						->name('destroy');
+			Route::get('/{filtered_event?}', 							\Modules\Backend\RAMPManagement\Actions\Registrations\Index::class)								->name('index');
+			Route::delete('delete/{registration}',	 					\Modules\Backend\RAMPManagement\Actions\Registrations\Destroy::class)							->name('destroy');
 			Route::post('/{registration}/approve',						\Modules\Backend\RAMPManagement\Actions\Registrations\ToggleApprovedToParticipate::class)		->name('toggle_approved_to_participate');
 
 		});
+
+		Route::prefix('participations')
+		->name('participations.')
+		->group(function () {
+
+			Route::get('/{filtered_event?}', 							\Modules\Backend\RAMPManagement\Actions\Participations\Index::class)						->name('index');
+
+		});
+
 
 		Route::prefix('enterprises')
 		->name('enterprises.')
 		->group(function () {
 
 			Route::get('/',								\Modules\Backend\RAMPManagement\Actions\Enterprises\Index::class)					->name('index');
-			// Route::get('/create',					\Modules\Backend\RAMPManagement\Actions\Enterprises\Create::class)					->name('create');
-			// Route::post('/',							\Modules\Backend\RAMPManagement\Actions\Enterprises\Store::class)					->name('store');
-			// Route::get('/{enterprise}/edit',			\Modules\Backend\RAMPManagement\Actions\Enterprises\Edit::class)					->name('edit');
-			// Route::put('/{enterprise}',				\Modules\Backend\RAMPManagement\Actions\Enterprises\Update::class)					->name('update');
 			Route::delete('/{enterprise}',				\Modules\Backend\RAMPManagement\Actions\Enterprises\Destroy::class)					->name('destroy');
-
 			Route::post('/{enterprise}/togglevalid',	\Modules\Backend\RAMPManagement\Actions\Enterprises\ToggleValidStatus::class)		->name('toggle_valid_status');
 
 		});

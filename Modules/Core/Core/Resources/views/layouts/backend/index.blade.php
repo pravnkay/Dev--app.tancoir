@@ -113,15 +113,21 @@
 						'active'	=> 'backend.rampmanagement.registrations.*',
 						'route'		=> 'backend.rampmanagement.registrations.index',
 						'icon'		=> 'clipboard-pen-line',
-						'hr'		=> 'true'
 					],			
+					[
+						'label'		=> 'Participations',
+						'active'	=> 'backend.rampmanagement.participations.*',
+						'route'		=> 'backend.rampmanagement.participations.index',
+						'icon'		=> 'ticket-check',
+						'hr'		=> 'true'
+					],
 					[
 						'label'		=> 'Enterprises',
 						'active'	=> 'backend.rampmanagement.enterprises.*',
 						'route'		=> 'backend.rampmanagement.enterprises.index',
 						'icon'		=> 'building-2',
 						'hr'		=> 'true'
-					],			
+					],		
 				]
 			],
 

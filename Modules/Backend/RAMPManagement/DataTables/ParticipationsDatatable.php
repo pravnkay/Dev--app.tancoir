@@ -2,10 +2,11 @@
 
 namespace Modules\Backend\RAMPManagement\DataTables;
 
-use Modules\Backend\RAMPManagement\Entities\Event;
+use Illuminate\Support\Str;
+use Modules\Backend\RAMPManagement\Entities\Participation;
 use Yajra\DataTables\Services\DataTable;
 
-class EventsDatatable extends DataTable
+class ParticipationsDatatable extends DataTable
 {
     public function dataTable($query)
     {
@@ -13,44 +14,40 @@ class EventsDatatable extends DataTable
             ->eloquent($query)
             ->addIndexColumn()
 
-			->addColumn('selector', function ($event) {
-                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$event->id.'">';
+			->addColumn('selector', function ($participation) {
+                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$participation->id.'">';
             })
 
-			->addColumn('registration_status', function($event) {
-				$text = $event->is_registration_open ? "" : "text-destructive";				
-                $icon = $event->is_registration_open ? "check-check" : "x";
-				return '<uk-icon class="flex justify-center '.$text.'" icon="'.$icon.'"></uk-icon>';
-			})
+			->addColumn('event', function ($participation) {
+                return $participation->registration->event->name;
+            })
 
-			->addColumn('registrations', function($event) {
+			->addColumn('action', function ($participation) {
 				// return view('core::components.datatable.action_column')->with([
-				// 	'show'			=> route('backend.rampmanagement.registrations.index',			["filtered_event"	=> $event->id]),
-				// 	'registration'	=> route('backend.rampmanagement.registrations.upload',			["filtered_event"	=> $event->id]),
-				// ])->render();
+				// 	'delete' 	=> route('backend.rampmanagement.participations.destroy', 	["participation" 	=> $participation->id]),
+				// ])->render();	
 			})
 
-			->addColumn('action', function ($event) {
-				return view('core::components.datatable.action_column')->with([
-					'edit' 		=> route('backend.rampmanagement.events.edit', 		["event"	=> $event->id]),
-					'delete' 	=> route('backend.rampmanagement.events.destroy', 	["event" 	=> $event->id]),
-				])->render();
-	
-			})
-
-			->rawColumns(['selector', 'registrations', 'registration_status', 'action']);
+			->rawColumns(['selector', 'action', 'eligible', 'approved']);
     }
 
     public function query()
     {
-		$event = Event::select();
-		return $this->applyScopes($event);
+		$filtered_event = $this->filtered_event;
+		$participation = Participation::with(['registration', 'registration.event']);
+
+		if ($filtered_event) {
+			$participation->whereHas('registration', function ($query) use ($filtered_event) {
+				$query->where('event_id', $filtered_event->id);
+			})->get();
+		}
+
+		return $this->applyScopes($participation);
     }
 
     public function html()
     {
-		$table_id  = 'events-table';
-		$importer_route = route('backend.bulk.import.create', ['model' => 'events']);
+		$table_id  = 'participations-table';
 
         return $this->builder()
                     ->columns($this->getColumns())
@@ -121,22 +118,7 @@ class EventsDatatable extends DataTable
 									'className' => ''
 								],
 							],
-							'buttons' => [								
-								[
-									'text' => 'Import',
-									'className'=>'uk-btn uk-btn-default',
-									'action' => "function (e, dt, node, config) {
-										window.location.href = '{$importer_route}';
-									}",
-								],
-								[
-									'text'      => 'Bulk Delete',
-									'className' => 'uk-btn uk-btn-default',
-									'action' => 'function (e, dt, node, config, cb) {
-										e.stopPropagation();
-      									window.open_bulk_delete_confirm(dt, "#bulk-delete-form");
-									}'
-								],
+							'buttons' => [
 								[
 									'extend'=>'reset',
 									'className'=>'uk-btn uk-btn-default'
@@ -215,58 +197,9 @@ class EventsDatatable extends DataTable
 				"width"					=> "25"
 			],
 			[
-				"title"					=> __('Name'),
-				"data"					=> "name",
+				"title"					=> __('Event'),
+				"data"					=> "event",
 				"responsivePriority"	=> "1",
-				"orderable"				=> true,
-				"searchable"			=> true,
-			],
-			[
-				"title"					=> __('Date'),
-				"data"					=> "date",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Days'),
-				"data"					=> "days",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Cost'),
-				"data"					=> "cost",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Participant Count'),
-				"data"					=> "participant_count",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Participant Cost'),
-				"data"					=> "participant_cost",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Reg. Status'),
-				"data"					=> "registration_status",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Registrations'),
-				"data"					=> "registrations",
-				"responsivePriority"	=> "2",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],

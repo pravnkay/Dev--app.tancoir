@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Modules\App\Profile\Entities\Participant;
-use Modules\App\Profile\Entities\Profile;
 use Modules\Backend\RAMPManagement\Observers\RegistrationObserver;
-use Modules\Core\Auth\Entities\User;
+
 use Modules\Core\Core\Traits\Userstamps;
 
 #[ObservedBy([RegistrationObserver::class])]
@@ -22,27 +20,19 @@ class Registration extends Model
 	protected $guarded = [];
 
 	protected $casts = [
+       'registration_data' 			=> 'array',
+	   'is_eligible_to_participate' => 'boolean',
 	   'is_approved_to_participate' => 'boolean',
     ];
-
-	public function user() :BelongsTo
-	{
-		return $this->belongsTo(User::class);
-	}
 
 	public function event() :BelongsTo
 	{
 		return $this->belongsTo(Event::class);
 	}
 
-	public function profile() :BelongsTo
+	public function enterprise() :BelongsTo
 	{
-		return $this->belongsTo(Profile::class);
-	}
-
-	public function participant() :BelongsTo
-	{
-		return $this->belongsTo(Participant::class);
+		return $this->belongsTo(Enterprise::class);
 	}
 
 	public function participation() :HasOne

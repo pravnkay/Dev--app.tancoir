@@ -36,11 +36,11 @@ class EnterpriseObserver
      */
     public function updated(Enterprise $enterprise): void
     {
-        $registrations = $enterprise->registrations()->get();
-		clock($registrations);
-		foreach ($registrations as $registration) {
-			clock('updated');
-			ToggleEligibleToParticipate::run($registration);
+		if ($enterprise->wasChanged('is_a_valid_enterprise')) {
+			$registrations = $enterprise->registrations()->get();
+			foreach ($registrations as $registration) {
+				ToggleEligibleToParticipate::run($registration);
+			}
 		}
     }
  

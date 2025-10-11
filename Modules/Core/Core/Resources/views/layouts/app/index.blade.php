@@ -14,6 +14,8 @@
 
 	<script src={{asset("assets/libs/jquery/jquery_v3.7.1.js")}}></script>
 
+	<script src={{asset("assets/libs/hyperscript/hyperscript_v0.9.14.min.js")}}></script>
+
 	<script src={{asset("assets/libs/datatables/2.3.2/js/dataTables.js")}}></script>
 	<script src={{asset("assets/libs/datatables/2.3.2/js/dataTables.dataTables.js")}}></script>
 	<script src={{asset("assets/libs/datatables/buttons/3.2.4/js/dataTables.buttons.js")}}></script>
@@ -66,7 +68,7 @@
 			],
 
 			"Profile" => [
-				'label'		=> 'Profile',
+				'label'		=> 'Profiles',
 				'active'	=> 'app.profile.*',
 				'route'		=> 'app.profile.index',
 				'icon'		=> 'user-round-pen',
@@ -76,12 +78,22 @@
 			],
 
 			"Participant" => [
-				'label'		=> 'Participant',
+				'label'		=> 'Participants',
 				'active'	=> 'app.participant.*',
 				'route'		=> 'app.participant.index',
-				'icon'		=> 'user-round-pen',
+				'icon'		=> 'users',
 				'links'		=> [
 					
+				]
+			],
+
+			"RAMP Mgmt." => [
+				'label'		=> 'RAMP Registrations',
+				'active'	=> 'app.rampregistration.*',
+				'route'		=> 'app.rampregistration.index',
+				'icon'		=> 'command',
+				'links'		=> [
+
 				]
 			],
 

@@ -14,7 +14,6 @@
 
 	<script src={{asset("assets/libs/hyperscript/hyperscript_v0.9.14.min.js")}}></script>
 	
-
 	<script src={{asset("assets/js/theme/core.iife.js")}} type = "module"></script>
 	<script src={{asset("assets/js/theme/icon.iife.js")}} type = "module"></script>
 

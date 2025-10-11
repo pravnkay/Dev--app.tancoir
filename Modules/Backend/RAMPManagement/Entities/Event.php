@@ -24,9 +24,10 @@ class Event extends Model
 	protected $guarded = [];
 
 	protected $casts = [
-        'date'				=> 'datetime:d/m/Y',
-        'cost'				=> 'decimal:2',
-        'participant_cost'	=> 'decimal:2',
+        'date'					=> 'datetime:d/m/Y',
+        'cost'					=> 'decimal:2',
+        'participant_cost'		=> 'decimal:2',
+        'is_registration_open'	=> 'boolean',
     ];
 
 	public function programme() :BelongsTo

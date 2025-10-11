@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\Backend\PubForm\Providers;
+namespace Modules\App\RAMPRegistration\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
-	protected string $moduleName = 'PubForm';
+	protected string $moduleName = 'RAMPRegistration';
 
-    protected string $moduleNameLower = 'pubform';
+    protected string $moduleNameLower = 'rampregistration';
 
     /**
      * Called before routes are registered.

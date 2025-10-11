@@ -56,6 +56,17 @@ Breadcrumbs::for('app.participant.edit', function (BreadcrumbTrail $trail, Parti
 	]));
 });
 
+Breadcrumbs::for('app.rampregistration', function (BreadcrumbTrail $trail) {
+	$trail->parent('app');
+	$trail->push('RAMP Registration', route('app.rampregistration.index'));
+});
+
+Breadcrumbs::for('app.rampregistration.create', function (BreadcrumbTrail $trail) {
+	$trail->parent('app.rampregistration');
+	$trail->push('Create', route('app.rampregistration.create'));
+});
+
+
 Breadcrumbs::for('backend', function (BreadcrumbTrail $trail) {
     $trail->push('Backend', route('backend.dashboard'));
 });
@@ -161,6 +172,11 @@ Breadcrumbs::for('backend.rampmanagement.registrations.upload', function (Breadc
 	$trail->parent('backend.rampmanagement');
 	$trail->push('Registrations', route('backend.rampmanagement.registrations.index'));
 	$trail->push('Upload', route('backend.rampmanagement.registrations.upload', ['filtered_event' => $event->id]));
+});
+
+Breadcrumbs::for('backend.rampmanagement.participations', function (BreadcrumbTrail $trail) {
+	$trail->parent('backend.rampmanagement');
+	$trail->push('Participations', route('backend.rampmanagement.participations.index'));
 });
 
 

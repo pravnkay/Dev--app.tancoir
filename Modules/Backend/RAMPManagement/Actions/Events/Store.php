@@ -39,6 +39,7 @@ class Store
 			'days' 					=> ['required', 'integer'],
 			'cost' 					=> ['required', new UnsignedDecimal],
 			'participant_count' 	=> ['required', 'integer'],
+			'is_registration_open' 	=> ['required', 'boolean'],
         ];
     }
 }

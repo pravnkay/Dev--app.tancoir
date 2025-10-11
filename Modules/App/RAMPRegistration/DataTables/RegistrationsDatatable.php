@@ -1,11 +1,13 @@
 <?php
 
-namespace Modules\Backend\RAMPManagement\DataTables;
+namespace Modules\App\RAMPRegistration\DataTables;
 
-use Modules\Backend\RAMPManagement\Entities\Event;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Modules\Backend\RAMPManagement\Entities\Registration;
 use Yajra\DataTables\Services\DataTable;
 
-class EventsDatatable extends DataTable
+class RegistrationsDatatable extends DataTable
 {
     public function dataTable($query)
     {
@@ -13,44 +15,45 @@ class EventsDatatable extends DataTable
             ->eloquent($query)
             ->addIndexColumn()
 
-			->addColumn('selector', function ($event) {
-                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$event->id.'">';
+			->addColumn('selector', function ($registration) {
+                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$registration->id.'">';
             })
 
-			->addColumn('registration_status', function($event) {
-				$text = $event->is_registration_open ? "" : "text-destructive";				
-                $icon = $event->is_registration_open ? "check-check" : "x";
+			->addColumn('event', function ($registration) {
+                return $registration->event->name;
+            })
+
+			->addColumn('approved', function ($registration) {
+				$text = $registration->is_approved_to_participate ? "" : "text-destructive";
+                $icon = $registration->is_approved_to_participate ? "check-check" : "x";
 				return '<uk-icon class="flex justify-center '.$text.'" icon="'.$icon.'"></uk-icon>';
-			})
+            })
 
-			->addColumn('registrations', function($event) {
-				// return view('core::components.datatable.action_column')->with([
-				// 	'show'			=> route('backend.rampmanagement.registrations.index',			["filtered_event"	=> $event->id]),
-				// 	'registration'	=> route('backend.rampmanagement.registrations.upload',			["filtered_event"	=> $event->id]),
-				// ])->render();
-			})
-
-			->addColumn('action', function ($event) {
+			->addColumn('action', function ($registration) {
 				return view('core::components.datatable.action_column')->with([
-					'edit' 		=> route('backend.rampmanagement.events.edit', 		["event"	=> $event->id]),
-					'delete' 	=> route('backend.rampmanagement.events.destroy', 	["event" 	=> $event->id]),
+					'delete' 	=> route('app.rampregistration.destroy', 	["registration" 	=> $registration->id]),
 				])->render();
-	
 			})
 
-			->rawColumns(['selector', 'registrations', 'registration_status', 'action']);
+			->rawColumns(['selector', 'action', 'eligible', 'approved']);
     }
 
     public function query()
     {
-		$event = Event::select();
-		return $this->applyScopes($event);
+		$filtered_event = $this->filtered_event;
+		$registration = Registration::where('user_id', Auth::id())->with(['event', 'profile', 'participant']);
+
+		if ($filtered_event) {
+			$registration->where('event_id', $filtered_event->id);
+		}
+
+		return $this->applyScopes($registration);
     }
 
     public function html()
     {
-		$table_id  = 'events-table';
-		$importer_route = route('backend.bulk.import.create', ['model' => 'events']);
+		$table_id  = 'registrations-table';
+		$importer_route = $this->filtered_event ? route('backend.rampmanagement.registrations.upload', ['filtered_event' => $this->filtered_event->id]) : 'javascript:;';
 
         return $this->builder()
                     ->columns($this->getColumns())
@@ -215,60 +218,19 @@ class EventsDatatable extends DataTable
 				"width"					=> "25"
 			],
 			[
-				"title"					=> __('Name'),
-				"data"					=> "name",
+				"title"					=> __('Event'),
+				"data"					=> "event",
 				"responsivePriority"	=> "1",
-				"orderable"				=> true,
-				"searchable"			=> true,
-			],
-			[
-				"title"					=> __('Date'),
-				"data"					=> "date",
-				"responsivePriority"	=> "2",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],
-			[
-				"title"					=> __('Days'),
-				"data"					=> "days",
-				"responsivePriority"	=> "2",
+            [
+				"title"					=> __('Approved'),
+				"data"					=> "approved",
+				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Cost'),
-				"data"					=> "cost",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Participant Count'),
-				"data"					=> "participant_count",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Participant Cost'),
-				"data"					=> "participant_cost",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Reg. Status'),
-				"data"					=> "registration_status",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-			[
-				"title"					=> __('Registrations'),
-				"data"					=> "registrations",
-				"responsivePriority"	=> "2",
-				"orderable"				=> false,
-				"searchable"			=> false,
+				"width"					=> "100",
 			],
 			[
 				"title"					=> __('Action'),

@@ -18,34 +18,46 @@ class RegistrationsDatatable extends DataTable
                 return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$registration->id.'">';
             })
 
+			->addColumn('user', function ($registration) {
+                return $registration->user->name;
+            })
+
 			->addColumn('event', function ($registration) {
                 return $registration->event->name;
             })
 
-			->addColumn('enterprise_name', function ($registration) {
-                return Str::of($registration->registration_data['நிறுவனத்தின் பெயர் / Company Name'])->replace('.', ' ')->upper()->squish()->toString();
+			->addColumn('profile', function ($registration) {
+                return $registration->profile->name;
             })
 
-			->addColumn('place', function ($registration) {
-                return Str::of($registration->registration_data['ஊர் / Place'])->replace('.', ' ')->squish()->title()->toString();
+			->addColumn('participant', function ($registration) {
+                return $registration->participant->name;
             })
 
-			->addColumn('district', function ($registration) {
-                return Str::of($registration->registration_data['மாவட்டம் / District'])->before('/')->lower()->replaceMatches('/[^a-z]+/u', ' ')->squish()->replace(' ', '_')->title()->toString();
-            })
+			// ->addColumn('enterprise_name', function ($registration) {
+            //     return Str::of($registration->registration_data['நிறுவனத்தின் பெயர் / Company Name'])->replace('.', ' ')->upper()->squish()->toString();
+            // })
 
-			->addColumn('eligible', function ($registration) {
+			// ->addColumn('place', function ($registration) {
+            //     return Str::of($registration->registration_data['ஊர் / Place'])->replace('.', ' ')->squish()->title()->toString();
+            // })
 
-				$text = $registration->is_eligible_to_participate ? "" : "text-destructive";				
-                $icon = $registration->is_eligible_to_participate ? "check-check" : "x";
+			// ->addColumn('district', function ($registration) {
+            //     return Str::of($registration->registration_data['மாவட்டம் / District'])->before('/')->lower()->replaceMatches('/[^a-z]+/u', ' ')->squish()->replace(' ', '_')->title()->toString();
+            // })
 
-				return '<uk-icon class="flex justify-center '.$text.'" icon="'.$icon.'"></uk-icon>';
+			// ->addColumn('eligible', function ($registration) {
 
-            })
+			// 	$text = $registration->is_eligible_to_participate ? "" : "text-destructive";
+            //     $icon = $registration->is_eligible_to_participate ? "check-check" : "x";
+
+			// 	return '<uk-icon class="flex justify-center '.$text.'" icon="'.$icon.'"></uk-icon>';
+
+            // })
 
 			->addColumn('approved', function ($registration) {
 
-				$text = $registration->is_approved_to_participate ? "" : "text-destructive";				
+				$text = $registration->is_approved_to_participate ? "" : "text-destructive";
                 $icon = $registration->is_approved_to_participate ? "check-check" : "x";
 
 				return 
@@ -61,8 +73,7 @@ class RegistrationsDatatable extends DataTable
 			->addColumn('action', function ($registration) {
 				return view('core::components.datatable.action_column')->with([
 					'delete' 	=> route('backend.rampmanagement.registrations.destroy', 	["registration" 	=> $registration->id]),
-				])->render();
-	
+				])->render();	
 			})
 
 			->rawColumns(['selector', 'action', 'eligible', 'approved']);
@@ -71,7 +82,7 @@ class RegistrationsDatatable extends DataTable
     public function query()
     {
 		$filtered_event = $this->filtered_event;
-		$registration = Registration::with('event');
+		$registration = Registration::with(['user', 'event', 'profile', 'participant']);
 
 		if ($filtered_event) {
 			$registration->where('event_id', $filtered_event->id);
@@ -248,6 +259,13 @@ class RegistrationsDatatable extends DataTable
 				"width"					=> "25"
 			],
 			[
+				"title"					=> __('User'),
+				"data"					=> "user",
+				"responsivePriority"	=> "1",
+				"orderable"				=> true,
+				"searchable"			=> true,
+			],
+			[
 				"title"					=> __('Event'),
 				"data"					=> "event",
 				"responsivePriority"	=> "1",
@@ -255,46 +273,26 @@ class RegistrationsDatatable extends DataTable
 				"searchable"			=> false,
 			],
 			[
-				"title"					=> __('Ent. Name'),
-				"data"					=> "enterprise_name",
+				"title"					=> __('Profile'),
+				"data"					=> "profile",
+				"responsivePriority"	=> "1",
+				"orderable"				=> false,
+				"searchable"			=> false,
+			],
+			[
+				"title"					=> __('Participant'),
+				"data"					=> "participant",
 				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
 			],
             [
-				"title"					=> __('UDYAM'),
-				"data"					=> "registration_data.உதயம் எண் / UDYAM No. (Format: UDYAM-TN-00-0000000)",
-				"responsivePriority"	=> "1",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-            [
-				"title"					=> __('Place'),
-				"data"					=> "place",
-				"responsivePriority"	=> "1",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-            [
-				"title"					=> __('District'),
-				"data"					=> "district",
-				"responsivePriority"	=> "1",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-            [
-				"title"					=> __('Eligible'),
-				"data"					=> "eligible",
-				"responsivePriority"	=> "1",
-				"orderable"				=> false,
-				"searchable"			=> false,
-			],
-            [
-				"title"					=> __('Participated'),
+				"title"					=> __('Participation Approved?'),
 				"data"					=> "approved",
 				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
+				"width"					=> "100",
 			],
 			[
 				"title"					=> __('Action'),
