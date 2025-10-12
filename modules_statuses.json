@@ -6,5 +6,5 @@
     "Profile": true,
     "Moderation": true,
     "RAMPManagement": true,
-    "RAMPRegistration": true
+    "RAMP": true
 }

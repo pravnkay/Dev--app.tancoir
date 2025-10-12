@@ -56,14 +56,15 @@ Breadcrumbs::for('app.participant.edit', function (BreadcrumbTrail $trail, Parti
 	]));
 });
 
-Breadcrumbs::for('app.rampregistration', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('app.ramp.registration', function (BreadcrumbTrail $trail) {
 	$trail->parent('app');
-	$trail->push('RAMP Registration', route('app.rampregistration.index'));
+	$trail->push('RAMP');
+	$trail->push('Registration', route('app.ramp.registration.index'));
 });
 
-Breadcrumbs::for('app.rampregistration.create', function (BreadcrumbTrail $trail) {
-	$trail->parent('app.rampregistration');
-	$trail->push('Create', route('app.rampregistration.create'));
+Breadcrumbs::for('app.ramp.registration.create', function (BreadcrumbTrail $trail) {
+	$trail->parent('app.ramp.registration');
+	$trail->push('Create', route('app.ramp.registration.create'));
 });
 
 

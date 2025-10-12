@@ -1,12 +1,13 @@
 <?php
 
-namespace Modules\Backend\RAMPManagement\DataTables;
+namespace Modules\App\RAMP\DataTables;
 
-use Modules\Backend\RAMPManagement\Entities\Enterprise;
-use Modules\Core\Core\Enums\DistrictEnum;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Modules\Backend\RAMPManagement\Entities\Registration;
 use Yajra\DataTables\Services\DataTable;
 
-class EnterprisesDatatable extends DataTable
+class RegistrationsDatatable extends DataTable
 {
     public function dataTable($query)
     {
@@ -14,60 +15,50 @@ class EnterprisesDatatable extends DataTable
             ->eloquent($query)
             ->addIndexColumn()
 
-			->addColumn('selector', function ($enterprise) {
-                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$enterprise->id.'">';
-            })	
-
-			->addColumn('district', function ($msme) {
-                return $msme->district->label();
+			->addColumn('selector', function ($registration) {
+                return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$registration->id.'">';
             })
 
-			->filterColumn('district', fn($query, $keyword) => $query->where('district', '=', "$keyword"))
-			
-			->addColumn('is_valid', function ($enterprise) {
-                $text = $enterprise->is_a_valid_enterprise ? "" : "text-destructive";				
-                $icon = $enterprise->is_a_valid_enterprise ? "check-check" : "x";
-				return 
-				'<form action="'.route('backend.rampmanagement.enterprises.toggle_valid_status', ['enterprise' => $enterprise->id]).'" method="POST" class="d-inline">
-					'.csrf_field().'
-					<button type="submit">
-						<uk-icon class="flex justify-center '.$text.'" icon="'.$icon.'"></uk-icon>
-					</button>
-				</form>';
+			->addColumn('event', function ($registration) {
+                return $registration->event->title;
             })
 
-			->filterColumn('is_valid', function ($query, $keyword) {
-				$keyword = $keyword == 'Valid' ? 1 : 0;
-				return  $query->where('is_a_valid_enterprise', '=', "$keyword");
+			->addColumn('profile', function ($registration) {
+                return $registration->profile->name;
+            })
+
+			->addColumn('participant', function ($registration) {
+                return $registration->participant->name;
+            })
+
+			->addColumn('approved', function ($registration) {
+				$text = $registration->is_approved_to_participate ? "" : "text-destructive";
+                $icon = $registration->is_approved_to_participate ? "check-check" : "x";
+				return '<uk-icon class="flex justify-center '.$text.'" icon="'.$icon.'"></uk-icon>';
+            })
+
+			->addColumn('action', function ($registration) {
+				return '<uk-icon class="flex justify-center my-2" icon="info" data-uk-tooltip="Contact TANCOIR to Edit/Delete"></uk-icon>';
 			})
 
-			->addColumn('action', function ($enterprise) {
-				return view('core::components.datatable.action_column')->with([
-					// 'edit' 		=> route('backend.rampmanagement.enterprises.edit', 		["enterprise"	=> $enterprise->id]),
-					'delete' 	=> route('backend.rampmanagement.enterprises.destroy', 	["enterprise" 	=> $enterprise->id]),
-				])->render();
-	
-			})
-
-			->rawColumns(['selector', 'is_valid', 'action']);
+			->rawColumns(['selector', 'action', 'eligible', 'approved']);
     }
 
     public function query()
     {
-		$enterprise = Enterprise::select();
-		return $this->applyScopes($enterprise);
+		$filtered_event = $this->filtered_event;
+		$registration = Registration::where('user_id', Auth::id())->with(['event', 'profile', 'participant']);
+
+		if ($filtered_event) {
+			$registration->where('event_id', $filtered_event->id);
+		}
+
+		return $this->applyScopes($registration);
     }
 
     public function html()
     {
-		$table_id  = 'enterprises-table';
-		$importer_route = route('backend.bulk.import.create', ['model' => 'enterprises']);
-
-		$is_valid = [0 => 'Not Valid', 1 => 'Valid'];
-		$valid_selector = view('core::components.datatable.select_filter', ['options' => $is_valid])->render();
-
-		$districts = DistrictEnum::asArray();
-		$districts_selector = view('core::components.datatable.select_filter', ['options' => $districts])->render();
+		$table_id  = 'registrations-table';
 
         return $this->builder()
                     ->columns($this->getColumns())
@@ -109,34 +100,6 @@ class EnterprisesDatatable extends DataTable
 										column.search($(this).val(), false, false, true).draw();
 									});
 
-									if(colDef.data === 'is_valid') {
-
-										var select = `".$valid_selector."`
-
-										$(select).appendTo($(column.footer()).empty())
-										.on('click', function (e) {
-											e.stopPropagation()
-										})
-										.on('change', function () {
-											column.search($(this).val()).draw()
-										})
-
-									}
-
-									if(colDef.data === 'district') {
-
-										var select = `".$districts_selector."`
-
-										$(select).appendTo($(column.footer()).empty())
-										.on('click', function (e) {
-											e.stopPropagation()
-										})
-										.on('change', function () {
-											column.search($(this).val()).draw()
-										})
-
-									}
-
 								}
 								
 							});
@@ -166,22 +129,7 @@ class EnterprisesDatatable extends DataTable
 									'className' => ''
 								],
 							],
-							'buttons' => [								
-								[
-									'text' => 'Import',
-									'className'=>'uk-btn uk-btn-default',
-									'action' => "function (e, dt, node, config) {
-										window.location.href = '{$importer_route}';
-									}",
-								],
-								[
-									'text'      => 'Bulk Delete',
-									'className' => 'uk-btn uk-btn-default',
-									'action' => 'function (e, dt, node, config, cb) {
-										e.stopPropagation();
-      									window.open_bulk_delete_confirm(dt, "#bulk-delete-form");
-									}'
-								],
+							'buttons' => [
 								[
 									'extend'=>'reset',
 									'className'=>'uk-btn uk-btn-default'
@@ -260,46 +208,32 @@ class EnterprisesDatatable extends DataTable
 				"width"					=> "25"
 			],
 			[
-				"title"					=> __('Name'),
-				"data"					=> "name",
+				"title"					=> __('Event'),
+				"data"					=> "event",
+				"responsivePriority"	=> "1",
+				"orderable"				=> false,
+				"searchable"			=> false,
+			],
+			[
+				"title"					=> __('Profile'),
+				"data"					=> "profile",
 				"responsivePriority"	=> "1",
 				"orderable"				=> true,
 				"searchable"			=> true,
 			],
 			[
-				"title"					=> __('UDYAM'),
-				"data"					=> "udyam",
+				"title"					=> __('Participant'),
+				"data"					=> "participant",
 				"responsivePriority"	=> "1",
-				"orderable"				=> true,
-				"searchable"			=> true,
+				"orderable"				=> false,
+				"searchable"			=> false,
 			],
-			[
-				"title"					=> __('Ent. District'),
-				"data"					=> "district",
+            [
+				"title"					=> __('Approved to participate'),
+				"data"					=> "approved",
 				"responsivePriority"	=> "1",
-				"orderable"				=> true,
-				"searchable"			=> true,
-			],
-			[
-				"title"					=> __('Contact Name'),
-				"data"					=> "contact_name",
-				"responsivePriority"	=> "1",
-				"orderable"				=> true,
-				"searchable"			=> true,
-			],
-			[
-				"title"					=> __('Contact Email'),
-				"data"					=> "contact_email",
-				"responsivePriority"	=> "1",
-				"orderable"				=> true,
-				"searchable"			=> true,
-			],
-			[
-				"title"					=> __('Valid'),
-				"data"					=> "is_valid",
-				"responsivePriority"	=> "1",
-				"orderable"				=> true,
-				"searchable"			=> true,
+				"orderable"				=> false,
+				"searchable"			=> false,
 				"width"					=> "100",
 			],
 			[
@@ -311,7 +245,7 @@ class EnterprisesDatatable extends DataTable
 				"exportable"			=> false,
 				"printable"				=> false,
 				"width"					=> "100",
-				"class"					=> "flex gap-x-1",
+				"className"				=> "text-center",
 			],
         ];
     }

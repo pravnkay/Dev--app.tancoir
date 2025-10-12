@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+
+use Modules\Backend\RAMPManagement\Entities\Registration;
+
 use Modules\Core\Auth\Entities\User;
 use Modules\Core\Core\Enums\ProfileStatusEnum;
 use Modules\Core\Core\Enums\ProfileTypeEnum;
@@ -30,6 +33,11 @@ class Profile extends Model
 	public function participants() :HasMany
     {
         return $this->hasMany(Participant::class);
+    }
+
+	public function registrations() :HasMany
+    {
+        return $this->hasMany(Registration::class);
     }
 
 	public function scopeApproved($query)

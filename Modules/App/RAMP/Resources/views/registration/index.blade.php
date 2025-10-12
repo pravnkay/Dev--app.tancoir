@@ -5,10 +5,10 @@
 	<div class="space-y-4 mb-4">
 		<div class="flex justify-between">
 			<div class="self-center">
-				{{ Breadcrumbs::render('app.rampregistration') }}
+				{{ Breadcrumbs::render('app.ramp.registration') }}
 			</div>
 			<div class="self-end"> 
-				<a type="button" href="{{route('app.rampregistration.create')}}" class="uk-btn uk-btn-primary self-end">New Registration</a>					
+				<a type="button" href="{{route('app.ramp.registration.create')}}" class="uk-btn uk-btn-primary self-end">New Registration</a>					
 			</div>
 		</div>		
 		<div class="border-border border-t"></div>

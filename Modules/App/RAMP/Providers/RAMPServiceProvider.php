@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\App\RAMPRegistration\Providers;
+namespace Modules\App\RAMP\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -8,13 +8,13 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class RAMPRegistrationServiceProvider extends ServiceProvider
+class RAMPServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'RAMPRegistration';
+    protected string $name = 'RAMP';
 
-    protected string $nameLower = 'rampregistration';
+    protected string $nameLower = 'ramp';
 
     /**
      * Boot the application events.

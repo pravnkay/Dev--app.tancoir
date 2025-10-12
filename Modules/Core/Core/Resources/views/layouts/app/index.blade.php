@@ -88,9 +88,9 @@
 			],
 
 			"RAMP Mgmt." => [
-				'label'		=> 'RAMP Registrations',
-				'active'	=> 'app.rampregistration.*',
-				'route'		=> 'app.rampregistration.index',
+				'label'		=> 'RAMP',
+				'active'	=> 'app.ramp.registration.*',
+				'route'		=> 'app.ramp.registration.index',
 				'icon'		=> 'command',
 				'links'		=> [
 

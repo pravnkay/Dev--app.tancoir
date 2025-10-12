@@ -18,15 +18,20 @@ Route::middleware(['auth', 'verified', 'role:user'])
 ->name('app.')
 ->group(function () {
 
-	Route::prefix('rampregistration')
-	->name('rampregistration.')
+	Route::prefix('ramp')
+	->name('ramp.')
 	->group(function () {
 
-		Route::get('/', 							\Modules\App\RAMPRegistration\Actions\RAMPRegistration\Index::class)			->name('index');
-		Route::get('/create', 						\Modules\App\RAMPRegistration\Actions\RAMPRegistration\Create::class)			->name('create');
-		Route::post('/', 							\Modules\App\RAMPRegistration\Actions\RAMPRegistration\Store::class)			->name('store');
-		Route::delete('delete/{registration}',	 	\Modules\App\RAMPRegistration\Actions\RAMPRegistration\Destroy::class)			->name('destroy');
+		Route::prefix('registration')
+		->name('registration.')
+		->group(function () {
 
+			Route::get('/', 							\Modules\App\RAMP\Actions\Registration\Index::class)			->name('index');
+			Route::get('/create', 						\Modules\App\RAMP\Actions\Registration\Create::class)			->name('create');
+			Route::post('/', 							\Modules\App\RAMP\Actions\Registration\Store::class)			->name('store');
+
+		});
+	
 	});
 
 });

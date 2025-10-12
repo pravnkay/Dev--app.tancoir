@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\App\RAMPRegistration\Providers;
+namespace Modules\App\RAMP\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
-	protected string $moduleName = 'RAMPRegistration';
+	protected string $moduleName = 'RAMP';
 
-    protected string $moduleNameLower = 'rampregistration';
+    protected string $moduleNameLower = 'ramp';
 
     /**
      * Called before routes are registered.

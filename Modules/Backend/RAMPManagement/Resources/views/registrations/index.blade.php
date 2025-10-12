@@ -9,8 +9,7 @@
 @section('main-content')
 
 <div class="row">
-	<div class="col w-full md:w-1/2">
-		{{-- <select id="event-picker" name="event" class="uk-select" _="on change log `{{route('backend.rampmanagement.registrations.index')}}/${me.value}`"> --}}
+	<div class="col w-full md:w-2/4">
 		<select id="event-picker" name="event" class="uk-select" _="on change go to url `{{route('backend.rampmanagement.registrations.index')}}/${me.value}`">
 			<option value="">All Events</option>
 			@foreach ($all_events as $event)
@@ -18,6 +17,26 @@
 			@endforeach
 		</select>
 	</div>
+
+	@if ($slot_summary)
+		<div class="col w-full md:w-1/4 mb-3">
+			<div class="uk-card uk-card-body">
+				<h3 class="uk-card-title">{{$slot_summary['filled']}}</h3>
+				<p class="mt-4">
+					Registration Details
+				</p>			
+			</div>
+		</div>
+		<div class="col w-full md:w-1/4 mb-3">
+			<div class="uk-card uk-card-body">
+				<h3 class="uk-card-title">{{$slot_summary['approved']}}/{{$slot_summary['total']}}</h3>
+				<p class="mt-4">
+					Participant Details
+				</p>			
+			</div>
+		</div>
+	@endif
+
 	<div class="col w-full border-border border-t mt-6 mb-6"></div>
 </div>
 

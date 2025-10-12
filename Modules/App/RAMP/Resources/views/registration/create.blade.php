@@ -5,14 +5,14 @@
 <div class="row">
 	<div class="col w-full">
 
-	<x-core::form action="{{route('app.rampregistration.store')}}"> 
+	<x-core::form action="{{route('app.ramp.registration.store')}}"> 
 
 		<div class="row">
 
 			<div class="col w-full">	
 				<div class="row">
 					<div class="col w-6/12 content-end">
-						{{ Breadcrumbs::render('app.rampregistration.create') }}
+						{{ Breadcrumbs::render('app.ramp.registration.create') }}
 					</div>
 					<div class="col w-6/12 flex items-end justify-end">
 						<x-core::anchor back /> 
@@ -34,9 +34,9 @@
 
 								<div class="uk-form-controls">
 									<select name="event_id" id="event_selector" class="uk-select" required>
-										<option hidden disabled selected value=""> -- Pick one open event -- </option>
+										<option hidden disabled value=""  @selected(old('event_id') === null)> -- Pick one open event -- </option>
 										@foreach ($registration_open_event_list as $event)
-											<option value="{{$event['id']}}">{{$event['name']}}</option>									
+											<option value="{{$event['id']}}" @selected(old('event_id'))>{{$event['name']}}</option>									
 										@endforeach								
 									</select>
 								</div>
@@ -50,13 +50,15 @@
 								</label>
 
 								<div class="uk-form-controls">
-									<select name="profile_id" id="profile_selector" placeholder="..." class="uk-select" label="Select a profile" aria-label="Select a profile" required>
+									<select name="profile_id" id="profile_selector" placeholder="..." class="uk-select @error('profile_id') uk-form-destructive @enderror" label="Select a profile" aria-label="Select a profile" required>
 										<option hidden disabled selected value=""> -- Pick one -- </option>
 										@foreach ($approved_profile_list as $profile)
 											<option value="{{$profile['id']}}">{{$profile['name']}}</option>									
 										@endforeach								
 									</select>
 								</div>
+
+								<x-core::errors name="profile_id"/>
 							</div>
 						</div>
 

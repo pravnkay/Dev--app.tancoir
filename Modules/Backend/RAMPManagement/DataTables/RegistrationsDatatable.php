@@ -34,27 +34,6 @@ class RegistrationsDatatable extends DataTable
                 return $registration->participant->name;
             })
 
-			// ->addColumn('enterprise_name', function ($registration) {
-            //     return Str::of($registration->registration_data['நிறுவனத்தின் பெயர் / Company Name'])->replace('.', ' ')->upper()->squish()->toString();
-            // })
-
-			// ->addColumn('place', function ($registration) {
-            //     return Str::of($registration->registration_data['ஊர் / Place'])->replace('.', ' ')->squish()->title()->toString();
-            // })
-
-			// ->addColumn('district', function ($registration) {
-            //     return Str::of($registration->registration_data['மாவட்டம் / District'])->before('/')->lower()->replaceMatches('/[^a-z]+/u', ' ')->squish()->replace(' ', '_')->title()->toString();
-            // })
-
-			// ->addColumn('eligible', function ($registration) {
-
-			// 	$text = $registration->is_eligible_to_participate ? "" : "text-destructive";
-            //     $icon = $registration->is_eligible_to_participate ? "check-check" : "x";
-
-			// 	return '<uk-icon class="flex justify-center '.$text.'" icon="'.$icon.'"></uk-icon>';
-
-            // })
-
 			->addColumn('approved', function ($registration) {
 
 				$text = $registration->is_approved_to_participate ? "" : "text-destructive";
@@ -303,7 +282,7 @@ class RegistrationsDatatable extends DataTable
 				"exportable"			=> false,
 				"printable"				=> false,
 				"width"					=> "100",
-				"class"					=> "flex gap-x-1",
+				"class"					=> "my-2",
 			],
         ];
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\App\RAMPRegistration\Actions\RAMPRegistration;
+namespace Modules\App\RAMP\Actions\Registration;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -50,7 +50,7 @@ class Store
 		}		
 
 		notify('Registered successfully!', ['icon' => 'circle-check-big']);
-		return redirect()->route('app.rampregistration.index');
+		return redirect()->route('app.ramp.registration.index');
 	}
 
 	public function prepareForValidation(ActionRequest $request)
@@ -62,14 +62,42 @@ class Store
 		$request->replace($input);
 	}
 
-	public function rules()
+	public function rules(ActionRequest $request)
     {
+		$event = Event::select(['id', 'programme_id'])->find($request->input('event_id'));
+
+		$profileRules = [
+			'required',
+			Rule::exists('profile_profiles', 'id'),
+			Rule::unique('ramp_registrations', 'profile_id')->where(function ($query) use ($request) {
+				return $query->where('event_id', $request->input('event_id'));
+			}),
+		];
+
+		if ($event && $event->programme_id) {
+			$profileRules[] = Rule::unique('ramp_registrations', 'profile_id')
+				->where(function ($query) use ($event) {
+					return $query->whereIn('event_id', function ($subQuery) use ($event) {
+						$subQuery->select('id')
+							->from('ramp_events')
+							->where('programme_id', $event->programme_id);
+					});
+				});
+		}
+
         return [
 			'user_id' 			=> ['required', Rule::exists('acl_users', 'id')],
 			'event_id' 			=> ['required', Rule::exists('ramp_events', 'id')],
-			'profile_id' 		=> ['required', Rule::exists('profile_profiles', 'id')],
+			'profile_id' 		=> $profileRules,
 			'participant_id' 	=> ['required', Rule::exists('profile_participants', 'id')],
         ];
     }
+
+	public function getValidationMessages(): array
+	{
+		return [
+			'profile_id.unique' => 'This profile is already registered for this event or another event under the same programme.',
+		];
+	}
 
 }

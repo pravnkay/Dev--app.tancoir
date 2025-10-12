@@ -14,6 +14,10 @@ class ProfilesDatatable extends DataTable
             ->of($query)
             ->addIndexColumn()	
 
+			->addColumn('user', function($profile) {
+				return $profile->user->name;
+			})
+
 			->addColumn('type', function($profile) {
 				return $profile->type->label().' Profile';
 			})		
@@ -173,6 +177,13 @@ class ProfilesDatatable extends DataTable
 				"orderable"				=> false,
 				"searchable"			=> false,
 				"width"					=> "25"
+			],
+			[
+				"title"					=> __('User'),
+				"data"					=> "user",
+				"responsivePriority"	=> "1",
+				"orderable"				=> true,
+				"searchable"			=> true,
 			],
 			[
 				"title"					=> __('Name'),

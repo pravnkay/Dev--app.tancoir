@@ -1,5 +1,5 @@
 {
-    "name": "praveen/rampregistration",
+    "name": "praveen/ramp",
     "description": "",
     "authors": [
         {
@@ -17,14 +17,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\App\\RAMPRegistration\\": "/",
-            "Modules\\App\\RAMPRegistration\\Database\\Factories\\": "Database/Factories/",
-            "Modules\\App\\RAMPRegistration\\Database\\Seeders\\": "Database/Seeders/"
+            "Modules\\App\\RAMP\\": "/",
+            "Modules\\App\\RAMP\\Database\\Factories\\": "Database/Factories/",
+            "Modules\\App\\RAMP\\Database\\Seeders\\": "Database/Seeders/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Modules\\App\\RAMPRegistration\\Tests\\": "Tests/"
+            "Modules\\App\\RAMP\\Tests\\": "Tests/"
         }
     }
 }

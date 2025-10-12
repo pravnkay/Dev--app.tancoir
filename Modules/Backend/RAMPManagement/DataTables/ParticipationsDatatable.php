@@ -18,14 +18,30 @@ class ParticipationsDatatable extends DataTable
                 return '<input form="bulk-delete-form" type="checkbox" class="row-select uk-checkbox" name="ids[]" value="'.$participation->id.'">';
             })
 
+			->addColumn('user', function ($participation) {
+                return $participation->registration->user->name;
+            })
+
+			->filterColumn('user', function ($query, $keyword) {
+				$query->whereHas('registration.user', function ($userQuery) use ($keyword) {
+					$userQuery->where('name', 'like', "%{$keyword}%");
+				});
+			})
+
 			->addColumn('event', function ($participation) {
                 return $participation->registration->event->name;
             })
 
+			->addColumn('profile', function ($participation) {
+                return $participation->registration->profile->name;
+            })
+
+			->addColumn('participant', function ($participation) {
+                return $participation->registration->participant->name;
+            })
+
 			->addColumn('action', function ($participation) {
-				// return view('core::components.datatable.action_column')->with([
-				// 	'delete' 	=> route('backend.rampmanagement.participations.destroy', 	["participation" 	=> $participation->id]),
-				// ])->render();	
+				return '<uk-icon class="flex justify-center my-2" icon="info" data-uk-tooltip="Edit/Delete through registrations"></uk-icon>';	
 			})
 
 			->rawColumns(['selector', 'action', 'eligible', 'approved']);
@@ -197,8 +213,29 @@ class ParticipationsDatatable extends DataTable
 				"width"					=> "25"
 			],
 			[
+				"title"					=> __('User'),
+				"data"					=> "user",
+				"responsivePriority"	=> "1",
+				"orderable"				=> true,
+				"searchable"			=> true,
+			],
+			[
 				"title"					=> __('Event'),
 				"data"					=> "event",
+				"responsivePriority"	=> "1",
+				"orderable"				=> false,
+				"searchable"			=> false,
+			],
+			[
+				"title"					=> __('Profile'),
+				"data"					=> "profile",
+				"responsivePriority"	=> "1",
+				"orderable"				=> false,
+				"searchable"			=> false,
+			],
+			[
+				"title"					=> __('Participant'),
+				"data"					=> "participant",
 				"responsivePriority"	=> "1",
 				"orderable"				=> false,
 				"searchable"			=> false,
@@ -212,7 +249,7 @@ class ParticipationsDatatable extends DataTable
 				"exportable"			=> false,
 				"printable"				=> false,
 				"width"					=> "100",
-				"class"					=> "flex gap-x-1",
+				"className"				=> "text-center",
 			],
         ];
     }
