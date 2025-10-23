@@ -86,13 +86,18 @@ Breadcrumbs::for('backend.moderation', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('backend.moderation.profile', function (BreadcrumbTrail $trail) {
 	$trail->parent('backend.moderation');
-    $trail->push('Profile', route('app.profile.index'));
+    $trail->push('Profile', route('backend.moderation.profile.index'));
 });
 
 Breadcrumbs::for('backend.moderation.profile.edit', function (BreadcrumbTrail $trail, Profile $profile) {
 	$trail->parent('backend.moderation.profile');
 	$trail->push('Edit '.ucwords($profile->type->value).' Profile');
     $trail->push($profile['id']);
+});
+
+Breadcrumbs::for('backend.moderation.users', function (BreadcrumbTrail $trail) {
+	$trail->parent('backend.moderation');
+    $trail->push('Users', route('backend.moderation.users.index'));
 });
 
 Breadcrumbs::for('backend.rampmanagement', function (BreadcrumbTrail $trail) {

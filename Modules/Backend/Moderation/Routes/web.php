@@ -36,6 +36,14 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 
 		});
 
+		Route::prefix('users')
+		->name('users.')
+		->group(function () {
+
+			Route::get('/',										\Modules\Backend\Moderation\Actions\Users\Index::class)			->name('index');
+
+		});
+
 	});
 
 });

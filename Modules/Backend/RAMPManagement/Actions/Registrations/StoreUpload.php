@@ -205,6 +205,10 @@ class StoreUpload
             ['name' => $name, 'password' => Hash::make(self::DEFAULT_PASSWORD)]
         );
 
+		if (!$user->hasRole('user')) {
+			$user->assignRole('user');
+		}
+
         if ($user->name !== $name) {
             $user->fill(['name' => $name])->save();
         }

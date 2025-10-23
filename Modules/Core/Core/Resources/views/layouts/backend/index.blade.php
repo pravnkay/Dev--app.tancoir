@@ -80,6 +80,13 @@
 						'icon'		=> 'file-text',
 						'hr'		=> 'true'
 					],
+					[
+						'label'		=> 'Users',
+						'active'	=> 'backend.moderation.users.*',
+						'route'		=> 'backend.moderation.users.index',
+						'icon'		=> 'users',
+						'hr'		=> 'true'
+					],
 				]
 			],
 
