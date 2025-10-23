@@ -8,6 +8,7 @@
         "Modules\\Core\\Core\\Providers\\CoreServiceProvider"
     ],
     "files": [
-		"Helpers\\Notify.php"
+		"Helpers\\Notify.php",
+		"Helpers\\Redirector.php"
 	]
 }

@@ -16,18 +16,9 @@ class UnauthorizedExceptionHandler
     {
         $user = Auth::user();
 
-		notify('No access! Re-routed', ['status'=> 'destructive', 'icon' => 'ban']);
+        notify('No access! Re-routed', ['status' => 'destructive', 'icon' => 'ban']);
 
-        if ($user && $user->hasRole('admin')) {
-            return redirect()
-                ->route('backend.dashboard');
-        }
-
-        if ($user) {
-            return redirect()
-                ->route('app.index');
-        }
-
-        return redirect()->route('core.index');
+        $routeName = resolve_role_redirect($user);        // falls back to core.index if user null/unknown
+        return redirect()->route($routeName);
     }
 }

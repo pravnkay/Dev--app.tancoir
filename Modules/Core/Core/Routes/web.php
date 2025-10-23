@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,13 @@ Route::middleware([])
 ->group(function () {
 
 	Route::get('/', function() {
+
+		if(auth()->check()) {
+			return redirect()->route(resolve_role_redirect(auth()->user()));
+		}
+
 		return view('core::dashboard.index');
+
 	})->name('index');
 
 });

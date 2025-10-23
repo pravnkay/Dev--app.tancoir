@@ -13,11 +13,9 @@ class LoginResponse implements LoginResponseContract
      */
     public function toResponse($request)
     {
-        $user = Auth::user();
-        if ($user->hasRole('admin')) {
-            return redirect('/backend');
-        } else {
-            return redirect('/app');
-        }
+		$user = Auth::user();
+        $target_route = resolve_role_redirect($user);           // returns name from config/redirects.php
+		clock($target_route);
+        return redirect()->route($target_route);
     }
 }
