@@ -9,6 +9,7 @@
 @section('main-content')
 
 <div class="row">
+	
 	<div class="col w-full md:w-2/4">
 		<select id="event-picker" name="event" class="uk-select" _="on change go to url `{{route('backend.rampmanagement.registrations.index')}}/${me.value}`">
 			<option value="">All Events</option>
@@ -18,26 +19,50 @@
 		</select>
 	</div>
 
+	
+
 	@if ($slot_summary)
-		<div class="col w-full md:w-1/4 mb-3">
-			<div class="uk-card uk-card-body">
-				<h3 class="uk-card-title">{{$slot_summary['filled']}}</h3>
-				<p class="mt-4">
-					Registration Details
-				</p>			
+
+	<div class="col w-full mt-4">
+		<div class="row">
+			<div class="col w-full md:w-1/4 mb-3">
+				<div class="uk-card uk-card-body">
+					<h3 class="uk-card-title">{{$slot_summary['filled']}}</h3>
+					<p class="mt-4">
+						Registration Details
+					</p>			
+				</div>
+			</div>
+			<div class="col w-full md:w-1/4 mb-3">
+				<div class="uk-card uk-card-body">
+					<h3 class="uk-card-title">{{$slot_summary['approved']}}/{{$slot_summary['total']}}</h3>
+					<p class="mt-4">
+						Participant Details
+					</p>			
+				</div>
 			</div>
 		</div>
-		<div class="col w-full md:w-1/4 mb-3">
-			<div class="uk-card uk-card-body">
-				<h3 class="uk-card-title">{{$slot_summary['approved']}}/{{$slot_summary['total']}}</h3>
-				<p class="mt-4">
-					Participant Details
-				</p>			
-			</div>
-		</div>
+	</div>
+	
 	@endif
 
 	<div class="col w-full border-border border-t mt-6 mb-6"></div>
+
+	@if($upload_information)
+	<div class="col w-full md:w-1/4 mb-3">
+		<div class="uk-alert" data-uk-alert>
+			<a href class="uk-alert-close" data-uk-close></a>
+			<div class="uk-alert-title">Notice</div>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua.
+			</p>
+		</div>
+	</div>
+	<div class="col w-full border-border border-t mt-6 mb-6"></div>
+	@endif
+
+
 </div>
 
 	

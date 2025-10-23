@@ -17,6 +17,15 @@ enum ParticipantCommunityEnum: string
         };
     }
 
+	public function label_for_uploader() :string
+	{
+		return match ($this) {
+            self::GENERAL 		=> 'General',
+            self::OBC 			=> 'OBC',
+            self::SCST 			=> 'SC/ST',
+        };
+	}
+
 	public static function asArray(): array
     {
         $array = [];

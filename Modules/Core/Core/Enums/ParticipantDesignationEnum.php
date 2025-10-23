@@ -21,6 +21,17 @@ enum ParticipantDesignationEnum: string
         };
     }
 
+	public function label_for_uploader() :string
+	{
+		return match ($this) {
+            self::PROPRIETOR 		=> 'உரிமையாளர் / Owner / Proprietor',
+			self::PARTNER 			=> 'பங்குதாரர் / Partner',
+			self::DIRECTOR 			=> 'டைரக்டர் / Director',
+			self::MANAGER 			=> 'மேலாளர் / Manager',
+			self::EMPLOYEE 			=> 'பணியாளர் / Employee',
+        };
+	}
+
 	public static function asArray(): array
     {
         $array = [];

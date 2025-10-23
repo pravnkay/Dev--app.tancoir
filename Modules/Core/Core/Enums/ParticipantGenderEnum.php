@@ -17,6 +17,15 @@ enum ParticipantGenderEnum: string
         };
     }
 
+	public function label_for_uploader() :string
+	{
+		return match ($this) {
+            self::MALE 				=> 'ஆண் / Male',
+			self::FEMALE 			=> 'பெண் / Female',
+			self::TRANSGENDER 		=> 'மாற்றுப் பாலினத்தவர் / Transgender',
+        };
+	}
+
 	public static function asArray(): array
     {
         $array = [];

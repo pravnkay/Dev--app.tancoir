@@ -19,6 +19,16 @@ enum ParticipantReligionEnum: string
         };
     }
 
+	public function label_for_uploader() :string
+	{
+		return match ($this) {
+            self::HINDU 			=> 'இந்து / Hindu',
+			self::MUSLIM 			=> 'முஸ்லிம் / Muslim',
+			self::CHRISTIANITY 		=> 'கிறிஸ்துவம் / Chiristianity',
+			self::OTHERS 			=> 'Other',
+        };
+	}
+
 	public static function asArray(): array
     {
         $array = [];

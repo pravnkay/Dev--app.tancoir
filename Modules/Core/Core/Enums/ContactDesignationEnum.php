@@ -16,6 +16,14 @@ enum ContactDesignationEnum: string
 		};
 	}
 
+	public function label_for_uploader() :string
+	{
+		return match ($this) {
+            self::OWNER 				=> 'Owner / Proprietor',
+			self::PARTNER 				=> 'Partner',
+        };
+	}
+
 	public static function asArray(): array
     {
         $array = [];

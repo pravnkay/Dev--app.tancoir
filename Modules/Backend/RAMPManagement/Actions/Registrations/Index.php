@@ -29,15 +29,14 @@ class Index
 				'approved' => (int) $filtered_event->approved_registrations_count,
 			];
 			
-		}
-
-		
+		}		
 
 		return $datatable->with('filtered_event', $filtered_event)->render('rampmanagement::registrations.index', [
 			'model' => 'Modules\\Backend\\RAMPManagement\\Entities\\Registration',
 			'all_events' => $all_events,
 			'filtered_event' => $filtered_event,
 			'slot_summary' => $slot_summary,
+			'upload_information' => null,
 		]);
     }
 }

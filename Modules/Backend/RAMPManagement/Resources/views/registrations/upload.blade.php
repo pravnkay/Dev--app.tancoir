@@ -6,6 +6,44 @@
 
 	<div class="row">
 		<div class="col w-full">
+			
+			@if (session()->has('upload_feedback'))
+
+				@php($feedback = session('upload_feedback'))
+
+				@php($statusClasses = ['success' => 'uk-alert-success', 'warning' => 'uk-alert-warning', 'error' => 'uk-alert-danger'])
+
+				<div class="uk-alert {{ $statusClasses[$feedback['status']] ?? 'uk-alert-primary' }} mb-6" data-uk-alert>
+
+					<a href="#" class="uk-alert-close" data-uk-close></a>
+					<div class="uk-alert-title">{{ ucfirst($feedback['status']) }}</div>
+					<p>{{ $feedback['message'] ?? __('Upload completed.') }}</p>
+
+					@if (!empty($feedback['rows']))
+
+						<ul class="uk-list uk-list-divider mt-4">
+							@foreach ($feedback['rows'] as $rowFeedback)
+								@php($rowStatusClass = [
+									'success' => 'uk-text-success',
+									'skipped' => 'uk-text-warning',
+									'error' => 'uk-text-danger',
+								][$rowFeedback['status']] ?? '')
+								<li>
+									<strong>{{ __('Row :number', ['number' => $rowFeedback['row']]) }}:</strong>
+									<span class="{{ $rowStatusClass }}">{{ ucfirst($rowFeedback['status']) }}</span>
+									@if (!empty($rowFeedback['message']))
+										- {{ $rowFeedback['message'] }}
+									@endif
+								</li>
+							@endforeach
+						</ul>
+
+					@endif
+
+				</div>
+
+			@endif
+
 			<form class="uk-form-stacked" action="{{route('backend.rampmanagement.registrations.store_upload', ['filtered_event' => $event->id])}}" method="POST" autocomplete="off" enctype="multipart/form-data">
 				@csrf
 		
