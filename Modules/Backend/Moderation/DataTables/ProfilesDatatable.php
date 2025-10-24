@@ -19,6 +19,12 @@ class ProfilesDatatable extends DataTable
 				return $profile->user->name;
 			})
 
+			->filterColumn('user', function ($query, $keyword) {
+				$query->whereHas('user', function ($userQuery) use ($keyword) {
+					$userQuery->where('name', 'like', "%{$keyword}%");
+				});
+			})
+
 			->addColumn('type', function($profile) {
 				return $profile->type->label().' Profile';
 			})		
@@ -56,9 +62,62 @@ class ProfilesDatatable extends DataTable
 		return $this->applyScopes($profile);
     }
 
-    public function html()
-    {
+	public function html()
+	{
 		$table_id  = 'profiles-table';
+
+		$initCompleteScript = <<<JS
+
+			function (profile, json) {
+
+				var tableId  = '#{$table_id}';
+
+				this.api().columns().every(function (index) {
+
+					var r = $('tfoot tr');
+					$('thead').append(r);
+
+					var column = this;
+					var colDef = profile['aoColumns'][index];
+
+					if (!colDef.searchable) {
+						return;
+					}
+
+					var footerCell = $(column.footer()).empty();
+
+					var input = document.createElement("input");
+					input.className = 'uk-input uk-form-sm';
+
+					if (column.search()) {
+						input.value = column.search();
+					}
+
+					$(input).appendTo(footerCell)
+					.on('click', function (e) {
+						e.stopPropagation();
+					})
+					.on('change', function () {
+						column.search($(this).val(), false, false, true).draw();
+					});
+
+				});
+
+				$(document).on('change', '#select-all', function () {
+					var on = this.checked;
+					$(tableId + ' tbody input[name=\"ids[]\"]').each(function () {
+						this.checked = on;
+						$(this).closest('tr').toggleClass('selected', on);
+					});
+				});
+
+				$(document).on('change', tableId + ' tbody input[name=\"ids[]\"]', function () {
+					$(this).closest('tr').toggleClass('selected', this.checked);
+					if (!this.checked) $('#select-all').prop('checked', false);
+				});
+			}
+
+		JS;
 
         return $this->builder()
                     ->columns($this->getColumns())
@@ -72,51 +131,7 @@ class ProfilesDatatable extends DataTable
 					->parameters([          
 						'searchDelay' => 1000,
 						'pageLength' => 10,
-						'initComplete' => "						
-						
-						function (profile, json) {
-
-							var tableId  = '#{$table_id}';
-
-							this.api().columns().every(function (index) {
-
-								var r = $('tfoot tr');
-								$('thead').append(r);
-
-								var column = this;
-								var colDef = profile['aoColumns'][index];
-
-								var input = document.createElement(\"input\")
-								input.className = 'uk-input uk-form-sm'
-
-								if(colDef.searchable){
-
-									$(input).appendTo($(column.footer()).empty())
-									.on('click', function (e) {
-										e.stopPropagation()
-									})
-									.on('change', function () {
-										column.search($(this).val(), false, false, true).draw();
-									});
-
-								}
-								
-							});
-
-							$(document).on('change', '#select-all', function () {
-								var on = this.checked;
-								$(tableId + ' tbody input[name=\"ids[]\"]').each(function () {
-									this.checked = on;
-									$(this).closest('tr').toggleClass('selected', on);
-								});
-							});
-					  
-							$(document).on('change', tableId + ' tbody input[name=\"ids[]\"]', function () {
-								$(this).closest('tr').toggleClass('selected', this.checked);
-								if (!this.checked) $('#select-all').prop('checked', false);
-							});
-
-						}",
+						'initComplete' => $initCompleteScript,
 
 						'drawCallback' => "function (profile) {
 							
@@ -210,14 +225,14 @@ class ProfilesDatatable extends DataTable
 				"data"					=> "type",
 				"responsivePriority"	=> "1",
 				"orderable"				=> true,
-				"searchable"			=> true,
+				"searchable"			=> false,
 			],
 			[
 				"title"					=> __('Status'),
 				"data"					=> "status",
 				"responsivePriority"	=> "1",
 				"orderable"				=> true,
-				"searchable"			=> true,
+				"searchable"			=> false,
 			],			
 			[
 				"title"					=> __('Action'),
