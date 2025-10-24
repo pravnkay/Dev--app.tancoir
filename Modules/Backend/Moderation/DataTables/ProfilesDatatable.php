@@ -4,6 +4,7 @@ namespace Modules\Backend\Moderation\DataTables;
 
 use Modules\App\Profile\Entities\Profile;
 use Modules\Core\Core\Enums\ProfileStatusEnum;
+use Modules\Core\Core\Enums\ProfileTypeEnum;
 use Yajra\DataTables\Services\DataTable;
 
 class ProfilesDatatable extends DataTable
@@ -39,7 +40,19 @@ class ProfilesDatatable extends DataTable
 
     public function query()
     {
-		$profile = Profile::where('status', ProfileStatusEnum::SUBMITTED);
+		$filtered_profile_status = $this->filtered_profile_status;
+		$filtered_profile_type = $this->filtered_profile_type;
+
+		$profile = Profile::query();
+
+		if ($filtered_profile_status && $filtered_profile_status !== 'all') {
+			$profile->where('status', ProfileStatusEnum::from($filtered_profile_status));
+		}
+
+		if ($filtered_profile_type && $filtered_profile_type !== 'all') {
+			$profile->where('type', ProfileTypeEnum::from($filtered_profile_type));
+		}
+
 		return $this->applyScopes($profile);
     }
 

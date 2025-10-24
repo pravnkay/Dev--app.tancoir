@@ -30,9 +30,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 		->name('profile.')
 		->group(function () {
 
-			Route::get('/',										\Modules\Backend\Moderation\Actions\Profiles\Index::class)			->name('index');
-			Route::get('edit/{profile}',						\Modules\Backend\Moderation\Actions\Profiles\Edit::class)			->name('edit');
-			Route::post('update/{profile}',						\Modules\Backend\Moderation\Actions\Profiles\Update::class)			->name('update');
+			Route::get('/{filtered_profile_status?}/{filtered_profile_type?}',			\Modules\Backend\Moderation\Actions\Profiles\Index::class)			->name('index');
+			Route::get('edit/{profile}',												\Modules\Backend\Moderation\Actions\Profiles\Edit::class)			->name('edit');
+			Route::post('update/{profile}',												\Modules\Backend\Moderation\Actions\Profiles\Update::class)			->name('update');
 
 		});
 
